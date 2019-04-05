@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#ffffff"
+    android:layout_margin="5dp">
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:orientation="horizontal"
+        android:layout_margin="5dp"
+        android:background="#ffeaa7">
+        
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/film_image"
+                android:layout_width="345px"
+                android:layout_height="345px"
+                android:layout_margin="5dp"
+                android:layout_gravity="center"
+                android:src="@mipmap/kodakcolorplus"/>
+
+        </LinearLayout>
+
+        
+        
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="0.6"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="right|center_vertical"
+                    android:text="Tên film:"
+                    android:textStyle="bold"
+                    android:textSize="17dp" />
+
+                <TextView
+                    android:id="@+id/film_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="Kodak Colorplus 200"
+                    android:gravity="center"
+                    android:layout_weight="0.6"
+                    android:layout_margin="5dp"
+                    android:background="#55efc4"
+                    />
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="horizontal"
+                >
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="right|center_vertical"
+                    android:text="Giá:"
+                    android:textStyle="bold"
+                    android:textSize="17dp"/>
+
+
+                <TextView
+                    android:id="@+id/film_price"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="Giá"
+                    android:gravity="center"
+                    android:layout_weight="0.6"
+                    android:layout_margin="5dp"
+                    android:background="#55efc4"
+                    />
+
+            </LinearLayout>
+
+           <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="horizontal"
+               >
+
+               <TextView
+                   android:layout_width="match_parent"
+                   android:layout_height="match_parent"
+                   android:layout_weight="1"
+                   android:gravity="right|center_vertical"
+                   android:text="Trạng Thái:"
+                   android:textStyle="bold"
+                   android:textSize="17dp"/>
+
+               <TextView
+                   android:id="@+id/film_status"
+                   android:layout_width="match_parent"
+                   android:layout_height="match_parent"
+                   android:text="Còn Hàng"
+                   android:gravity="center"
+                   android:layout_weight="0.6"
+                   android:layout_margin="5dp"
+                   android:background="#55efc4"
+                   />
+
+            </LinearLayout>
+
+
+
+
+
+
+
+
+
+
+
+
+        </LinearLayout>
+        
+        
+    </LinearLayout>
+
+
+</LinearLayout>
