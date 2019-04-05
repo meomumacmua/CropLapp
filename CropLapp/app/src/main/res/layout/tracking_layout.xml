@@ -63,6 +63,9 @@
 
 
             <EditText
+
+                android:id="@+id/editText"
+
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:hint="Vui lòng nhập số hóa đơn..."
@@ -84,6 +87,9 @@
 
 
             <ImageButton
+
+                android:id="@+id/seachButton"
+
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:layout_gravity="left|center"
