@@ -9,7 +9,8 @@
        android:layout_height="match_parent"
        android:layout_weight="1"
         android:orientation="vertical"
-        android:background="@mipmap/trackingback">
+        android:background="@mipmap/trackingback"
+        >
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -34,13 +35,12 @@
         </LinearLayout>
 
 
-
             <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1">
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1.3">
 
-        </LinearLayout>
+            </LinearLayout>
 
     </LinearLayout>
 
@@ -48,9 +48,11 @@
     <LinearLayout
        android:layout_width="match_parent"
        android:layout_height="match_parent"
-       android:layout_weight="1"
+       android:layout_weight="0.6"
         android:gravity="center|top"
         android:paddingTop="13dp"
+        android:orientation="vertical"
+
         >
 
         <LinearLayout
@@ -101,8 +103,94 @@
             </ImageButton>
 
 
+
             </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="0.7"
+            android:orientation="vertical">
+
+
+            <TextView
+                android:id="@+id/huongdan"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text=" Hướng dẫn tìm kiếm tracking!"
+                android:textStyle="bold"
+                android:textSize="25dp"
+                android:gravity="center_horizontal"
+                android:paddingTop="15dp"
+                android:textColor="#ffffff"
+                android:fontFamily="@font/cucho"
+
+                />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="- Vui lòng nhập chính xác mã hoá đơn trên phiếu biên nhận."
+                android:textColor="#ffffff"
+                android:fontFamily="@font/cucho"
+                android:gravity="center_horizontal"
+                android:paddingTop="3dp"
+                android:paddingLeft="7dp"
+                android:paddingRight="7dp"
+
+                />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text=" - Để tracking film đen trắng, vui lòng thêm đuôi 'b' ở cuối mã biên nhận, ví dụ: 'K1234b'."
+                android:textColor="#ffffff"
+                android:fontFamily="@font/cucho"
+                android:gravity="center_horizontal"
+                android:paddingTop="3dp"
+                android:paddingLeft="7dp"
+                android:paddingRight="7dp"
+                />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text= "- Để tracking film điện ảnh, vui lòng thêm đuôi 'b' ở cuối mã biên nhận, ví dụ: 'K1234c'."
+                android:textColor="#ffffff"
+                android:fontFamily="@font/cucho"
+                android:gravity="center_horizontal"
+                android:paddingTop="3dp"
+                android:paddingLeft="7dp"
+                android:paddingRight="7dp"
+                />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text= "- Nếu bạn gửi film từ tỉnh khác qua đường chuyển phát, vui lòng tìm kiếm theo tên hoặc thành phố của bạn. VD: Tuấn Anh, hoặc VD: Quảng Ninh."
+                android:textColor="#ffffff"
+                android:fontFamily="@font/cucho"
+                android:gravity="center_horizontal"
+                android:paddingTop="3dp"
+                android:paddingLeft="7dp"
+                android:paddingRight="7dp"
+                />
+
+
+
+
+
+
+
+
         </LinearLayout>
+
+
+        </LinearLayout>
+
+
+
+
     </LinearLayout>
 </LinearLayout>
 

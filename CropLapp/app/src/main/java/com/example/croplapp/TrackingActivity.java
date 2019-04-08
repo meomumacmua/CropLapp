@@ -1,6 +1,7 @@
 package com.example.croplapp;
 
 import android.content.DialogInterface;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -8,6 +9,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.TextView;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -22,6 +24,7 @@ public class TrackingActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.tracking_layout);
+
 
         ImageButton button1 = findViewById(R.id.seachButton);
         button1.setOnClickListener(new View.OnClickListener()
@@ -92,11 +95,11 @@ public class TrackingActivity extends AppCompatActivity {
 
     public void showAlertDialog(int kindofAlert, String code){
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Croblap");
-        if (kindofAlert == 1) builder.setMessage("Mã hóa đơn '" + code + "' đã được hoàn thành, bạn có thể đến lấy bất kỳ lúc nào!");
-        if (kindofAlert == 2) builder.setMessage("Mã hóa đơn '" + code + "' đang được thực hiện, bạn vui lòng đợi chúng mình hoàn thành nhé!");
-        if (kindofAlert == 3) builder.setMessage("Mã hóa đơn '" + code + "' không tìm thấy, vui lòng kiểm tra lại mã và thực hiện lại!");
-        if (kindofAlert == 4) builder.setMessage("Mã hóa đơn '"   + code + "' không hợp lệ! \nMời nhập lại");
+        builder.setTitle("CropLab Thông báo!!!");
+        if (kindofAlert == 1) builder.setMessage("Mã hóa đơn '" + code + "' : film của bạn đã hoàn thành, bạn có thể tới lấy lại âm bản trong vòng 3 tháng nhé! ♥ ");
+        if (kindofAlert == 2) builder.setMessage("Mã hóa đơn '" + code + "' : film của bạn đang được xử lý, bạn cứ bình tĩnh rồi hình sẽ tới nhé! ♥  ");
+        if (kindofAlert == 3) builder.setMessage("Mã hóa đơn '" + code + "' không tìm thấy, vui lòng kiểm tra và nhập lại chính xác mã hoá đơn!");
+        if (kindofAlert == 4) builder.setMessage("Mã hóa đơn '"   + code + "' không hợp lệ! \nMời nhập lại chính xác mã hoá đơn!!!");
         builder.setCancelable(false);
         builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             @Override
