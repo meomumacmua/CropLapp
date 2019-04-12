@@ -1,5 +1,6 @@
 package com.example.croplapp;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -7,6 +8,8 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 
@@ -45,10 +48,12 @@ public class TrackingActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         setContentView(R.layout.tracking_layout);
+
         ImageButton button1 = findViewById(R.id.seachButton);
         button1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                hideKeyboard(view);
                 EditText inputText = findViewById(R.id.editText);
                 final String text = inputText.getText().toString();
                 final String mydata;
@@ -62,6 +67,13 @@ public class TrackingActivity extends AppCompatActivity {
         });
     }
 
+    public void hideKeyboard(View view) {
+        try {
+            InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        } catch(Exception ignored) {
+        }
+    }
     public void showAlertDialog(int response ,String code) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("CropLab Thông báo!!!");
@@ -77,7 +89,7 @@ public class TrackingActivity extends AppCompatActivity {
                 break;
             }
             case 3: {
-                builder.setMessage("Mã hóa đơn '" + code + "' đã tiếp nhận");
+                builder.setMessage("Mã hóa đơn '" + code + "' của bạn đang trong hàng chờ để được xử lý, cứ ngồi im rồi film sẽ được tráng! ♥  ");
                 break;
             }
             case 4: {
