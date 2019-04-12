@@ -10,6 +10,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.Spinner;
 import android.widget.Switch;
 
 public class MainActivity extends AppCompatActivity {
@@ -84,9 +86,9 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Log.d("TrackingActivity", "onClick: ");
+
                 Intent intent1 = new Intent(MainActivity.this, TrackingActivity.class);
                 startActivity(intent1);
-
 
             }
         });
@@ -98,6 +100,16 @@ public class MainActivity extends AppCompatActivity {
                 Log.d("WebViewActivity", "onClick: ");
                 Intent intent2 = new Intent(MainActivity.this, WebViewActivity.class);
                 startActivity(intent2);
+            }
+        });
+
+        ImageButton buttonop = findViewById(R.id.button_option);
+        buttonop.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d("OptionList", "onClick: ");
+                Intent intent3 = new Intent(MainActivity.this, OptionList.class);
+                startActivity(intent3);
             }
         });
     }
