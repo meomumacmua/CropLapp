@@ -52,10 +52,10 @@ public class TrackingActivity extends AppCompatActivity {
                 hideKeyboard(view);
                 EditText inputText = findViewById(R.id.editText);
                 final String text = inputText.getText().toString();
-                final String mydata;
-                if (text.trim().length() <= 4) {
+                char c = text.charAt(0);
+                if ((text.trim().length() <= 4)  || (Character.isDigit(c))) {
                     showAlertDialog(1, text);
-                } else {
+                } else{
                     int temp = getDatabase(text);
                     //showAlertDialog(temp, text);
                 }
@@ -70,6 +70,7 @@ public class TrackingActivity extends AppCompatActivity {
         } catch(Exception ignored) {
         }
     }
+
     public void showAlertDialog(int response ,String code) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("CropLab Thông báo!!!");
@@ -119,10 +120,10 @@ public class TrackingActivity extends AppCompatActivity {
         //lấy đối tượng FempStringirebaseDatabase
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         //Kết nối tới node có tên là contacts (node này do ta định nghĩa trong CSDL Firebase)
-        DatabaseReference myRef = database.getReference("contacts");
+        DatabaseReference myRef = database.getReference("hanoi");
         //truy suất và lắng nghe sự thay đổi dữ liệu
         myRef.addValueEventListener(new ValueEventListener() {
-            int temp;
+            int temp = 2;
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 //vòng lặp để lấy dữ liệu khi có sự thay đổi trên Firebase
@@ -160,7 +161,7 @@ public class TrackingActivity extends AppCompatActivity {
         //lấy đối tượng FirebaseDatabase
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         //Kết nối tới node có tên là contacts (node này do ta định nghĩa trong CSDL Firebase)
-        DatabaseReference myRef = database.getReference("contacts");
+        DatabaseReference myRef = database.getReference("hanoi");
         //truy suất và lắng nghe sự thay đổi dữ liệu
         myRef.addValueEventListener(new ValueEventListener() {
             @Override

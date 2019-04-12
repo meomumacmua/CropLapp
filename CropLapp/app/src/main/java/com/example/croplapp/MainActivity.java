@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Switch;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -19,25 +20,22 @@ public class MainActivity extends AppCompatActivity {
         return cm.getActiveNetworkInfo() != null;
     }
 
-    public void showAlertDialog(final int kindofAlert, String code) {
+    public void showAlertDialog(final int response, String code) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("CropLab Thông báo!!!");
-        if (kindofAlert == 1)
-            builder.setMessage("Mã hóa đơn '" + code + "' : film của bạn đã hoàn thành, bạn có thể tới lấy lại âm bản trong vòng 3 tháng nhé! ♥ ");
-        if (kindofAlert == 2)
-            builder.setMessage("Mã hóa đơn '" + code + "' : film của bạn đang được xử lý, bạn cứ bình tĩnh rồi hình sẽ tới nhé! ♥  ");
-        if (kindofAlert == 3)
-            builder.setMessage("Mã hóa đơn '" + code + "' không tìm thấy, vui lòng kiểm tra và nhập lại chính xác mã hoá đơn!");
-        if (kindofAlert == 4)
-            builder.setMessage("Bạn đang ngoại tuyến!!! \nKết nối mạng và thử lại");
+        switch (response) {
+            case 4:
+            {
+                builder.setMessage("Bạn đang ngoại tuyến!!! \nKết nối mạng và thử lại");
+            }
+        }
+
         builder.setCancelable(false);
         builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 dialogInterface.dismiss();
-                if (kindofAlert == 4 ){
-                    finish();
-                }
+                finish();
                 //Toast.makeText(MainActivity.this, "Không thoát được", Toast.LENGTH_SHORT).show();
             }
         });
