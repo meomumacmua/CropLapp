@@ -19,7 +19,7 @@ import com.google.firebase.database.ValueEventListener;
 public class TrackingActivity extends AppCompatActivity {
 
     String TAG = "FIREBASE";
-
+    String area = "hanoi";
     /*
      * 0 = khởi tạo
      * 1 = không hợp lệ
@@ -35,7 +35,7 @@ public class TrackingActivity extends AppCompatActivity {
         setContentView(R.layout.tracking_layout);
 
 //        initDatabase();
-        if(initDatabase() == 6){
+        if(initDatabase(area) == 6){
             showAlertDialog(6,"Error");
         }
     }
@@ -57,7 +57,7 @@ public class TrackingActivity extends AppCompatActivity {
                 if ((text.trim().length() <= 4)  || (Character.isDigit(c))) {
                     showAlertDialog(1, text);
                 } else{
-                    int temp = getDatabase(text);
+                    int temp = getDatabase(area,text);
                     //showAlertDialog(temp, text);
                 }
             }
@@ -116,12 +116,12 @@ public class TrackingActivity extends AppCompatActivity {
 
     }
 
-    public int getDatabase(final String compareText) {
+    public int getDatabase(String areaCode, final String compareText) {
 
         //lấy đối tượng FempStringirebaseDatabase
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         //Kết nối tới node có tên là contacts (node này do ta định nghĩa trong CSDL Firebase)
-        DatabaseReference myRef = database.getReference("hanoi");
+        DatabaseReference myRef = database.getReference(areaCode);
         //truy suất và lắng nghe sự thay đổi dữ liệu
         myRef.addValueEventListener(new ValueEventListener() {
             int temp = 2;
@@ -158,11 +158,11 @@ public class TrackingActivity extends AppCompatActivity {
         return 0;
     }
 
-    public int initDatabase() {
+    public int initDatabase(String areaCode) {
         //lấy đối tượng FirebaseDatabase
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         //Kết nối tới node có tên là contacts (node này do ta định nghĩa trong CSDL Firebase)
-        DatabaseReference myRef = database.getReference("hanoi");
+        DatabaseReference myRef = database.getReference(areaCode);
         //truy suất và lắng nghe sự thay đổi dữ liệu
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
