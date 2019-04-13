@@ -8,9 +8,11 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 public class OptionList extends AppCompatActivity {
     String areaChosed;
+
     public static final String EXTRA_DATA = "EXTRA_DATA";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,10 +31,13 @@ public class OptionList extends AppCompatActivity {
         super.onStart();
         setContentView(R.layout.activity_option_list);
 
+        TextView showArea = findViewById(R.id.textView2);
+        showArea.setText("Khu vực hiện tại: " + areaChosed);
+
         //get the spinner from the xml.
         final Spinner dropdown = findViewById(R.id.spinner0);
         //create a list of items for the spinner.
-        String[] items = new String[]{"Khu vực đã chọn: " + areaChosed,"Hà Nội", "Sài Gòn", "Smt else"};
+        String[] items = new String[]{getString(R.string.areaHanoi), getString(R.string.areaSaigon)};
         //create an adapter to describe how the items are displayed, adapters are used in several places in android.
         //There are multiple variations of this, but this is the basic variant.
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, items);
@@ -53,6 +58,7 @@ public class OptionList extends AppCompatActivity {
 
     public void onBackPressed()
     {
+
         // Tạo một Intent mới để chứa dữ liệu trả về
         final Intent data = new Intent();
 

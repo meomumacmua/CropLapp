@@ -2,6 +2,7 @@ package com.example.croplapp;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -10,6 +11,8 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.TextView;
+
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -19,7 +22,8 @@ import com.google.firebase.database.ValueEventListener;
 public class TrackingActivity extends AppCompatActivity {
 
     String TAG = "FIREBASE";
-    String area = "hanoi";
+    String areaToFind;
+    String textReceiver;
     /*
      * 0 = khởi tạo
      * 1 = không hợp lệ
@@ -34,16 +38,32 @@ public class TrackingActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.tracking_layout);
 
+        Intent intent = getIntent();
+        Bundle bundle = intent.getExtras();
+        if (bundle != null) {
+            textReceiver = bundle.getString("area", "Hà Nội");
+
+            if (textReceiver.contains(getString(R.string.areaSaigon))){
+                areaToFind = getString(R.string.keySaigon);
+            } else {
+                areaToFind = getString(R.string.keyHanoi);
+            }
+        }
+
 //        initDatabase();
-        if(initDatabase(area) == 6){
+        if(initDatabase(areaToFind) == 6){
             showAlertDialog(6,"Error");
         }
+
     }
 
     @Override
     protected void onStart() {
         super.onStart();
         setContentView(R.layout.tracking_layout);
+
+        TextView showArea = findViewById(R.id.textViewArea);
+        showArea.setText(textReceiver);
 
         ImageButton button1 = findViewById(R.id.seachButton);
         button1.setOnClickListener(new View.OnClickListener() {
@@ -57,11 +77,16 @@ public class TrackingActivity extends AppCompatActivity {
                 if ((text.trim().length() <= 4)  || (Character.isDigit(c))) {
                     showAlertDialog(1, text);
                 } else{
-                    int temp = getDatabase(area,text);
+                    int temp = getDatabase(areaToFind,text);
                     //showAlertDialog(temp, text);
                 }
             }
         });
+    }
+
+    @Override
+    public void onBackPressed(){
+        finish();
     }
 
     public void hideKeyboard(View view) {

@@ -107,6 +107,9 @@ public class MainActivity extends AppCompatActivity {
                 Log.d("TrackingActivity", "onClick: ");
 
                 Intent intent1 = new Intent(MainActivity.this, TrackingActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putString("area",loadArea);
+                intent1.putExtras(bundle);
                 startActivity(intent1);
 
             }

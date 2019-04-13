@@ -2,4 +2,6 @@
     <string name="app_name">CropLapp</string>
     <string name="areaHanoi">Hà Nội</string>
     <string name="areaSaigon">Sài Gòn</string>
+    <string name="keyHanoi">hanoi</string>
+    <string name="keySaigon">saigon</string>
 </resources>
