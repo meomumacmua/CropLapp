@@ -53,6 +53,7 @@ public class TrackingActivity extends AppCompatActivity {
                 EditText inputText = findViewById(R.id.editText);
                 final String text = inputText.getText().toString();
                 char c = text.charAt(0);
+
                 if ((text.trim().length() <= 4)  || (Character.isDigit(c))) {
                     showAlertDialog(1, text);
                 } else{
