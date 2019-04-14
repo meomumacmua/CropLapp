@@ -30,7 +30,6 @@ public class WebViewActivity extends AppCompatActivity {
 
         webView = findViewById(R.id.webView);
         //Setting webview properties
-//        WebSettings webSettings = webView.getSettings();
 
         webView.getSettings().setJavaScriptEnabled(true);
         webView.getSettings().setJavaScriptEnabled (true);
@@ -59,6 +58,10 @@ public class WebViewActivity extends AppCompatActivity {
 //        }
     }
 
+    /* onBackPressed()
+    * Press back button to comeback to previous link
+    * If not back to MainActivity
+    */
     @Override
     public void onBackPressed() {
         if(webView.canGoBack()) {
