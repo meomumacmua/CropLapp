@@ -84,8 +84,8 @@ public class MainActivity extends AppCompatActivity {
     }
     
     /* onCreat();
-    * check network
-    * load data saved
+    * Check network
+    * Load data saved
     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -105,7 +105,7 @@ public class MainActivity extends AppCompatActivity {
     }
     
     /* onstart(); 
-    * show name of search area
+    * Show name of search area
     * Switch to FilmStoreActivity, TrackingActivity, WebViewActivity, OptionList
     */
     @Override
@@ -195,8 +195,8 @@ public class MainActivity extends AppCompatActivity {
         /* Check if the requestCode matches the REQUESTCODE we just used (REQUEST_CODE = 1998) */
         if(requestCode == REQUEST_CODE) {
             /*
-            * resultCode set by DetailActivity
-            * RESULT_OK indicates that this result was successful
+            * "resultCode" set by DetailActivity
+            * "RESULT_OK" indicates that this result was successful
             */
             if(resultCode == AppCompatActivity.RESULT_OK) {
                 // Receive data from returned Intent
@@ -217,11 +217,11 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onBackPressed()
     {
-        // press back again in the given time period (<2s)
+        // Press back again in the given time period (<2s)
         if (mBackPressed + TIME_INTERVAL > System.currentTimeMillis())
         {
             super.onBackPressed();
-            // save data
+            // Save data
             saveAppSetting();
             return;
         } else {
