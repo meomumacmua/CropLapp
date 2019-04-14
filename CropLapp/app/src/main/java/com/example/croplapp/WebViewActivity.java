@@ -1,3 +1,9 @@
+/*
+* Name: WebViewActivity.java
+* Author: Nguyen Duc Tien 16020175
+* Purpose: Show store website: https://croplab.vn/
+* Include: Webview
+*/
 
 package com.example.croplapp;
 
@@ -15,12 +21,10 @@ public class WebViewActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.view_web);
 
-
-//        String url = "https://croplab.vn/";
         String url = "https://croplab.vn/";
         WebView webView= (WebView)  findViewById(R.id.webView);
 
-        //TA webview
+        //Setting webview properties
         WebSettings webSettings = webView.getSettings();
         webSettings.setJavaScriptEnabled(true);
         webView.getSettings().setJavaScriptEnabled (true);
@@ -31,19 +35,14 @@ public class WebViewActivity extends AppCompatActivity {
         webView.getSettings().setBuiltInZoomControls(true);
         webView.getSettings().setDisplayZoomControls(false);
         webView.getSettings().setDomStorageEnabled(true);
-        webView.loadUrl("https://croplab.vn/blog");
-
-
+        //webView.loadUrl("https://croplab.vn/blog");
+        
         webView.setWebViewClient(new WebViewClient() {
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
                 view.loadUrl(url);
                 return true;
             }
-
         });
-
-
-
     }
 }
