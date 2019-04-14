@@ -9,8 +9,7 @@
        android:layout_height="match_parent"
        android:layout_weight="1"
         android:orientation="vertical"
-        android:background="@mipmap/trackingback"
-        >
+        android:background="@mipmap/trackingback">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -42,16 +41,13 @@
 
             </LinearLayout>
 
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1.7">
-
             </LinearLayout>
 
-    </LinearLayout>
-
+        </LinearLayout>
 
     <LinearLayout
        android:layout_width="match_parent"
@@ -59,21 +55,15 @@
        android:layout_weight="0.3"
         android:gravity="center|top"
         android:paddingTop="13dp"
-        android:orientation="vertical"
-
-        >
+        android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="300dp"
             android:layout_height="50dp"
             android:background="@drawable/transparrentborder"
-            android:orientation="horizontal"
-
-            >
-
+            android:orientation="horizontal">
 
             <EditText
-
                 android:id="@+id/editText"
                 android:singleLine="true"
                 android:layout_width="match_parent"
@@ -87,40 +77,31 @@
                 android:gravity="center|left"
                 android:paddingLeft="8dp"
                 android:background="@android:color/transparent"
-                android:inputType="textCapSentences"
-                />
+                android:inputType="textCapSentences" />
+
             <LinearLayout
                 android:layout_width="3dp"
                 android:layout_height="match_parent"
                 android:background="#F7F7F7">
-
             </LinearLayout>
 
-
             <ImageButton
-
                 android:id="@+id/seachButton"
-
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:layout_gravity="left|center"
                 android:layout_margin="6dp"
-                android:background="@mipmap/search"
-                >
-
+                android:background="@mipmap/search">
 
             </ImageButton>
 
-
-
-            </LinearLayout>
+        </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="0.8"
             android:orientation="vertical">
-
 
             <TextView
                 android:id="@+id/huongdan"
@@ -132,84 +113,62 @@
                 android:gravity="center_horizontal"
                 android:paddingTop="15dp"
                 android:textColor="#ffffff"
-                android:fontFamily="@font/opensans0regular"
-
-                />
+                android:fontFamily="@font/opensans0regular" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="- Vui lòng nhập chính xác mã hoá đơn trên phiếu biên nhận."
+                android:text="@string/instruction1"
                 android:textColor="#ffffff"
                 android:fontFamily="@font/opensans0regular"
                 android:gravity="center_horizontal"
                 android:paddingTop="15dp"
                 android:paddingLeft="7dp"
-                android:paddingRight="7dp"
-
-                />
+                android:paddingRight="7dp" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text=" - Để tracking film đen trắng, vui lòng thêm đuôi 'b' ở cuối mã biên nhận, ví dụ: 'K1234b'."
+                android:text="@string/instruction2"
                 android:textColor="#ffffff"
                 android:fontFamily="@font/opensans0regular"
                 android:gravity="center_horizontal"
                 android:paddingTop="15dp"
                 android:paddingLeft="7dp"
-                android:paddingRight="7dp"
-                />
+                android:paddingRight="7dp" />
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text=" - Để tracking film điện ảnh, vui lòng thêm đuôi 'c' ở cuối mã biên nhận, ví dụ: 'K1234c'."
+                android:text="@string/instruction3"
                 android:textColor="#ffffff"
                 android:fontFamily="@font/opensans0regular"
                 android:gravity="center_horizontal"
                 android:paddingTop="15dp"
                 android:paddingLeft="7dp"
-                android:paddingRight="7dp"
-                />
-
+                android:paddingRight="7dp" />
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text= "- Để tracking film dương bản, vui lòng thêm đuôi 'e' ở cuối mã biên nhận, ví dụ: 'K1234e'."
+                android:text= "@string/instruction4"
                 android:textColor="#ffffff"
                 android:fontFamily="@font/opensans0regular"
                 android:gravity="center_horizontal"
                 android:paddingTop="15dp"
                 android:paddingLeft="7dp"
-                android:paddingRight="7dp"
-                />
-
+                android:paddingRight="7dp" />
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text= "- Nếu bạn gửi film từ tỉnh khác qua đường chuyển phát, vui lòng tìm kiếm theo tên hoặc thành phố của bạn. VD: Tuấn Anh, hoặc VD: Quảng Ninh."
+                android:text= "@string/instruction5"
                 android:textColor="#ffffff"
                 android:fontFamily="@font/opensans0regular"
                 android:gravity="center_horizontal"
                 android:paddingTop="15dp"
                 android:paddingLeft="7dp"
-                android:paddingRight="7dp"
-                />
-
-
-
-
-
-
-
-
+                android:paddingRight="7dp" />
         </LinearLayout>
 
-
-        </LinearLayout>
-
-
-
+    </LinearLayout>
 
     </LinearLayout>
 </LinearLayout>

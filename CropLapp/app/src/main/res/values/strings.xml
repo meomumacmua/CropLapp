@@ -4,4 +4,12 @@
     <string name="areaSaigon">Sài Gòn</string>
     <string name="keyHanoi">hanoi</string>
     <string name="keySaigon">saigon</string>
+    <string name="instruction1">"- Vui lòng nhập chính xác mã hoá đơn trên phiếu biên nhận.</string>
+    <string name="instruction2">" - Để tracking film đen trắng, vui lòng thêm đuôi 'b' ở cuối mã biên nhận,
+        ví dụ: 'K1234b'.</string>
+    <string name="instruction3">" - Để tracking film điện ảnh, vui lòng thêm đuôi 'c' ở cuối mã biên nhận,
+        ví dụ: 'K1234c'.</string>
+    <string name="instruction4">"- Để tracking film dương bản, vui lòng thêm đuôi 'e' ở cuối mã biên nhận,
+        ví dụ: 'K1234e'.</string>
+    <string name="instruction5">- Nếu bạn gửi film từ tỉnh khác qua đường chuyển phát, vui lòng tìm kiếm theo tên hoặc thành phố của bạn. VD: Tuấn Anh, hoặc VD: Quảng Ninh.</string>
 </resources>

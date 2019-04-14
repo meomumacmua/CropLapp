@@ -2,15 +2,13 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    >
+    android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="6"
         android:orientation="vertical">
-
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -45,8 +43,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:orientation="horizontal"
-            android:layout_margin="2dp"
-            >
+            android:layout_margin="2dp">
 
             <EditText
                 android:layout_width="match_parent"
@@ -65,17 +62,9 @@
                 android:background="#8DCEDD"
                 android:layout_margin="1dp"/>
 
-
-
         </LinearLayout>
 
-
-
-
-
-
     </LinearLayout>
-
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rv_listfilm"
@@ -85,9 +74,6 @@
         android:background="#e67e22"
         android:layout_weight="1">
 
-
     </android.support.v7.widget.RecyclerView>
-
-
 
 </LinearLayout>

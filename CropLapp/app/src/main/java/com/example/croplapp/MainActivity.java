@@ -19,6 +19,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
@@ -111,6 +112,10 @@ public class MainActivity extends AppCompatActivity {
         super.onStart();
         setContentView(R.layout.activity_main);
 
+        /* Show name of search area */
+        TextView showArea = findViewById(R.id.textView);
+        showArea.setText(loadArea);
+
         /*
         * #1
         * This function will coming soon
@@ -121,10 +126,13 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Log.d("FilmstoreActivity", "onClick: ");
-                
+
+                Toast.makeText(getBaseContext(), "This function will coming soon!", Toast.LENGTH_SHORT).show();
+                /*
                 Intent intent = new Intent(MainActivity.this, FilmStoreActivity.class);
                 // Start activity
                 startActivity(intent);
+                */
             }
         });
         /*
