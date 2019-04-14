@@ -13,6 +13,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.text.InputType;
 import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -91,6 +92,7 @@ public class TrackingActivity extends AppCompatActivity {
                 hideKeyboard(view);
                 // Get string input
                 EditText inputText = findViewById(R.id.editText);
+                inputText.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_FLAG_CAP_SENTENCES);
                 final String text = inputText.getText().toString();
                 /*
                 * If frist letter is digit or string length < 4, notice invalid input 
