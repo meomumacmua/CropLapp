@@ -1,5 +1,5 @@
 /*
-* OMane: ptionList.java
+* OMane: OptionList.java
 * Author: Nguyen Duc Tien 16020175
 * Purpose: Change search area: "Hà Nội" or "Sài Gòn"
 * Include: AdapterView, Spinner, Intent bundle
