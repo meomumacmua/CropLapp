@@ -1,9 +1,8 @@
 /*
-* MainActivity.java
-*
-* Nguyen Duc Tien 16020175
-* 
-* Home screen
+* Name: MainActivity.java
+* Author: Nguyen Duc Tien 16020175
+* Purpose: Home screen
+* Include: alert dialog, Intent bundle, Shared preference, network check
 */
 
 package com.example.croplapp;
@@ -20,7 +19,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
