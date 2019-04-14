@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
         return cm.getActiveNetworkInfo() != null;
     }
     
-    /* Alert dialog */
+    /* Alert dialog funtiion*/
     public void showAlertDialog(final int response, String code) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("CropLab Thông báo!!!");
@@ -167,8 +167,8 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent2);
             }
         });
-
-
+        
+        /* Action switch to InformationActivity.java */
         Button buttoninfor = findViewById(R.id.button_info);
         buttoninfor.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -224,7 +224,6 @@ public class MainActivity extends AppCompatActivity {
     * onbackpressed();
     * Press back 2 times to exit and save data to android-shared-preferences
     */
-    
     private static final int TIME_INTERVAL = 2000;  // milliseconds, desired time passed between two back presses.
     private long mBackPressed;
     @Override
@@ -243,9 +242,4 @@ public class MainActivity extends AppCompatActivity {
         }
         mBackPressed = System.currentTimeMillis();
     }
-
-
-
-
 }
-
