@@ -84,7 +84,7 @@ public class OptionList extends AppCompatActivity {
     public void onBackPressed()
 
         final Intent data = new Intent();
-        // Transfer data to the intent
+        // Add data to the intent
         data.putExtra(EXTRA_DATA, areaChosed);
 
         /*
