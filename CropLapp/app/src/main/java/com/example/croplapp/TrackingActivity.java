@@ -19,7 +19,6 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
-
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -33,24 +32,26 @@ public class TrackingActivity extends AppCompatActivity {
     String textReceiver;
     
     /*
-    * feedback when searching data on firebase 
+    * Feedback when searching data on firebase 
     * 0 = Init
     * 1 = Invalid Code
     * 2 = No code found
     * 3 = Received
     * 4 = Processing
-    * 5 = Finish
+    * 5 = Finished
     * 6 = Database error
     */
     
-    /* onCreat();
-    *
+    /* onCreat()
+    * Get intent bundle
+    * Init database
     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.tracking_layout);
-
+        
+        /* Get intent bundle */
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
         if (bundle != null) {
@@ -62,45 +63,58 @@ public class TrackingActivity extends AppCompatActivity {
                 areaToFind = getString(R.string.keyHanoi);
             }
         }
-
-//        initDatabase();
+        /* Init Database */
         if(initDatabase(areaToFind) == 6){
             showAlertDialog(6,"Error");
         }
-
     }
-
+    
+    /* onStart()
+    * Show seach area
+    * Seach in database if match input code
+    */
     @Override
     protected void onStart() {
         super.onStart();
         setContentView(R.layout.tracking_layout);
 
+        /* Show seach area */
         TextView showArea = findViewById(R.id.textViewArea);
         showArea.setText(textReceiver);
 
+        /* Seach button */
         ImageButton button1 = findViewById(R.id.seachButton);
         button1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                // Call to hide keyboard when clicked
                 hideKeyboard(view);
+                // Get string input
                 EditText inputText = findViewById(R.id.editText);
                 final String text = inputText.getText().toString();
+                /*
+                * If frist letter is digit or string length < 4, notice invalid input 
+                * If not, seach in database
+                */
                 char c = text.charAt(0);
-
-                if ((text.trim().length() <= 4)  || (Character.isDigit(c))) {
+                if ((text.trim().length() <= 4)  || (Character.isDigit(c))) {   // Invalid code (1)
                     showAlertDialog(1, text);
-                } else{
+                } else {                                                        // Seach in database
                     int temp = getDatabase(areaToFind,text);
                 }
             }
         });
     }
-
+    
+    /* onBackPressed()
+    * Finish current activity and back to MainActivity
+    */
     @Override
     public void onBackPressed(){
         finish();
     }
 
+    /* Hide keyboard function */
     public void hideKeyboard(View view) {
         try {
             InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -109,86 +123,94 @@ public class TrackingActivity extends AppCompatActivity {
         }
     }
 
-    public void showAlertDialog(int response ,String code) {
+    /* Alert dialog funtiion*/
+    public void showAlertDialog(int feedBack ,String code) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("CropLab Thông báo!!!");
-        Log.d("Printf", "catchalert " + response);
+        Log.d("Printf", "catchalert " + feedBack);
 
-        switch (response) {
-            case 1: {
+        // Set the message
+        switch (feedBack) {
+            case 1: {   // Invalid Code (1)
                 builder.setMessage("Mã hóa đơn '" + code + "' không hợp lệ! \nMời nhập lại chính xác mã hoá đơn!!!");
                 break;
             }
-            case 2: {
+            case 2: {   // No code found (2)
                 builder.setMessage("Mã hóa đơn '" + code + "' không tìm thấy, vui lòng kiểm tra và nhập lại chính xác mã hoá đơn!");
                 break;
             }
-            case 3: {
+            case 3: {   // Received (3)
                 builder.setMessage("Mã hóa đơn '" + code + "' của bạn đang trong hàng chờ để được xử lý, cứ ngồi im rồi film sẽ được tráng! ♥  ");
                 break;
             }
-            case 4: {
+            case 4: {   // Processing (4)
                 builder.setMessage("Mã hóa đơn '" + code + "' : film của bạn đang được xử lý, bạn cứ bình tĩnh rồi hình sẽ tới nhé! ♥  ");
                 break;
             }
-            case 5: {
+            case 5: {   // Finished (5)
                 builder.setMessage("Mã hóa đơn '" + code + "' : film của bạn đã hoàn thành, bạn có thể tới lấy lại âm bản trong vòng 3 tháng nhé! ♥ ");
                 break;
             }
-            case 6: {
+            case 6: {   // Database error (6)
                 builder.setMessage("Gặp sự cố khi kết nối đến cơ sở dữ liệu \nBạn vui lòng quay lại sau!!!");
                 break;
             }
         }
-
+        /* Disable click outside the alert to turn off */
         builder.setCancelable(false);
+        /* Set "OK" button */
         builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
+                // Dismiss the alert
                 dialogInterface.dismiss();
             }
         });
+        /* Creat alert on buffer */
         AlertDialog alertDialog = builder.create();
+        /* Show alert dialog */
         alertDialog.show();
 
     }
-
+    
+    /* Seach in database */
     public int getDatabase(String areaCode, final String compareText) {
-
-        //lấy đối tượng FempStringirebaseDatabase
+        // Get the FirebaseDatabase object 
         FirebaseDatabase database = FirebaseDatabase.getInstance();
-        //Kết nối tới node có tên là contacts (node này do ta định nghĩa trong CSDL Firebase)
+        // Connection to the node named areaCode, this node is defined by the Firebase database ('hanoi' or 'saigon')
         DatabaseReference myRef = database.getReference(areaCode);
-        //truy suất và lắng nghe sự thay đổi dữ liệu
+        // Access and listen to data changes
         myRef.addValueEventListener(new ValueEventListener() {
+            /*
+            * Default Feedback is No-code-found (2), until the code is found
+            */
             int temp = 2;
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                //vòng lặp để lấy dữ liệu khi có sự thay đổi trên Firebase
+                // Loop to get data when there is a change on Firebase
                 for (DataSnapshot data : dataSnapshot.getChildren()) {
-                    //lấy key của dữ liệu
-                    //String key = data.getKey();
-
-                        String value = data.getValue().toString();
-
-                        if (value.contains(compareText)) {
-
-                            temp = 3;           //Đã nhận
-                            Log.d("Printf", value);
-                            if (value.contains("...")) {
-                                temp = 4;       // Đang xử lý
-                                if (value.contains("OK")) {
-                                    temp = 5;       //Đã hoàn thành
-                                    Log.d("Printf", "catch1 " + temp);
-                                }
+                    // Get the key of the data
+                    // String key = data.getKey();
+                    
+                    // Transfer data into string then check
+                    String value = data.getValue().toString();
+                    if (value.contains(compareText)) {      // Check if the code exists
+                        temp = 3;                           // Feedback curent is Received (3)
+                        if (value.contains("...")) {        // Continue to check whether the status is processing
+                            temp = 4;                       // Feedback curent is Processing (4)
+                            if (value.contains("OK")) {     // Keep checking if the code is complete
+                                temp = 5;                   // Feedback curent is Finished (5)
                             }
                         }
                     }
-                    showAlertDialog(temp, compareText);
+                }
+                showAlertDialog(temp, compareText);
             }
+            
+            /* Firebase error*/
             @Override
             public void onCancelled(DatabaseError databaseError) {
-                Log.w( "loadPost:onCancelled", databaseError.toException());
+                Log.w("FIREBASE", "loadPost:onCancelled", databaseError.toException());
                 showAlertDialog(6,"Error!!!");
             }
         });
@@ -196,19 +218,20 @@ public class TrackingActivity extends AppCompatActivity {
     }
 
     public int initDatabase(String areaCode) {
-        //lấy đối tượng FirebaseDatabase
+        // Get the FirebaseDatabase object 
         FirebaseDatabase database = FirebaseDatabase.getInstance();
-        //Kết nối tới node có tên là contacts (node này do ta định nghĩa trong CSDL Firebase)
+        // Connection to the node named areaCode, this node is defined by the Firebase database ('hanoi' or 'saigon')
         DatabaseReference myRef = database.getReference(areaCode);
-        //truy suất và lắng nghe sự thay đổi dữ liệu
+        // Access and listen to data changes
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                //vòng lặp để lấy dữ liệu khi có sự thay đổi trên Firebase
+                // Loop to get data when there is a change on Firebasese
                 for (DataSnapshot data : dataSnapshot.getChildren()) {
                 }
             }
 
+            /* Firebase error*/
             @Override
             public void onCancelled(DatabaseError databaseError) {
                 Log.w("FIREBASE", "loadPost:onCancelled", databaseError.toException());
