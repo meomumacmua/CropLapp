@@ -96,7 +96,7 @@ public class MainActivity extends AppCompatActivity {
             Log.e("print", "You're connected to us");
             // Load saved data
             loadAppSetting();
-        } else{
+        } else {
             Log.e("print", "You're alone");
             // Show alert offline and exit
             showAlertDialog(4,"4");
