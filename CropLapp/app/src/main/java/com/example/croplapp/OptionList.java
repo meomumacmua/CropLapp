@@ -1,3 +1,10 @@
+/*
+* OptionList.java
+*
+* Nguyen Duc Tien 16020175
+* 
+* Change search area: "Hà Nội" or "Sài Gòn"
+*/
 package com.example.croplapp;
 
 import android.content.Intent;
@@ -11,9 +18,14 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 public class OptionList extends AppCompatActivity {
-    String areaChosed;
-
+    /* String specifying the choosed area: "Hà Nội" or "Sài Gòn" */
+    String areaChoosed;
+    /*  */
     public static final String EXTRA_DATA = "EXTRA_DATA";
+    
+    /* onCreat(); 
+    * Get bundle data from MainAcvtivity
+    */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -25,25 +37,36 @@ public class OptionList extends AppCompatActivity {
             areaChosed = bundle.getString("area", "");
         }
     }
-
+    
+    /* onStart(); 
+    * Show name of search area
+    * Show dropdown list
+    * Get sellected dropdown list item
+    */
     @Override
     protected void onStart() {
         super.onStart();
         setContentView(R.layout.activity_option_list);
-
+        
+        /* Show name of search area */
         TextView showArea = findViewById(R.id.textView2);
         showArea.setText("Khu vực hiện tại: " + areaChosed);
 
-        //get the spinner from the xml.
+        /* Get the spinner from the xml. */
         final Spinner dropdown = findViewById(R.id.spinner0);
-        //create a list of items for the spinner.
+        // Create a list of items for the spinner.
         String[] items = new String[]{getString(R.string.areaHanoi), getString(R.string.areaSaigon)};
-        //create an adapter to describe how the items are displayed, adapters are used in several places in android.
-        //There are multiple variations of this, but this is the basic variant.
+        
+        /*
+        * Create an adapter to describe how the items are displayed, adapters are used in several places in android.
+        * There are multiple variations of this, but this is the basic variant.
+        */
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, items);
-        //set the spinners adapter to the previously created one.
+        
+        /* Set the spinners adapter */
         dropdown.setAdapter(adapter);
-        //get the text when sellect
+        
+        /* Get the text when sellect */
         dropdown.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
@@ -54,22 +77,23 @@ public class OptionList extends AppCompatActivity {
             }
         });
     }
-
-
+    
+    /*
+    * onbackpressed();
+    * Press back to return MainActivity and send new name of seach area (if changed)
+    */
     public void onBackPressed()
-    {
-
-        // Tạo một Intent mới để chứa dữ liệu trả về
+    Ơ
         final Intent data = new Intent();
-
-        // Truyền data vào intent
+        // Transfer data to the intent
         data.putExtra(EXTRA_DATA, areaChosed);
 
-        // Đặt resultCode là Activity.RESULT_OK to
-        // thể hiện đã thành công và có chứa kết quả trả về
+        /*
+        * Set the resultCode to AppCompatActivity.RESULT_OK to show
+        * instance was successful and contains returned results
+        */
         setResult(AppCompatActivity.RESULT_OK, data);
-
-        // gọi hàm finish() để đóng Activity hiện tại và trở về MainActivity.
+        // Call the finish() function to close the current Activity and return to MainActivity
         finish();
     }
 }
