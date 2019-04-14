@@ -161,15 +161,15 @@ public class MainActivity extends AppCompatActivity {
         });
         
         /* Action switch to InformationActivity.java */
-//        Button buttoninfor = findViewById(R.id.button_info);
-//        buttoninfor.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Log.d("InfoActivity", "onClick: ");
-//                Intent intent4 = new Intent(MainActivity.this, InformationActivity.class);
-//                startActivity(intent4);
-//            }
-//        });
+        Button buttoninfor = findViewById(R.id.button_info);
+        buttoninfor.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d("InfoActivity", "onClick: ");
+                Intent intent4 = new Intent(MainActivity.this, InformationActivity.class);
+                startActivity(intent4);
+            }
+        });
 
         /* Action switch to OptionList.java */
         ImageButton buttonoption = findViewById(R.id.image_buttonOption);
