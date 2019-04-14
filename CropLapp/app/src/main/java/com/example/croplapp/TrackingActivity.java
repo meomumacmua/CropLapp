@@ -1,3 +1,10 @@
+/*
+* Name: TrackingActivity.java
+* Author: Nguyen Duc Tien 16020175
+* Purpose: Seach bill code
+* Include: firebase, alert dialog, Intent bundle, keyboard hide
+*/
+
 package com.example.croplapp;
 
 import android.content.Context;
@@ -20,19 +27,25 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 public class TrackingActivity extends AppCompatActivity {
-
-    String TAG = "FIREBASE";
+    /* key specifying the search area: "hanoi" or "saigon" */
     String areaToFind;
+    /* String specifying the search area: "Hà Nội" or "Sài Gòn" */
     String textReceiver;
+    
     /*
-     * 0 = khởi tạo
-     * 1 = không hợp lệ
-     * 2 = không tìm thấy
-     * 3 = đã nhận
-     * 4 = đang xử lý
-     * 5 = đã hoàn thành
-     * 6 = lỗi CSDL
-     */
+    * feedback when searching data on firebase 
+    * 0 = Init
+    * 1 = Invalid Code
+    * 2 = No code found
+    * 3 = Received
+    * 4 = Processing
+    * 5 = Finish
+    * 6 = Database error
+    */
+    
+    /* onCreat();
+    *
+    */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -78,7 +91,6 @@ public class TrackingActivity extends AppCompatActivity {
                     showAlertDialog(1, text);
                 } else{
                     int temp = getDatabase(areaToFind,text);
-                    //showAlertDialog(temp, text);
                 }
             }
         });
@@ -199,7 +211,7 @@ public class TrackingActivity extends AppCompatActivity {
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
-                Log.w(TAG, "loadPost:onCancelled", databaseError.toException());
+                Log.w("FIREBASE", "loadPost:onCancelled", databaseError.toException());
                 showAlertDialog(6, "Error");
             }
         });
