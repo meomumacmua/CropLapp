@@ -45,7 +45,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_weight="0.7"
+                    android:layout_weight="1"
                     >
 
                     <TextView
@@ -55,19 +55,11 @@
                         android:textSize="20dp"
                         android:gravity="center|top"
                         android:textColor="#CCFFFFFF"
-                        android:fontFamily="@font/cucho"
+                        android:fontFamily="@font/sanfranciscotextbold"
                         />
 
 
                 </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="20dp"
-                    >
-
-                </LinearLayout>
-
 
 
                 <LinearLayout
@@ -84,26 +76,6 @@
                         android:orientation="horizontal"
                         >
 
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1"
-                            android:orientation="horizontal"
-                            android:gravity="right"
-                            android:layout_gravity="left">
-
-                            <ImageView
-                                android:layout_width="48dp"
-                                android:layout_height="48dp"
-                                android:layout_gravity="center|right"
-                                android:background="@android:color/transparent"
-                                android:layout_margin="2dp"
-
-                                />
-
-                        </LinearLayout>
-
-
 
 
 
@@ -111,17 +83,17 @@
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:layout_weight="0.3"
+                            android:layout_weight="0.1"
                             android:orientation="vertical">
 
                             <TextView
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-                                android:text="Nguyen Duc Tien"
-                                android:gravity="center|left"
+                                android:text="- 16020175 - Nguyễn Đức Tiến - K61ĐACLC "
+                                android:gravity="center"
                                 android:paddingLeft="10dp"
                                 android:textSize="17dp"
-                                android:fontFamily="@font/cucho"
+                                android:fontFamily="@font/sanfranciscotextitalic"
                                 android:textColor="#CCFFFFFF"/>
 
                         </LinearLayout>
@@ -131,127 +103,16 @@
                     </LinearLayout>
 
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="20dp"
-                        >
 
-                    </LinearLayout>
+
+            </LinearLayout>
 
 
 
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="50dp"
-                        android:background="@android:color/transparent"
-                        >
 
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1"
-                            android:orientation="horizontal"
-                            android:gravity="right"
-                            android:layout_gravity="left">
-
-                            <ImageView
-                                android:layout_width="48dp"
-                                android:layout_height="48dp"
-                                android:layout_gravity="center|right"
-                                android:background="@android:color/transparent"
-                                android:layout_margin="2dp"
-
-                                />
-
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_weight="0.3"
-                            android:orientation="vertical"
-
-                            >
-
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:text="Vu Tuan Anh"
-                                android:gravity="center|left"
-                                android:paddingLeft="10dp"
-                                android:textSize="17dp"
-                                android:fontFamily="@font/cucho"
-                                android:textColor="#CCFFFFFF"/>
-
-                        </LinearLayout>
-
-                    </LinearLayout>
-
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="20dp"
-                        >
-
-                    </LinearLayout>
-
-
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="50dp"
-                        android:background="@android:color/transparent"
-                        >
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1"
-                            android:orientation="horizontal"
-                            android:gravity="right"
-                            android:layout_gravity="left"
-                            android:background="@android:color/transparent">
-
-
-
-                            <ImageView
-                                android:layout_width="48dp"
-                                android:layout_height="48dp"
-                                android:layout_gravity="center|right"
-                                android:background="@android:color/transparent"
-                                android:layout_margin="2dp"
-                                android:src="@mipmap/ic_launcher"
-                                />
-
-
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_weight="0.3"
-                            android:orientation="vertical"
-                            android:background="@android:color/transparent"
-                            >
-
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:text="Croplab"
-                                android:gravity="center|left"
-                                android:paddingLeft="10dp"
-                                android:textSize="17dp"
-                                android:fontFamily="@font/cucho"
-                                android:textColor="#CCFFFFFF"/>
-
-                        </LinearLayout>
-
-                    </LinearLayout>
-
-                </LinearLayout>
+            </LinearLayout>
 
                 </LinearLayout>
         </LinearLayout>
     </LinearLayout>
-</LinearLayout>

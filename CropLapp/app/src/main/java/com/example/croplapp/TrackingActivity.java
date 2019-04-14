@@ -188,7 +188,7 @@ public class TrackingActivity extends AppCompatActivity {
             }
             @Override
             public void onCancelled(DatabaseError databaseError) {
-                Log.w(TAG, "loadPost:onCancelled", databaseError.toException());
+                Log.w( "loadPost:onCancelled", databaseError.toException());
                 showAlertDialog(6,"Error!!!");
             }
         });

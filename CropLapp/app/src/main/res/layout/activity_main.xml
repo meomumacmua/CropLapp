@@ -7,8 +7,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
         android:background="@mipmap/back"
+        android:orientation="vertical"
 
         >
 
@@ -16,28 +16,47 @@
             android:layout_width="500dp"
             android:layout_height="140dp"
 
+
+
             >
 
-            <ImageButton
-                android:id="@+id/button_option"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_margin="2dp"
-                android:background="@android:color/transparent"
-                android:src="@mipmap/listbt"
-                android:scaleType="fitCenter"
+            <LinearLayout
+                android:layout_width="143dp"
+                android:layout_height="35dp"
+
+                android:orientation="horizontal"
+                android:background="#48000000"
+                android:gravity="center">
+
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_margin="2dp"
+                    android:src="@mipmap/settingicon">
+
+
+                </ImageView>
+
+                <Spinner
+                    android:id="@+id/SpinnerArea"
+                    android:layout_width="103dp"
+                    android:layout_height="30dp"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:background="#48000000"
+                    android:layout_margin="1dp"
+                    android:paddingLeft="1dp"
+                    android:spinnerMode="dropdown"
+                    >
+
+                </Spinner>
+
+            </LinearLayout>
 
 
 
-                />
 
-            <TextView
-                android:id="@+id/textView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/colorAccent"
-                android:layout_weight="1"
-                android:text="TextView" />
+
 
         </LinearLayout>
 
@@ -50,7 +69,8 @@
                 android:layout_width="230dp"
                 android:layout_height="100dp"
                 android:layout_gravity="center"
-                android:src="@mipmap/logopng"/>
+                android:src="@mipmap/logopng" />
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="50dp">
@@ -62,46 +82,64 @@
                 android:layout_width="180dp"
                 android:layout_height="55dp"
                 android:layout_gravity="center"
+                android:background="@drawable/transparent_button_w_border"
                 android:text="Film Store"
                 android:textColor="#FFFFFF"
                 android:textSize="15dp"
-                android:textStyle="bold"
-                android:background="@drawable/transparent_button_w_border"
-                />
+                android:textStyle="bold" />
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="20dp">
-            </LinearLayout>
+                android:layout_height="20dp"></LinearLayout>
 
             <Button
                 android:id="@+id/button_tracking"
                 android:layout_width="180dp"
                 android:layout_height="55dp"
                 android:layout_gravity="center"
+                android:background="@drawable/transparent_button_w_border"
                 android:text="Tracking"
                 android:textColor="#ffffff"
                 android:textSize="15dp"
-                android:textStyle="bold"
-                android:background="@drawable/transparent_button_w_border" />
+                android:textStyle="bold" />
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="20dp">
-            </LinearLayout>
+                android:layout_height="20dp"></LinearLayout>
 
             <Button
                 android:id="@+id/button_news"
                 android:layout_width="180dp"
                 android:layout_height="55dp"
                 android:layout_gravity="center"
+                android:background="@drawable/transparent_button_w_border"
                 android:text="News"
                 android:textColor="#ffffff"
                 android:textSize="15dp"
-                android:textStyle="bold"
-                android:background="@drawable/transparent_button_w_border" />
+                android:textStyle="bold" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="20dp"></LinearLayout>
+
+            <Button
+                android:id="@+id/button_info"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_gravity="center_horizontal"
+                android:background="@mipmap/information"
+
+                />
 
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+
+
+            </LinearLayout>
 
 
         </LinearLayout>

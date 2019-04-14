@@ -17,8 +17,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -166,8 +168,19 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+
+        Button buttoninfor = findViewById(R.id.button_info);
+        buttoninfor.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d("InfoActivity", "onClick: ");
+                Intent intent4 = new Intent(MainActivity.this, InformationActivity.class);
+                startActivity(intent4);
+            }
+        });
+
         /* Action switch to OptionList.java */
-        ImageButton buttonoption = findViewById(R.id.button_option);
+        Spinner buttonoption = findViewById(R.id.);
         buttonoption.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -230,5 +243,9 @@ public class MainActivity extends AppCompatActivity {
         }
         mBackPressed = System.currentTimeMillis();
     }
+
+
+
+
 }
 

@@ -82,7 +82,7 @@ public class OptionList extends AppCompatActivity {
     * Press back to return MainActivity and send new name of seach area (if changed)
     */
     public void onBackPressed()
-    Ơ
+
         final Intent data = new Intent();
         // Transfer data to the intent
         data.putExtra(EXTRA_DATA, areaChosed);
