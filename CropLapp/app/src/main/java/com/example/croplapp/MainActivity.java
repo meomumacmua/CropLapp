@@ -85,7 +85,10 @@ public class MainActivity extends AppCompatActivity {
         editor.apply();
     }
     
-    /* onCreat(); */
+    /* onCreat();
+    * check network
+    * load data saved
+    */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -103,7 +106,10 @@ public class MainActivity extends AppCompatActivity {
         }
     }
     
-    /* onstart(); */
+    /* onstart(); 
+    * show name of search area
+    * Switch to FilmStoreActivity, TrackingActivity, WebViewActivity, OptionList
+    */
     @Override
     protected void onStart() {
         super.onStart();
@@ -175,13 +181,15 @@ public class MainActivity extends AppCompatActivity {
                 bundle.putString("area",loadArea);
                 intent3.putExtras(bundle);
                 
-                // Start activity and get result when called activity return
+                // Start OptionList activity and get result when called activity return
                 startActivityForResult(intent3, REQUEST_CODE);
             }
         });
     }
     
-    /* onActivityResult(); */
+    /* onActivityResult(); 
+    * get data from called activity result (OptionList)
+    */
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         /* Get data return */
