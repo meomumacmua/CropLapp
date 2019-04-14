@@ -17,12 +17,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.Spinner;
-import android.widget.Switch;
-import android.widget.TextView;
 import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
@@ -34,15 +30,15 @@ public class MainActivity extends AppCompatActivity {
     
     /* Internet connection test function */
     private boolean isNetworkConnected() {
-        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-        return cm.getActiveNetworkInfo() != null;
+        ConnectivityManager checkNetwork = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        return checkNetwork.getActiveNetworkInfo() != null;
     }
     
     /* Alert dialog funtiion*/
-    public void showAlertDialog(final int response, String code) {
+    public void showAlertDialog(final int feedBack, String code) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("CropLab Thông báo!!!");
-        switch (response) {
+        switch (feedBack) {
             case 4:
             {
                 // Set the message
@@ -115,10 +111,6 @@ public class MainActivity extends AppCompatActivity {
         super.onStart();
         setContentView(R.layout.activity_main);
 
-        /* Show name of search area */
-        TextView showArea = findViewById(R.id.textView);
-        showArea.setText(loadArea);
-        
         /*
         * #1
         * This function will coming soon
@@ -169,18 +161,18 @@ public class MainActivity extends AppCompatActivity {
         });
         
         /* Action switch to InformationActivity.java */
-        Button buttoninfor = findViewById(R.id.button_info);
-        buttoninfor.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.d("InfoActivity", "onClick: ");
-                Intent intent4 = new Intent(MainActivity.this, InformationActivity.class);
-                startActivity(intent4);
-            }
-        });
+//        Button buttoninfor = findViewById(R.id.button_info);
+//        buttoninfor.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Log.d("InfoActivity", "onClick: ");
+//                Intent intent4 = new Intent(MainActivity.this, InformationActivity.class);
+//                startActivity(intent4);
+//            }
+//        });
 
         /* Action switch to OptionList.java */
-        Spinner buttonoption = findViewById(R.id.);
+        ImageButton buttonoption = findViewById(R.id.image_buttonOption);
         buttonoption.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

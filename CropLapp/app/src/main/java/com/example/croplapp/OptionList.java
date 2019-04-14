@@ -33,7 +33,7 @@ public class OptionList extends AppCompatActivity {
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
         if (bundle != null) {
-            areaChosed = bundle.getString("area", "");
+            areaChoosed = bundle.getString("area", "");
         }
     }
     
@@ -49,7 +49,7 @@ public class OptionList extends AppCompatActivity {
         
         /* Show name of search area */
         TextView showArea = findViewById(R.id.textView2);
-        showArea.setText("Khu vực hiện tại: " + areaChosed);
+        showArea.setText("Khu vực hiện tại: " + areaChoosed);
 
         /* Get the spinner from the xml. */
         final Spinner dropdown = findViewById(R.id.spinner0);
@@ -69,7 +69,7 @@ public class OptionList extends AppCompatActivity {
         dropdown.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                areaChosed = dropdown.getSelectedItem().toString();
+                areaChoosed = dropdown.getSelectedItem().toString();
             }
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
@@ -81,11 +81,11 @@ public class OptionList extends AppCompatActivity {
     * onbackpressed();
     * Press back to return MainActivity and send new name of seach area (if changed)
     */
-    public void onBackPressed()
+    public void onBackPressed() {
 
         final Intent data = new Intent();
         // Add data to the intent
-        data.putExtra(EXTRA_DATA, areaChosed);
+        data.putExtra(EXTRA_DATA, areaChoosed);
 
         /*
         * Set the resultCode to AppCompatActivity.RESULT_OK to show

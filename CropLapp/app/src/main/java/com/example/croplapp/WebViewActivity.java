@@ -35,7 +35,7 @@ public class WebViewActivity extends AppCompatActivity {
         webView.getSettings().setBuiltInZoomControls(true);
         webView.getSettings().setDisplayZoomControls(false);
         webView.getSettings().setDomStorageEnabled(true);
-        //webView.loadUrl("https://croplab.vn/blog");
+        webView.loadUrl("https://croplab.vn/blog");
         
         webView.setWebViewClient(new WebViewClient() {
             @Override
