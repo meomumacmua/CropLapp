@@ -1,76 +1,104 @@
 package com.example.croplapp;
 
-import android.content.Intent;
-import android.support.annotation.NonNull;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Button;
+
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
 public class FilmStoreActivity extends AppCompatActivity {
+    DatabaseReference reference;
+    RecyclerView recyclerView;
+    ArrayList<FilmDetails> list;
+    FilmStoreAdapter adapter;
 
-        ArrayList <Film> listfilm = new ArrayList<>();
-
-    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.list_store);
 
+        recyclerView = (RecyclerView) findViewById(R.id.rv_listfilm);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        list = new ArrayList<FilmDetails>();
 
 
-        RecyclerView recyclerView = findViewById(R.id.rv_listfilm);
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this,LinearLayoutManager.VERTICAL, false);
-        recyclerView.setLayoutManager(linearLayoutManager);
-        ListfilmAdapter listfilmAdapter = new ListfilmAdapter();
-        recyclerView.setAdapter(listfilmAdapter);
+        /*
+        reference = FirebaseDatabase.getInstance().getReference().child("hanoifilm");
+        reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-
-        for (int i=0 ; i < 10000; i++){
-            Film film = new Film();
-            film.filmname= " Kodak Colorplus";
-            film.filmprice= " 75.000";
-            film.filmstatus = "Còn hàng";
-            listfilm.add(film);
-        }
-
-    }
-
-    class ListfilmAdapter extends RecyclerView.Adapter<ListfilmAdapter.ViewHolder>{
+                Log.d()
 
 
 
-        @NonNull
-        @Override
-        public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-            View view = getLayoutInflater().inflate(R.layout.list_store_item, parent, false);
-            ViewHolder viewHolder = new ViewHolder(view);
-            return viewHolder;
-        }
+                for (DataSnapshot dataSnapshot1: dataSnapshot.getChildren())
+                {
+                    FilmDetails fd = dataSnapshot1.getValue(FilmDetails.class);
+                    list.add(fd);
+                }
 
-        @Override
-        public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
+                adapter = new FilmStoreAdapter(FilmStoreActivity.this,list);
+                recyclerView.setAdapter(adapter);
 
-        }
-
-        @Override
-        public int getItemCount() {
-            return listfilm.size();
-        }
-
-        class ViewHolder extends  RecyclerView.ViewHolder{
-
-            public ViewHolder(@NonNull View itemView) {
-                super(itemView);
             }
-        }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Toast.makeText(FilmStoreActivity.this, "Oops...Something went wrong!", Toast.LENGTH_SHORT).show();
+            }
+        });
+        */
+        Log.d("print", "Start get");
+        getDatabase("hanoifilm", "color film");
+        Log.d("print", "End get");
+
+
+
     }
 
+    public int getDatabase(String areaCode, final String compareText) {
+        // Get the FirebaseDatabase object
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        // Connection to the node named areaCode, this node is defined by the Firebase database ('hanoi' or 'saigon')
+        DatabaseReference myRef = database.getReference(areaCode);
+        // Access and listen to data changes
+        myRef.addValueEventListener(new ValueEventListener() {
+            /*
+             * Default Feedback is No-code-found (2), until the code is found
+             */
+            int temp = 2;
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                // Loop to get data when there is a change on Firebase
+                for (DataSnapshot data1 : dataSnapshot.getChildren()) {
+                        // Get the key of the data
+                        String key = data1.getKey();
+                        Log.d("print", key);
+                        // Transfer data into string then check
+                        String value = data1.getValue().toString();
+                        Log.d("print", value);
+//                        if (key.toString() == compareText) {      // Check if the code exists
+//                            Log.d("print", value);
+////                        }
+                }
+                //showAlertDialog(temp, compareText);
+            }
 
+            /* Firebase error*/
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Log.w("FIREBASE", "loadPost:onCancelled", databaseError.toException());
+                //showAlertDialog(6,"Error!!!");
+            }
+        });
+        return 0;
+    }
 }

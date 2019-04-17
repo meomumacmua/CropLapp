@@ -12,4 +12,8 @@
     <string name="instruction4">"- Để tracking film dương bản, vui lòng thêm đuôi 'e' ở cuối mã biên nhận,
         ví dụ: 'K1234e'.</string>
     <string name="instruction5">- Nếu bạn gửi film từ tỉnh khác qua đường chuyển phát, vui lòng tìm kiếm theo tên hoặc thành phố của bạn. VD: Tuấn Anh, hoặc VD: Quảng Ninh.</string>
+    <string name="filmname">filmname</string>
+    <string name="filmprice">filmprice</string>
+    <string name="filmstatus">filmstatus</string>
+
 </resources>
