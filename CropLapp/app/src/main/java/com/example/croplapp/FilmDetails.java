@@ -2,11 +2,13 @@ package com.example.croplapp;
 
 public class FilmDetails {
 
-    private String filmname;
-    private String filmprice;
-    private String filmstatus;
-    private String filmimage;
+    public String filmname;
+    public String filmprice;
+    public String filmstatus;
+    public String filmimage;
 
+    public FilmDetails() {
+    }
 
     public String getFilmname() {
         return filmname;
@@ -40,11 +42,11 @@ public class FilmDetails {
         this.filmstatus = filmstatus;
     }
 
-    public FilmDetails(String filname, String filmprice, String filmstatus, String filmimage) {
+    public FilmDetails(String filname, String filmprice, String filmimage, String filmstatus) {
         this.filmname = filname;
         this.filmprice = filmprice;
-        this.filmstatus = filmstatus;
         this.filmimage = filmimage;
+        this.filmstatus = filmstatus;
     }
 
 

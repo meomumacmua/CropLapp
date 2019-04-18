@@ -14,11 +14,6 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 
 
-
-
-
-
-
 //    @Override
 //    protected void onCreate(Bundle savedInstanceState) {
 //        super.onCreate(savedInstanceState);
@@ -66,12 +61,10 @@ import java.util.ArrayList;
         public void onBindViewHolder(@NonNull ViewHolder viewHolder, int position) {
             viewHolder.filmname.setText(filmdetails.get(position).getFilmname());
             viewHolder.filmprice.setText(filmdetails.get(position).getFilmprice());
-            viewHolder.filmstatus.setText(filmdetails.get(position).getFilmstatus());
+
 //            viewHolder.filmimage.setImageBitmap(filmdetails.get(position).getFilmimage());
             Picasso.with(context).load(filmdetails.get(position).getFilmimage()).into(viewHolder.filmimage);
-
-
-
+            viewHolder.filmstatus.setText(filmdetails.get(position).getFilmstatus());
         }
 
         @Override

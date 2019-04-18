@@ -11,6 +11,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.InputType;
@@ -188,7 +189,7 @@ public class TrackingActivity extends AppCompatActivity {
             */
             int temp = 2;
             @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 // Loop to get data when there is a change on Firebase
                 for (DataSnapshot data : dataSnapshot.getChildren()) {
                     // Get the key of the data
@@ -227,7 +228,7 @@ public class TrackingActivity extends AppCompatActivity {
         // Access and listen to data changes
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 // Loop to get data when there is a change on Firebasese
                 for (DataSnapshot data : dataSnapshot.getChildren()) {
                 }

@@ -1,6 +1,7 @@
 package com.example.croplapp;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -26,8 +27,6 @@ public class FilmStoreActivity extends AppCompatActivity {
 
         recyclerView = (RecyclerView) findViewById(R.id.rv_listfilm);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        list = new ArrayList<FilmDetails>();
-
 
         /*
         reference = FirebaseDatabase.getInstance().getReference().child("hanoifilm");
@@ -57,7 +56,7 @@ public class FilmStoreActivity extends AppCompatActivity {
         });
         */
         Log.d("print", "Start get");
-        getDatabase("hanoifilm", "color film");
+        getDatabase("hanoifilm", "colorfilm");
         Log.d("print", "End get");
 
 
@@ -69,26 +68,30 @@ public class FilmStoreActivity extends AppCompatActivity {
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         // Connection to the node named areaCode, this node is defined by the Firebase database ('hanoi' or 'saigon')
         DatabaseReference myRef = database.getReference(areaCode);
+        DatabaseReference myRefChild = myRef.child(compareText);
         // Access and listen to data changes
-        myRef.addValueEventListener(new ValueEventListener() {
+        myRefChild.addValueEventListener(new ValueEventListener() {
             /*
              * Default Feedback is No-code-found (2), until the code is found
              */
             int temp = 2;
             @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 // Loop to get data when there is a change on Firebase
-                for (DataSnapshot data1 : dataSnapshot.getChildren()) {
+                list = new ArrayList<FilmDetails>();
+                for (DataSnapshot data : dataSnapshot.getChildren()) {
                         // Get the key of the data
-                        String key = data1.getKey();
+                        String key = data.getKey();
                         Log.d("print", key);
                         // Transfer data into string then check
-                        String value = data1.getValue().toString();
+                        String value = data.getValue().toString();
                         Log.d("print", value);
-//                        if (key.toString() == compareText) {      // Check if the code exists
-//                            Log.d("print", value);
-////                        }
+
+                    FilmDetails fd = data.getValue(FilmDetails.class);
+                    list.add(fd);
                 }
+                adapter = new FilmStoreAdapter(FilmStoreActivity.this,list);
+                recyclerView.setAdapter(adapter);
                 //showAlertDialog(temp, compareText);
             }
 
