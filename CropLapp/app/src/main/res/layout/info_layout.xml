@@ -77,7 +77,7 @@
                             <TextView
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-                                android:text="- 16020175 - Nguyễn Đức Tiến - K61ĐACLC "
+                                android:text="- "
                                 android:gravity="center"
                                 android:paddingLeft="10dp"
                                 android:textSize="17dp"
