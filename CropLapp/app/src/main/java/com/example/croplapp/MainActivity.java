@@ -130,6 +130,7 @@ public class MainActivity extends AppCompatActivity {
 //                Toast.makeText(getBaseContext(), "This function will coming soon!", Toast.LENGTH_SHORT).show();
 
                 Intent intent = new Intent(MainActivity.this, FilmStoreActivity.class);
+
                 // Start activity
                 startActivity(intent);
             }

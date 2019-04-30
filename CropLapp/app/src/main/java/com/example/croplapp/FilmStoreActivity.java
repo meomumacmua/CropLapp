@@ -1,6 +1,8 @@
 package com.example.croplapp;
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -14,94 +16,118 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class FilmStoreActivity extends AppCompatActivity {
-    DatabaseReference reference;
+    List<FilmDetails> list;
     RecyclerView recyclerView;
-    ArrayList<FilmDetails> list;
     FilmStoreAdapter adapter;
+
+    ArrayList<String> a0 = new ArrayList<String>();
+
+    ProgressDialog progressDialog;
+
+    boolean loadFinish = false;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.list_store);
 
-        recyclerView = (RecyclerView) findViewById(R.id.rv_listfilm);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-
-        /*
-        reference = FirebaseDatabase.getInstance().getReference().child("hanoifilm");
-        reference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
-                Log.d()
-
-
-
-                for (DataSnapshot dataSnapshot1: dataSnapshot.getChildren())
-                {
-                    FilmDetails fd = dataSnapshot1.getValue(FilmDetails.class);
-                    list.add(fd);
-                }
-
-                adapter = new FilmStoreAdapter(FilmStoreActivity.this,list);
-                recyclerView.setAdapter(adapter);
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-                Toast.makeText(FilmStoreActivity.this, "Oops...Something went wrong!", Toast.LENGTH_SHORT).show();
-            }
-        });
-        */
-        Log.d("print", "Start get");
-        getDatabase("hanoifilm", "colorfilm");
-        Log.d("print", "End get");
-
+        loadFinish = false;
+        getDatabase("hanoifilm");
 
 
     }
 
-    public int getDatabase(String areaCode, final String compareText) {
-        // Get the FirebaseDatabase object
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        // Connection to the node named areaCode, this node is defined by the Firebase database ('hanoi' or 'saigon')
-        DatabaseReference myRef = database.getReference(areaCode);
-        DatabaseReference myRefChild = myRef.child(compareText);
-        // Access and listen to data changes
-        myRefChild.addValueEventListener(new ValueEventListener() {
-            /*
-             * Default Feedback is No-code-found (2), until the code is found
-             */
-            int temp = 2;
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                // Loop to get data when there is a change on Firebase
-                list = new ArrayList<FilmDetails>();
-                for (DataSnapshot data : dataSnapshot.getChildren()) {
-                        // Get the key of the data
-                        String key = data.getKey();
-                        Log.d("print", key);
-                        // Transfer data into string then check
-                        String value = data.getValue().toString();
-                        Log.d("print", value);
+    protected void onStart() {
+        super.onStart();
+        setContentView(R.layout.list_store);
 
-                    FilmDetails fd = data.getValue(FilmDetails.class);
-                    list.add(fd);
-                }
-                adapter = new FilmStoreAdapter(FilmStoreActivity.this,list);
-                recyclerView.setAdapter(adapter);
-                //showAlertDialog(temp, compareText);
+        loadFinish = false;
+
+        progressDialog = new ProgressDialog(this);
+        // Setting Title
+        progressDialog.setTitle("ProgressDialog");
+        // Setting Message
+        progressDialog.setMessage("Loading...");
+        // Progress Dialog Style Spinner
+        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        // Display Progress Dialog
+        progressDialog.show();
+        // Cannot Cancel Progress Dialog
+        progressDialog.setCancelable(false);
+
+        if(loadFinish == true) Log.d("print", "end process");
+
+        new CountDownTimer(3000, 1000) {
+            public void onTick(long millisUntilFinished) {
+                Log.d("print","seconds remaining: " + millisUntilFinished / 1000);
             }
 
+            public void onFinish() {
+                progressDialog.dismiss();
+                Log.d("print","done!");
+
+                FilmDetails item;
+                addControl();
+
+                for (short i = 0; i < a0.size(); i++) {
+
+                    String[] split = a0.get(i).replaceAll("\\s", "").toString().split(",");
+                    String filmStateDecode = "...";
+                    if(split[4].contains("0000")) {
+                        filmStateDecode = "Hết hàng";
+                    } else if (split[4].contains("0001")) {
+                        filmStateDecode = "Còn hàng";
+                    }
+                    item = new FilmDetails(split[0], split[2], split[3], filmStateDecode);
+                    list.add(item);
+                }
+                adapter.notifyDataSetChanged();
+            }
+        }.start();
+
+//        progressDialog.dismiss();
+    }
+
+    public void getDatabase(String areaCode) {
+        // Get the FirebaseDatabase object
+        DatabaseReference database;
+        database = FirebaseDatabase.getInstance().getReference(areaCode);
+        // Connection to the node named areaCode, this node is defined by the Firebase database ('hanoi' or 'saigon')
+        // Access and listen to data changes
+        database.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                // Loop to get data when there is a change on Firebase
+                for (DataSnapshot data : dataSnapshot.getChildren()) {
+                    // Get the key of the data
+                    String key = data.getKey().toString();
+//                    Log.d("print", key);
+                    // Transfer data into string then check
+                    String[] value = data.getValue().toString().split(",");
+//                    Log.d("print", data.getValue().toString());
+
+                    a0.add(key + ", " + data.getValue());
+//                    Log.d("print", "a0 " + a0);
+                }
+            }
             /* Firebase error*/
             @Override
-            public void onCancelled(DatabaseError databaseError) {
+            public void onCancelled(@NonNull DatabaseError databaseError) {
                 Log.w("FIREBASE", "loadPost:onCancelled", databaseError.toException());
                 //showAlertDialog(6,"Error!!!");
             }
         });
-        return 0;
+    }
+
+    public void addControl() {
+        recyclerView = (RecyclerView) findViewById(R.id.rv_listfilm);
+        list = new ArrayList<>();
+        adapter = new FilmStoreAdapter(this,list);
+        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
+        recyclerView.setLayoutManager(mLayoutManager);
+        recyclerView.setAdapter(adapter);
     }
 }

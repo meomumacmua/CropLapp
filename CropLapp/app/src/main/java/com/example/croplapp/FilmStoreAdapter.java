@@ -1,17 +1,25 @@
 package com.example.croplapp;
 
+import android.app.Activity;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
+import java.util.List;
+
+import static android.app.ProgressDialog.show;
 
 
 //    @Override
@@ -40,52 +48,66 @@ import java.util.ArrayList;
 
 
 
-    class FilmStoreAdapter extends RecyclerView.Adapter<FilmStoreAdapter.ViewHolder>{
+    public class FilmStoreAdapter extends RecyclerView.Adapter<FilmStoreAdapter.ViewHolder>{
 
-        Context context;
-        ArrayList <FilmDetails> filmdetails;
+        private List<FilmDetails> filmList;
+        private Activity activity;
 
-        public FilmStoreAdapter(Context c, ArrayList<FilmDetails> fd){
-
-            context = c;
-            filmdetails = fd;
+        public FilmStoreAdapter(Activity activity, List<FilmDetails> filmList){
+            this.activity = activity;
+            this.filmList = filmList;
         }
 
-        @NonNull
-        @Override
-        public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-            return new ViewHolder(LayoutInflater.from(context).inflate(R.layout.list_store_item,parent,false));
-        }
-
-        @Override
-        public void onBindViewHolder(@NonNull ViewHolder viewHolder, int position) {
-            viewHolder.filmname.setText(filmdetails.get(position).getFilmname());
-            viewHolder.filmprice.setText(filmdetails.get(position).getFilmprice());
-
-//            viewHolder.filmimage.setImageBitmap(filmdetails.get(position).getFilmimage());
-            Picasso.with(context).load(filmdetails.get(position).getFilmimage()).into(viewHolder.filmimage);
-            viewHolder.filmstatus.setText(filmdetails.get(position).getFilmstatus());
-        }
-
-        @Override
-        public int getItemCount() {
-
-            return filmdetails.size();
-        }
-
-        class ViewHolder extends  RecyclerView.ViewHolder{
+        public class ViewHolder extends  RecyclerView.ViewHolder{
 
             TextView filmprice, filmname,filmstatus;
-            ImageView filmimage;
+            //ImageView filmimage;
 
             public ViewHolder(@NonNull View itemView) {
                 super(itemView);
                 filmname = (TextView) itemView.findViewById(R.id.film_name);
                 filmprice = (TextView) itemView.findViewById(R.id.film_price);
                 filmstatus = (TextView) itemView.findViewById(R.id.film_status);
-                filmimage = (ImageView) itemView.findViewById(R.id.film_image);
-
+                //filmimage = (ImageView) itemView.findViewById(R.id.film_image);
             }
+        }
+
+        @Override
+        public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_store_item,parent,false);
+            return new ViewHolder(view);
+        }
+
+        @Override
+        public void onBindViewHolder(@NonNull ViewHolder viewHolder, int position) {
+//            viewHolder.filmname.setText(filmdetails.get(position).getFilmname());
+//            viewHolder.filmprice.setText(filmdetails.get(position).getFilmprice());
+
+//            viewHolder.filmimage.setImageBitmap(filmdetails.get(position).getFilmimage());
+//            Picasso.with(context).load(filmdetails.get(position).getFilmimage()).into(viewHolder.filmimage);
+//            viewHolder.filmstatus.setText(filmdetails.get(position).getFilmstatus());
+
+//            Log.e("print", filmdetails.get(position).getFilmname());
+//            Log.e("print", filmdetails.get(position).getFilmprice());
+//            Log.e("print", filmdetails.get(position).getFilmimage());
+//            Log.e("print", filmdetails.get(position).getFilmstatus());
+            final FilmDetails filmDetails = filmList.get(position);
+
+            viewHolder.filmname.setText(filmDetails.getFilmname());
+            viewHolder.filmprice.setText(filmDetails.getFilmprice());
+            viewHolder.filmstatus.setText(filmDetails.getFilmstatus());
+
+            viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Toast.makeText(activity, filmDetails.toString(), Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
+
+        @Override
+        public int getItemCount() {
+            return filmList.size();
         }
     }
 

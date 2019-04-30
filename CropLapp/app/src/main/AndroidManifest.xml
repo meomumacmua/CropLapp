@@ -14,11 +14,13 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".OptionList"></activity>
+        <activity android:name=".testFilmStore" />
+        <activity android:name=".OptionList" />
         <activity android:name=".FilmStoreActivity" />
         <activity android:name=".TrackingActivity" />
-        <activity android:name=".WebViewActivity"
-            android:configChanges="orientation|keyboard|keyboardHidden|screenSize"/>
+        <activity
+            android:name=".WebViewActivity"
+            android:configChanges="orientation|keyboard|keyboardHidden|screenSize" />
         <activity android:name=".InformationActivity" />
         <activity android:name=".MainActivity">
             <intent-filter>

@@ -10,45 +10,43 @@ public class FilmDetails {
     public FilmDetails() {
     }
 
+    public FilmDetails(String filmName, String filmPrice, String filmImage, String filmStatus) {
+        this.filmname = filmName;
+        this.filmprice = filmPrice;
+        this.filmimage = filmImage;
+        this.filmstatus = filmStatus;
+    }
+
+
     public String getFilmname() {
         return filmname;
     }
 
-    public void setFilmname(String filmname) {
-        this.filmname = filmname;
+    public void setFilmname(String filmName) {
+        this.filmname = filmName;
     }
 
     public String getFilmprice() {
         return filmprice;
     }
 
-    public void setFilmprice(String filmprice) {
-        this.filmprice = filmprice;
+    public void setFilmprice(String filmPrice) {
+        this.filmprice = filmPrice;
     }
 
     public String getFilmstatus() {
         return filmstatus;
     }
 
-    public void setFilmstatus(String filmstatus) {
-        this.filmstatus = filmstatus;
+    public void setFilmstatus(String filmStatus) {
+        this.filmstatus = filmStatus;
     }
 
     public String getFilmimage() {
         return filmimage;
     }
 
-    public void setFilmimage(String filmstatus) {
-        this.filmstatus = filmstatus;
+    public void setFilmimage(String filmImage) {
+        this.filmimage = filmImage;
     }
-
-    public FilmDetails(String filname, String filmprice, String filmimage, String filmstatus) {
-        this.filmname = filname;
-        this.filmprice = filmprice;
-        this.filmimage = filmimage;
-        this.filmstatus = filmstatus;
-    }
-
-
-
 }
