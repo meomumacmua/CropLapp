@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name">CropLapp</string>
+    <string name="noneArea">Chọn khu vực</string>
     <string name="areaHanoi">Hà Nội</string>
     <string name="areaSaigon">Sài Gòn</string>
     <string name="keyHanoi">hanoi</string>
@@ -15,5 +16,16 @@
     <string name="filmname">filmname</string>
     <string name="filmprice">filmprice</string>
     <string name="filmstatus">filmstatus</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+
+    <string-array name="navigation_drawer_items_array">
+        <item>Create</item>
+        <item>Read</item>
+        <item>Help</item>
+    </string-array>
+
 
 </resources>

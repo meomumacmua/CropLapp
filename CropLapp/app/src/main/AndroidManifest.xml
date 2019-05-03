@@ -14,6 +14,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
+        <activity android:name=".OptionFragment"></activity>
         <activity android:name=".testFilmStore" />
         <activity android:name=".OptionList" />
         <activity android:name=".FilmStoreActivity" />

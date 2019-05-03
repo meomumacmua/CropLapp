@@ -42,7 +42,14 @@
             android:layout_gravity="center"
             android:gravity="center"
             android:background="@android:drawable/btn_dropdown"
-            android:spinnerMode="dropdown" />
+            android:spinnerMode="dialog"
+            android:prompt="@string/noneArea"/>
+
+        <Button
+            android:id="@+id/buttonOption"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Button" />
 
     </LinearLayout>
 

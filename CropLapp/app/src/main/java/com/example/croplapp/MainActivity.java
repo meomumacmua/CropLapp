@@ -13,16 +13,25 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
+
+    /* */
+    private String[] mNavigationDrawerItemTitles;
+    private DrawerLayout mDrawerLayout;
+    private ListView mDrawerList;
+
     /* String specifying the search area: "Hà Nội" or "Sài Gòn" */
     String loadArea;
     
@@ -185,6 +194,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Log.d("OptionList", "onClick: ");
+
                 Intent intent3 = new Intent(MainActivity.this, OptionList.class);
                 
                 // Send bundle data (seach area) to destination activity
@@ -194,11 +204,14 @@ public class MainActivity extends AppCompatActivity {
                 
                 // Start OptionList activity and get result when called activity return
                 startActivityForResult(intent3, REQUEST_CODE);
+
+
+
             }
         });
     }
-    
-    /* onActivityResult(); 
+
+    /* onActivityResult();
     * get data from called activity result (OptionList)
     */
     @Override

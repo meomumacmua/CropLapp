@@ -3,6 +3,7 @@ package com.example.croplapp;
 import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -27,23 +28,26 @@ public class FilmStoreActivity extends AppCompatActivity {
 
     ProgressDialog progressDialog;
 
-    boolean loadFinish = false;
+    int arrayListsize = 0;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.list_store);
 
-        loadFinish = false;
-        getDatabase("hanoifilm");
-
-
+//        Handler handler = new Handler();
+//
+//        handler.postDelayed(new Runnable() {
+//            public void run() {
+//                finish();
+//            }
+//        }, 20000);
     }
 
     protected void onStart() {
         super.onStart();
         setContentView(R.layout.list_store);
 
-        loadFinish = false;
+        getDatabase("hanoifilm");
 
         progressDialog = new ProgressDialog(this);
         // Setting Title
@@ -57,22 +61,20 @@ public class FilmStoreActivity extends AppCompatActivity {
         // Cannot Cancel Progress Dialog
         progressDialog.setCancelable(false);
 
-        if(loadFinish == true) Log.d("print", "end process");
-
-        new CountDownTimer(3000, 1000) {
+        new CountDownTimer(4000, 1000) {
             public void onTick(long millisUntilFinished) {
                 Log.d("print","seconds remaining: " + millisUntilFinished / 1000);
             }
 
             public void onFinish() {
-                progressDialog.dismiss();
                 Log.d("print","done!");
+                progressDialog.dismiss();
 
+                Log.d("print", a0.size() + "");
                 FilmDetails item;
                 addControl();
 
                 for (short i = 0; i < a0.size(); i++) {
-
                     String[] split = a0.get(i).replaceAll("\\s", "").toString().split(",");
                     String filmStateDecode = "...";
                     if(split[4].contains("0000")) {
@@ -86,11 +88,11 @@ public class FilmStoreActivity extends AppCompatActivity {
                 adapter.notifyDataSetChanged();
             }
         }.start();
-
-//        progressDialog.dismiss();
     }
 
     public void getDatabase(String areaCode) {
+        //Clear arrray buffer before retrieve data
+        a0.clear();
         // Get the FirebaseDatabase object
         DatabaseReference database;
         database = FirebaseDatabase.getInstance().getReference(areaCode);
@@ -99,7 +101,6 @@ public class FilmStoreActivity extends AppCompatActivity {
         database.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
                 // Loop to get data when there is a change on Firebase
                 for (DataSnapshot data : dataSnapshot.getChildren()) {
                     // Get the key of the data

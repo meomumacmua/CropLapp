@@ -61,14 +61,14 @@ import static android.app.ProgressDialog.show;
         public class ViewHolder extends  RecyclerView.ViewHolder{
 
             TextView filmprice, filmname,filmstatus;
-            //ImageView filmimage;
+            ImageView filmimage;
 
             public ViewHolder(@NonNull View itemView) {
                 super(itemView);
                 filmname = (TextView) itemView.findViewById(R.id.film_name);
                 filmprice = (TextView) itemView.findViewById(R.id.film_price);
                 filmstatus = (TextView) itemView.findViewById(R.id.film_status);
-                //filmimage = (ImageView) itemView.findViewById(R.id.film_image);
+                filmimage = (ImageView) itemView.findViewById(R.id.film_image);
             }
         }
 
@@ -96,6 +96,7 @@ import static android.app.ProgressDialog.show;
             viewHolder.filmname.setText(filmDetails.getFilmname());
             viewHolder.filmprice.setText(filmDetails.getFilmprice());
             viewHolder.filmstatus.setText(filmDetails.getFilmstatus());
+            Picasso.get().load(filmDetails.getFilmimage()).into(viewHolder.filmimage);
 
             viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override

@@ -6,13 +6,20 @@
 */
 package com.example.croplapp;
 
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+
 import android.content.Intent;
+import android.content.res.Resources;
+import android.support.v4.app.NotificationCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -21,6 +28,7 @@ public class OptionList extends AppCompatActivity {
     String areaChoosed;
     /*  */
     public static final String EXTRA_DATA = "EXTRA_DATA";
+
     
     /* onCreat(); 
     * Get bundle data from MainAcvtivity
@@ -35,7 +43,9 @@ public class OptionList extends AppCompatActivity {
         if (bundle != null) {
             areaChoosed = bundle.getString("area", "");
         }
+
     }
+
     
     /* onStart(); 
     * Show name of search area
@@ -46,9 +56,24 @@ public class OptionList extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         setContentView(R.layout.activity_option_list);
+
+        Button button=findViewById(R.id.buttonOption);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+//                Intent i = new Intent(OptionList.this, MyService.class);
+//                startService(i);  // For the service.
+                showNotification();
+            }
+        });
+        /*
+        Load được ảnh (ko load được do link ko có .jpg)
+Thông báo hệ thống (thanh thông báo trên cùng của màn hình)
+Chưa chạy được tác vụ nền
+         */
         
         /* Show name of search area */
-        TextView showArea = findViewById(R.id.textView2);
+        final TextView showArea = findViewById(R.id.textView2);
         showArea.setText("Khu vực hiện tại: " + areaChoosed);
 
         /* Get the spinner from the xml. */
@@ -70,6 +95,7 @@ public class OptionList extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 areaChoosed = dropdown.getSelectedItem().toString();
+                showArea.setText("Khu vực hiện tại: " + areaChoosed);
             }
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
@@ -94,5 +120,22 @@ public class OptionList extends AppCompatActivity {
         setResult(AppCompatActivity.RESULT_OK, data);
         // Call the finish() function to close the current Activity and return to MainActivity
         finish();
+    }
+
+    public void showNotification() {
+        Log.d("print", "In showNotification();");
+        PendingIntent pi = PendingIntent.getActivity(this, 0, new Intent(this, MainActivity.class), 0);
+        Resources r = getResources();
+        Notification notification = new NotificationCompat.Builder(this)
+                .setTicker("Hello Ticker")
+                .setSmallIcon(android.R.drawable.ic_menu_report_image)
+                .setContentTitle("Hello content title")
+                .setContentText("hello content text")
+                .setContentIntent(pi)
+                .setAutoCancel(true)
+                .build();
+
+        NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+        notificationManager.notify(0, notification);
     }
 }
