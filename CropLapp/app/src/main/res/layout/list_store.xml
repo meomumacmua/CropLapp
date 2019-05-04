@@ -3,7 +3,64 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="#B3B0B0">
+    android:background="@mipmap/backliststore">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="#E1C2BFBF"
+
+        >
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:background="@android:color/transparent"
+
+
+            >
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="FILM STORE"
+                android:autoSizeMaxTextSize="48dp"
+                android:textColor="#FFFFFF"
+                android:textStyle="bold"
+                android:gravity="left|center"
+                android:layout_margin="5dp"
+
+
+                />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_margin="1dp"
+            android:layout_gravity="center">
+
+            <ImageButton
+                android:id="@+id/btn_refresh"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="2dp"
+                android:background="@android:color/transparent"
+                android:scaleType="fitCenter"
+                android:src="@mipmap/refresh"
+
+                />
+
+        </LinearLayout>
+
+
+
+    </LinearLayout>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rv_listfilm"
@@ -11,7 +68,6 @@
         android:layout_height="match_parent"
         android:layout_margin="3dp"
 
-        android:background="@mipmap/backliststore"
         android:layout_weight="1">
 
     </android.support.v7.widget.RecyclerView>

@@ -1,14 +1,16 @@
 package com.example.croplapp;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
-import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.View;
+import android.widget.ImageButton;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -75,19 +77,42 @@ public class FilmStoreActivity extends AppCompatActivity {
                 addControl();
 
                 for (short i = 0; i < a0.size(); i++) {
-                    String[] split = a0.get(i).replaceAll("\\s", "").toString().split(",");
-                    String filmStateDecode = "...";
-                    if(split[4].contains("0000")) {
-                        filmStateDecode = "Hết hàng";
-                    } else if (split[4].contains("0001")) {
-                        filmStateDecode = "Còn hàng";
-                    }
-                    item = new FilmDetails(split[0], split[2], split[3], filmStateDecode);
+                    String[] split = a0.get(i).toString().split(",");
+                    split[3] = split[3].replaceAll("\\s", "").toString();
+//                    Log.d("print", "/" + split[3] + "/");
+
+//                    String filmStateDecode = "...";
+//                    if(split[4].contains("0000")) {
+//                        filmStateDecode = "Hết hàng";
+//                    } else if (split[4].contains("0001")) {
+//                        filmStateDecode = "Còn hàng";
+//                    }
+                    item = new FilmDetails(split[0], split[2], split[3], split[4]);
                     list.add(item);
                 }
                 adapter.notifyDataSetChanged();
             }
         }.start();
+
+        ImageButton buttonRefresh = findViewById(R.id.btn_refresh);
+        buttonRefresh.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onRestart();
+            }
+        });
+    }
+
+
+    @Override
+    protected void onRestart() {
+
+        // TODO Auto-generated method stub
+        super.onRestart();
+        Intent i1 = new Intent(FilmStoreActivity.this, FilmStoreActivity.class);  //your class
+        startActivity(i1);
+        finish();
+
     }
 
     public void getDatabase(String areaCode) {

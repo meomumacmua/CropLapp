@@ -101,7 +101,7 @@ import static android.app.ProgressDialog.show;
             viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Toast.makeText(activity, filmDetails.toString(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(activity, "Coming soon!", Toast.LENGTH_SHORT).show();
                 }
             });
         }

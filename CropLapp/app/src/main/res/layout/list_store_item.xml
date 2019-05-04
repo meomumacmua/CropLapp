@@ -9,7 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="150dp"
         android:orientation="horizontal"
-        android:layout_margin="5dp"
+        android:layout_margin="3dp"
         android:background="#E1C2BFBF"
         >
         
@@ -19,15 +19,21 @@
             android:layout_weight="1"
             android:gravity="center"
             android:layout_gravity="center"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:layout_margin="3dp"
+            >
 
             <ImageView
                 android:id="@+id/film_image"
-                android:layout_width="350px"
-                android:layout_height="350px"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
                 android:gravity="center"
                 android:layout_gravity="center"
-                android:src="@mipmap/kodakcolorplus"/>
+                android:src="@mipmap/kodakcolorplus"
+                android:scaleType="fitCenter"
+                android:layout_margin="3dp"
+
+                />
 
         </LinearLayout>
 
@@ -51,7 +57,7 @@
                     android:text="Tên film:"
                     android:textStyle="bold"
                     android:textColor="#000000"
-                    android:textSize="17dp" />
+                    android:textSize="12dp" />
 
                 <TextView
                     android:id="@+id/film_name"
@@ -59,10 +65,12 @@
                     android:layout_height="match_parent"
                     android:text="@string/filmname"
                     android:gravity="center"
-                    android:layout_weight="0.6"
+                    android:layout_weight="0.4"
                     android:layout_margin="5dp"
                     android:textColor="#000000"
-                    android:background="@drawable/list_item_back" />
+                    android:background="@drawable/list_item_back"
+                    android:padding="2dp"
+                    />
 
             </LinearLayout>
 
@@ -80,7 +88,7 @@
                     android:text="Giá:"
                     android:textStyle="bold"
                     android:textColor="#000000"
-                    android:textSize="17dp"/>
+                    android:textSize="12dp"/>
 
                 <TextView
                     android:id="@+id/film_price"
@@ -88,10 +96,11 @@
                     android:layout_height="match_parent"
                     android:text="@string/filmprice"
                     android:gravity="center"
-                    android:layout_weight="0.6"
+                    android:layout_weight="0.4"
                     android:layout_margin="5dp"
                     android:textColor="#000000"
-                    android:background="@drawable/list_item_back" />
+                    android:background="@drawable/list_item_back"
+                    />
             </LinearLayout>
 
             <LinearLayout
@@ -108,7 +117,7 @@
                    android:text="Trạng Thái:"
                    android:textStyle="bold"
                    android:textColor="#000000"
-                   android:textSize="17dp"/>
+                   android:textSize="12dp"/>
 
                <TextView
                    android:id="@+id/film_status"
@@ -116,7 +125,7 @@
                    android:layout_height="match_parent"
                    android:text="@string/filmstatus"
                    android:gravity="center"
-                   android:layout_weight="0.6"
+                   android:layout_weight="0.4"
                    android:layout_margin="5dp"
                    android:textColor="#000000"
                    android:background="@drawable/list_item_back"
