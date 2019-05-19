@@ -10,9 +10,12 @@ import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Resources;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.NotificationCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -23,12 +26,13 @@ import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-public class OptionList extends AppCompatActivity {
+public class OptionList extends AppCompatActivity{
     /* String specifying the choosed area: "Hà Nội" or "Sài Gòn" */
     String areaChoosed;
     /*  */
     public static final String EXTRA_DATA = "EXTRA_DATA";
 
+    Test test = new Test(this);
     
     /* onCreat(); 
     * Get bundle data from MainAcvtivity
@@ -64,6 +68,18 @@ public class OptionList extends AppCompatActivity {
 //                Intent i = new Intent(OptionList.this, MyService.class);
 //                startService(i);  // For the service.
                 showNotification();
+//                FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+//                fragmentTransaction.add(R.id.frg, new TestFragment());
+//                fragmentTransaction.commit();
+                test.showAlertDialog( 4, "abc");
+                test.OnSeclectListener(new Test.OnSeclect() {
+                    @Override
+                    public void onSeclected() {
+                        finish();
+                    }
+                });
+//                showAlertDialog(4, "abc");
+
             }
         });
         /*
@@ -74,7 +90,7 @@ Chưa chạy được tác vụ nền
         
         /* Show name of search area */
         final TextView showArea = findViewById(R.id.textView2);
-        showArea.setText("Khu vực hiện tại: " + areaChoosed);
+        showArea.setText(getString(R.string.curentArea) + " " + areaChoosed);
 
         /* Get the spinner from the xml. */
         final Spinner dropdown = findViewById(R.id.spinner0);
@@ -85,7 +101,8 @@ Chưa chạy được tác vụ nền
         * Create an adapter to describe how the items are displayed, adapters are used in several places in android.
         * There are multiple variations of this, but this is the basic variant.
         */
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, items);
+        ArrayAdapter<String> adapter = new ArrayAdapter<>
+                (this, android.R.layout.simple_spinner_dropdown_item, items);
         
         /* Set the spinners adapter */
         dropdown.setAdapter(adapter);
@@ -95,7 +112,7 @@ Chưa chạy được tác vụ nền
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 areaChoosed = dropdown.getSelectedItem().toString();
-                showArea.setText("Khu vực hiện tại: " + areaChoosed);
+                showArea.setText(getString(R.string.curentArea) + " " + areaChoosed);
             }
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
@@ -124,8 +141,13 @@ Chưa chạy được tác vụ nền
 
     public void showNotification() {
         Log.d("print", "In showNotification();");
-        PendingIntent pi = PendingIntent.getActivity(this, 0, new Intent(this, MainActivity.class), 0);
-        Resources r = getResources();
+
+
+//        Intent intent = new Intent(this, MainActivity.class);
+        Intent intent = new Intent(Intent.ACTION_MAIN);
+        intent.setClassName("com.example.croplapp", "com.example.croplapp.MainActivity");
+        PendingIntent pi = PendingIntent.getActivity(this, 0, intent, 0);
+
         Notification notification = new NotificationCompat.Builder(this)
                 .setTicker("Hello Ticker")
                 .setSmallIcon(android.R.drawable.ic_menu_report_image)
@@ -134,8 +156,11 @@ Chưa chạy được tác vụ nền
                 .setContentIntent(pi)
                 .setAutoCancel(true)
                 .build();
+        // Play sound
+        notification.defaults = Notification.DEFAULT_SOUND;
 
-        NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+        NotificationManager notificationManager =
+                (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
         notificationManager.notify(0, notification);
     }
 }

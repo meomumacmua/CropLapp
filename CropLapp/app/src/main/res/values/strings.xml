@@ -1,6 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">CropLapp</string>
     <string name="noneArea">Chọn khu vực</string>
+    <string name="curentArea">Khu vực hiện tại:</string>
     <string name="areaHanoi">Hà Nội</string>
     <string name="areaSaigon">Sài Gòn</string>
     <string name="keyHanoi">hanoi</string>
@@ -16,6 +18,20 @@
     <string name="filmname">filmname</string>
     <string name="filmprice">filmprice</string>
     <string name="filmstatus">filmstatus</string>
+    <string name="noticeOffline">Bạn đang ngoại tuyến!!! \n Kết nối mạng và thử lại</string>
+    <string name="noticeTitle">"CropLab Thông báo!!!"</string>
+    <string name="sharePreName">croplabSetting</string>
+    <string name="backConfirm">Nhấn phím back lần nữa để thoát</string>
+    <string name="unavailableWhenOffline">Chức năng không khả dụng khi ngoại tuyến!</string>
+    <string name="offlineSeach">Tìm kiếm ngoại tuyến</string>
+    <string name="bill">Mã hóa đơn </string>
+    <string name="codeInvalidd">không hợp lệ! \n Mời nhập lại chính xác mã hoá đơn!!!</string>
+    <string name="codeUnknow">không tìm thấy, vui lòng kiểm tra và nhập lại chính xác mã hoá đơn!</string>
+    <string name="codeInQueue">của bạn đang trong hàng chờ để được xử lý, cứ ngồi im rồi film sẽ được tráng! ♥</string>
+    <string name="codeProcessing">film của bạn đang được xử lý, bạn cứ bình tĩnh rồi hình sẽ tới nhé! ♥</string>
+    <string name="codeDone">film của bạn đã hoàn thành, bạn có thể tới lấy lại âm bản trong vòng 3 tháng nhé! ♥</string>
+
+    <string name="firebaseError">Gặp sự cố khi kết nối đến cơ sở dữ liệu \nBạn vui lòng quay lại sau!!!</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
@@ -26,6 +42,4 @@
         <item>Read</item>
         <item>Help</item>
     </string-array>
-
-
 </resources>

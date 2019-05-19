@@ -16,6 +16,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.InputType;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
@@ -32,6 +33,8 @@ public class TrackingActivity extends AppCompatActivity {
     String areaToFind;
     /* String specifying the search area: "Hà Nội" or "Sài Gòn" */
     String textReceiver;
+
+    EditText clickedEditText;
     
     /*
     * Feedback when searching data on firebase 
@@ -84,6 +87,21 @@ public class TrackingActivity extends AppCompatActivity {
         TextView showArea = findViewById(R.id.textViewArea);
         showArea.setText(textReceiver);
 
+        /* */
+        clickedEditText = findViewById(R.id.editText);
+        clickedEditText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                clickedEditText.getText().clear();
+            }
+//            public void onKey(View v, int keyCode, KeyEvent event) {
+//                if (keyCode == KeyEvent.KEYCODE_NAVIGATE_NEXT) {
+////                    int temp = getDatabase(areaToFind,clickedEditText.getText().toString());
+//                    Log.d("print", keyCode + "");
+//                }
+//            }
+        });
+
         /* Seach button */
         ImageButton button1 = findViewById(R.id.seachButton);
         button1.setOnClickListener(new View.OnClickListener() {
@@ -129,33 +147,33 @@ public class TrackingActivity extends AppCompatActivity {
     /* Alert dialog funtiion*/
     public void showAlertDialog(int feedBack ,String code) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("CropLab Thông báo!!!");
-        Log.d("Printf", "catchalert " + feedBack);
+        builder.setTitle(getString(R.string.noticeTitle));
 
+        String bill = getString(R.string.bill);
         // Set the message
         switch (feedBack) {
             case 1: {   // Invalid Code (1)
-                builder.setMessage("Mã hóa đơn '" + code + "' không hợp lệ! \nMời nhập lại chính xác mã hoá đơn!!!");
+                builder.setMessage(bill  + " " + code + " " + getString(R.string.codeInvalidd));
                 break;
             }
             case 2: {   // No code found (2)
-                builder.setMessage("Mã hóa đơn '" + code + "' không tìm thấy, vui lòng kiểm tra và nhập lại chính xác mã hoá đơn!");
+                builder.setMessage(bill + " " + code + " " + getString(R.string.codeUnknow));
                 break;
             }
             case 3: {   // Received (3)
-                builder.setMessage("Mã hóa đơn '" + code + "' của bạn đang trong hàng chờ để được xử lý, cứ ngồi im rồi film sẽ được tráng! ♥  ");
+                builder.setMessage(bill + " " + code + " " + getString(R.string.codeInQueue));
                 break;
             }
             case 4: {   // Processing (4)
-                builder.setMessage("Mã hóa đơn '" + code + "' : film của bạn đang được xử lý, bạn cứ bình tĩnh rồi hình sẽ tới nhé! ♥  ");
+                builder.setMessage(bill + " " + code + " " + getString(R.string.codeProcessing));
                 break;
             }
             case 5: {   // Finished (5)
-                builder.setMessage("Mã hóa đơn '" + code + "' : film của bạn đã hoàn thành, bạn có thể tới lấy lại âm bản trong vòng 3 tháng nhé! ♥ ");
+                builder.setMessage(bill + " " + code + " " + getString(R.string.codeDone));
                 break;
             }
             case 6: {   // Database error (6)
-                builder.setMessage("Gặp sự cố khi kết nối đến cơ sở dữ liệu \nBạn vui lòng quay lại sau!!!");
+                builder.setMessage(getString(R.string.firebaseError));
                 break;
             }
         }

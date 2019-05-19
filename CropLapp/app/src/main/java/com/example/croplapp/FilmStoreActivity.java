@@ -78,7 +78,7 @@ public class FilmStoreActivity extends AppCompatActivity {
 
                 for (short i = 0; i < a0.size(); i++) {
                     String[] split = a0.get(i).toString().split(",");
-                    split[3] = split[3].replaceAll("\\s", "").toString();
+                    split[3] = split[3].trim();
 //                    Log.d("print", "/" + split[3] + "/");
 
 //                    String filmStateDecode = "...";
@@ -94,7 +94,8 @@ public class FilmStoreActivity extends AppCompatActivity {
             }
         }.start();
 
-        ImageButton buttonRefresh = findViewById(R.id.btn_refresh);
+//        ImageButton buttonRefresh = findViewById(R.id.btn_);
+        ImageButton buttonRefresh = findViewById(R.id.button_refresh);
         buttonRefresh.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

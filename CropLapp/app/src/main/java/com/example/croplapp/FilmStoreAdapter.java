@@ -96,7 +96,7 @@ import static android.app.ProgressDialog.show;
             viewHolder.filmname.setText(filmDetails.getFilmname());
             viewHolder.filmprice.setText(filmDetails.getFilmprice());
             viewHolder.filmstatus.setText(filmDetails.getFilmstatus());
-            Picasso.get().load(filmDetails.getFilmimage()).into(viewHolder.filmimage);
+            Picasso.get().load(filmDetails.getFilmimage()).placeholder(R.mipmap.loading).error(R.mipmap.file).into(viewHolder.filmimage);
 
             viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override

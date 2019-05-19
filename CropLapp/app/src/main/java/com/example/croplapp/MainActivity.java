@@ -34,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
 
     /* String specifying the search area: "Hà Nội" or "Sài Gòn" */
     String loadArea;
+    boolean onlineStatus;
     
     /* Request code for startActivityForResult() & onActivityResult() function */
     private static final int REQUEST_CODE = 1998;
@@ -47,12 +48,12 @@ public class MainActivity extends AppCompatActivity {
     /* Alert dialog funtiion*/
     public void showAlertDialog(final int feedBack, String code) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("CropLab Thông báo!!!");
+        builder.setTitle(R.string.noticeTitle);
         switch (feedBack) {
             case 4:
             {
                 // Set the message
-                builder.setMessage("Bạn đang ngoại tuyến!!! \nKết nối mạng và thử lại");
+                builder.setMessage(R.string.noticeOffline);
             }
         }
         /* Disable click outside the alert to turn off */
@@ -67,6 +68,15 @@ public class MainActivity extends AppCompatActivity {
                 finish();
             }
         });
+
+        builder.setNegativeButton(R.string.offlineSeach, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                // Dismiss the alert
+                dialogInterface.dismiss();
+            }
+        });
+
         /* Creat alert on buffer */
         AlertDialog alertDialog = builder.create();
         /* Show alert dialog */
@@ -82,7 +92,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
     
-    /* Save data to android-shared-preferences */
+    /* Save data a android-shared-preferences */
     public void saveAppSetting()  {
         SharedPreferences sharedPreferences= this.getSharedPreferences("croplabSetting", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -102,14 +112,17 @@ public class MainActivity extends AppCompatActivity {
         
         /* Check internet */
         if (isNetworkConnected()) {
-            Log.e("print", "You're connected to us");
+//            Log.e("print", "You're connected to us");
             // Load saved data
-            loadAppSetting();
+            onlineStatus = true;
         } else {
-            Log.e("print", "You're alone");
+            onlineStatus = false;
+//            Log.e("print", "You're alone");
             // Show alert offline and exit
             showAlertDialog(4,"4");
         }
+        loadAppSetting();
+        Log.d("print", "oncreat" + " " + loadArea);
     }
     
     /* onstart(); 
@@ -130,18 +143,21 @@ public class MainActivity extends AppCompatActivity {
         * This function will coming soon
         */
         /* Action switch to FilmStoreAdapter.java */
+
         Button buttonfilmstore = findViewById(R.id.button_film_store);
         buttonfilmstore.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d("FilmstoreActivity", "onClick: ");
+                if(onlineStatus == false) {
+                    Toast.makeText(getBaseContext(), R.string.unavailableWhenOffline, Toast.LENGTH_SHORT).show();
+                } else {
+                    Log.d("FilmstoreActivity", "onClick: ");
 
-//                Toast.makeText(getBaseContext(), "This function will coming soon!", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(MainActivity.this, FilmStoreActivity.class);
 
-                Intent intent = new Intent(MainActivity.this, FilmStoreActivity.class);
-
-                // Start activity
-                startActivity(intent);
+                    // Start activity
+                    startActivity(intent);
+                }
             }
         });
         /*
@@ -159,6 +175,7 @@ public class MainActivity extends AppCompatActivity {
                 // Send bundle data (seach area) to destination activity
                 Bundle bundle = new Bundle();
                 bundle.putString("area",loadArea);
+                bundle.putBoolean("state", onlineStatus);
                 intent1.putExtras(bundle);
                 // Start activity
                 startActivity(intent1);
@@ -171,9 +188,13 @@ public class MainActivity extends AppCompatActivity {
         buttonnews.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d("WebViewActivity", "onClick: ");
-                Intent intent2 = new Intent(MainActivity.this, WebViewActivity.class);
-                startActivity(intent2);
+                if(onlineStatus == false) {
+                    Toast.makeText(getBaseContext(), R.string.unavailableWhenOffline, Toast.LENGTH_SHORT).show();
+                } else {
+                    Log.d("WebViewActivity", "onClick: ");
+                    Intent intent2 = new Intent(MainActivity.this, WebViewActivity.class);
+                    startActivity(intent2);
+                }
             }
         });
         
@@ -204,9 +225,6 @@ public class MainActivity extends AppCompatActivity {
                 
                 // Start OptionList activity and get result when called activity return
                 startActivityForResult(intent3, REQUEST_CODE);
-
-
-
             }
         });
     }
@@ -251,15 +269,8 @@ public class MainActivity extends AppCompatActivity {
             return;
         } else {
             // Press back first time
-            Toast.makeText(getBaseContext(), "Nhấn phím back lần nữa để thoát", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getBaseContext(), R.string.backConfirm, Toast.LENGTH_SHORT).show();
         }
         mBackPressed = System.currentTimeMillis();
     }
-
-
-
-
-
-
-
 }
