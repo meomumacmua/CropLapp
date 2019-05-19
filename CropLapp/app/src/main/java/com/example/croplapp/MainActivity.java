@@ -27,11 +27,6 @@ import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
-    /* */
-    private String[] mNavigationDrawerItemTitles;
-    private DrawerLayout mDrawerLayout;
-    private ListView mDrawerList;
-
     /* String specifying the search area: "Hà Nội" or "Sài Gòn" */
     String loadArea;
     boolean onlineStatus;
@@ -48,12 +43,12 @@ public class MainActivity extends AppCompatActivity {
     /* Alert dialog funtiion*/
     public void showAlertDialog(final int feedBack, String code) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle(R.string.noticeTitle);
+        builder.setTitle(getString(R.string.noticeTitle));
         switch (feedBack) {
             case 4:
             {
                 // Set the message
-                builder.setMessage(R.string.noticeOffline);
+                builder.setMessage(getString(R.string.noticeOffline));
             }
         }
         /* Disable click outside the alert to turn off */
@@ -69,7 +64,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        builder.setNegativeButton(R.string.offlineSeach, new DialogInterface.OnClickListener() {
+        builder.setNegativeButton(getString(R.string.offlineSeach), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 // Dismiss the alert
@@ -148,8 +143,8 @@ public class MainActivity extends AppCompatActivity {
         buttonfilmstore.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(onlineStatus == false) {
-                    Toast.makeText(getBaseContext(), R.string.unavailableWhenOffline, Toast.LENGTH_SHORT).show();
+                if(!onlineStatus) {
+                    Toast.makeText(getBaseContext(), getString(R.string.unavailableWhenOffline), Toast.LENGTH_SHORT).show();
                 } else {
                     Log.d("FilmstoreActivity", "onClick: ");
 
@@ -188,8 +183,8 @@ public class MainActivity extends AppCompatActivity {
         buttonnews.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(onlineStatus == false) {
-                    Toast.makeText(getBaseContext(), R.string.unavailableWhenOffline, Toast.LENGTH_SHORT).show();
+                if(!onlineStatus) {
+                    Toast.makeText(getBaseContext(), getString(R.string.unavailableWhenOffline), Toast.LENGTH_SHORT).show();
                 } else {
                     Log.d("WebViewActivity", "onClick: ");
                     Intent intent2 = new Intent(MainActivity.this, WebViewActivity.class);
@@ -222,9 +217,10 @@ public class MainActivity extends AppCompatActivity {
                 Bundle bundle = new Bundle();
                 bundle.putString("area",loadArea);
                 intent3.putExtras(bundle);
-                
+
                 // Start OptionList activity and get result when called activity return
                 startActivityForResult(intent3, REQUEST_CODE);
+                overridePendingTransition(R.anim.push_left_in,R.anim.push_up_out);
             }
         });
     }
@@ -247,6 +243,7 @@ public class MainActivity extends AppCompatActivity {
                 loadArea = data.getStringExtra(OptionList.EXTRA_DATA);
             } else {
                 // DetailActivity failed, no data returned.
+
             }
         }
     }
