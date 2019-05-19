@@ -30,14 +30,23 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+
 public class MainActivity extends AppCompatActivity {
 
     /* String specifying the search area: "Hà Nội" or "Sài Gòn" */
     String loadArea;
     boolean onlineStatus;
+
+    /* */
+    MyLib alertDialog = new MyLib(this);
     
     /* Request code for startActivityForResult() & onActivityResult() function */
-    private static final int REQUEST_CODE = 1998;
+    private static final int REQUEST_CODE_AREA = 1998;
+    private static final int REQUEST_CODE_TRACK = 1997;
+
+    /* */
+    ArrayList<String> dataReserve = new ArrayList<String>();
     
     /* Internet connection test function */
     private boolean isNetworkConnected() {
@@ -45,50 +54,19 @@ public class MainActivity extends AppCompatActivity {
         return checkNetwork.getActiveNetworkInfo() != null;
     }
     
-    /* Alert dialog funtiion*/
-    public void showAlertDialog(final int feedBack, String code) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle(getString(R.string.noticeTitle));
-        switch (feedBack) {
-            case 4:
-            {
-                // Set the message
-                builder.setMessage(getString(R.string.noticeOffline));
-            }
-        }
-        /* Disable click outside the alert to turn off */
-        builder.setCancelable(false);
-        /* Set "OK" button */
-        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                // Dismiss the alert
-                dialogInterface.dismiss();
-                // Exit when there is no internet connection
-                finish();
-            }
-        });
-
-        builder.setNegativeButton(getString(R.string.offlineSeach), new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                // Dismiss the alert
-                dialogInterface.dismiss();
-            }
-        });
-
-        /* Creat alert on buffer */
-        AlertDialog alertDialog = builder.create();
-        /* Show alert dialog */
-        alertDialog.show();
-    }
-    
     /* Get saved data from android-shared-preferences */
     private void loadAppSetting()  {
+        dataReserve.clear();
         SharedPreferences sharedPreferences= this.getSharedPreferences("croplabSetting", Context.MODE_PRIVATE);
         if(sharedPreferences!= null) {
             // String specifying the search area
             loadArea = sharedPreferences.getString("area", getString(R.string.areaHanoi));
+            if (!isNetworkConnected()) {
+                int dataReserveLength = sharedPreferences.getInt("dataReserveLength", 0);
+                for (int i = 0; i < dataReserveLength; i++) {
+                    dataReserve.add(sharedPreferences.getString("dataReserve" + i, "0"));
+                }
+            }
         }
     }
     
@@ -97,6 +75,11 @@ public class MainActivity extends AppCompatActivity {
         SharedPreferences sharedPreferences= this.getSharedPreferences("croplabSetting", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString("area", loadArea);
+        int dataReserveLength = dataReserve.size();
+        editor.putInt("dataReserveLength", dataReserveLength);
+        for (int i = 0; i< dataReserveLength; i++) {
+            editor.putString("dataReserve"+i,dataReserve.get(i));
+        }
         // Save
         editor.apply();
     }
@@ -119,7 +102,13 @@ public class MainActivity extends AppCompatActivity {
             onlineStatus = false;
 //            Log.e("print", "You're alone");
             // Show alert offline and exit
-            showAlertDialog(4,"4");
+            alertDialog.showAlertDialog1(4,"4");
+            alertDialog.OnSeclectListener(new MyLib.OnSeclect() {
+                @Override
+                public void onSeclected() {
+                    finish();
+                }
+            });
         }
         loadAppSetting();
         Log.d("print", "oncreat" + " " + loadArea);
@@ -178,7 +167,7 @@ public class MainActivity extends AppCompatActivity {
                 bundle.putBoolean("state", onlineStatus);
                 intent1.putExtras(bundle);
                 // Start activity
-                startActivity(intent1);
+                startActivityForResult(intent1, REQUEST_CODE_TRACK);
 
             }
         });
@@ -225,7 +214,7 @@ public class MainActivity extends AppCompatActivity {
                 intent3.putExtras(bundle);
 
                 // Start OptionList activity and get result when called activity return
-                startActivityForResult(intent3, REQUEST_CODE);
+                startActivityForResult(intent3, REQUEST_CODE_AREA);
                 overridePendingTransition(R.anim.slide_in_left,R.anim.slide_out_right);
             }
         });
@@ -241,7 +230,7 @@ public class MainActivity extends AppCompatActivity {
         /* Get data return */
         super.onActivityResult(requestCode, resultCode, data);
         /* Check if the requestCode matches the REQUESTCODE we just used (REQUEST_CODE = 1998) */
-        if(requestCode == REQUEST_CODE) {
+        if(requestCode == REQUEST_CODE_AREA) {
             /*
             * "resultCode" set by DetailActivity
             * "RESULT_OK" indicates that this result was successful
@@ -249,6 +238,19 @@ public class MainActivity extends AppCompatActivity {
             if(resultCode == AppCompatActivity.RESULT_OK) {
                 // Receive data from returned Intent
                 loadArea = data.getStringExtra(OptionList.EXTRA_DATA);
+            } else {
+                // DetailActivity failed, no data returned.
+
+            }
+        }
+        if(requestCode == REQUEST_CODE_TRACK) {
+            /*
+             * "resultCode" set by DetailActivity
+             * "RESULT_OK" indicates that this result was successful
+             */
+            if(resultCode == AppCompatActivity.RESULT_OK) {
+                // Receive data from returned Intent
+                dataReserve = data.getStringArrayListExtra(OptionList.EXTRA_DATA);
             } else {
                 // DetailActivity failed, no data returned.
 

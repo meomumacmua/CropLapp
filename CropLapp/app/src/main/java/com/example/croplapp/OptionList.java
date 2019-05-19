@@ -65,13 +65,13 @@ public class OptionList extends AppCompatActivity{
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                Intent i = new Intent(OptionList.this, MyService.class);
-//                startService(i);  // For the service.
-                showNotification();
+                Intent intent = new Intent(OptionList.this, MyService.class);
+                startService(intent);  // For the service.
+//                showNotification();
 //                FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
 //                fragmentTransaction.add(R.id.frg, new TestFragment());
 //                fragmentTransaction.commit();
-                test.showAlertDialog( 4, "abc");
+                test.showAlertDialog1( 4, "abc");
                 test.OnSeclectListener(new MyLib.OnSeclect() {
                     @Override
                     public void onSeclected() {

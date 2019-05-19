@@ -15,7 +15,9 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
 
-        <service android:name=".MyService" />
+        <service
+            android:name="com.example.croplapp.MyService"
+            android:exported="false"/>
 
         <activity android:name=".OptionList" />
         <activity android:name=".FilmStoreActivity" />
@@ -23,6 +25,7 @@
         <activity
             android:name=".WebViewActivity"
             android:configChanges="orientation|keyboard|keyboardHidden|screenSize" />
+
         <activity android:name=".InformationActivity" />
         <activity android:name=".MainActivity">
             <intent-filter>

@@ -28,6 +28,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
+
 public class TrackingActivity extends AppCompatActivity {
     /* key specifying the search area: "hanoi" or "saigon" */
     String areaToFind;
@@ -35,7 +37,15 @@ public class TrackingActivity extends AppCompatActivity {
     String textReceiver;
 
     EditText clickedEditText;
-    
+
+    /**/
+    MyLib alertDialog = new MyLib(this);
+
+    /* */
+    ArrayList<String> a0 = new ArrayList<String>();
+
+    /* */
+    public static final String EXTRA_DATA = "EXTRA_DATA";
     /*
     * Feedback when searching data on firebase 
     * 0 = Init
@@ -55,6 +65,7 @@ public class TrackingActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.tracking_layout);
+        Log.d("print", "oncreat Track");
         
         /* Get intent bundle */
         Intent intent = getIntent();
@@ -70,7 +81,7 @@ public class TrackingActivity extends AppCompatActivity {
         }
         /* Init Database */
         if(initDatabase(areaToFind) == 6){
-            showAlertDialog(6,"Error");
+            alertDialog.showAlertDialog2(6,"Error");
         }
     }
     
@@ -119,7 +130,7 @@ public class TrackingActivity extends AppCompatActivity {
                 */
                 char c = text.charAt(0);
                 if ((text.trim().length() <= 4)  || (Character.isDigit(c))) {   // Invalid code (1)
-                    showAlertDialog(1, text);
+                    alertDialog.showAlertDialog2(1, text);
                 } else {                                                        // Seach in database
                     int temp = getDatabase(areaToFind,text);
                 }
@@ -132,6 +143,16 @@ public class TrackingActivity extends AppCompatActivity {
     */
     @Override
     public void onBackPressed(){
+        final Intent data = new Intent();
+        // Add data to the intent
+        data.putExtra(EXTRA_DATA, a0);
+
+        /*
+         * Set the resultCode to AppCompatActivity.RESULT_OK to show
+         * instance was successful and contains returned results
+         */
+        setResult(AppCompatActivity.RESULT_OK, data);
+        // Call the finish() function to close the current Activity and return to MainActivity
         finish();
     }
 
@@ -142,56 +163,6 @@ public class TrackingActivity extends AppCompatActivity {
             imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
         } catch(Exception ignored) {
         }
-    }
-
-    /* Alert dialog funtiion*/
-    public void showAlertDialog(int feedBack ,String code) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle(getString(R.string.noticeTitle));
-
-        String bill = getString(R.string.bill);
-        // Set the message
-        switch (feedBack) {
-            case 1: {   // Invalid Code (1)
-                builder.setMessage(bill  + " " + code + " " + getString(R.string.codeInvalidd));
-                break;
-            }
-            case 2: {   // No code found (2)
-                builder.setMessage(bill + " " + code + " " + getString(R.string.codeUnknow));
-                break;
-            }
-            case 3: {   // Received (3)
-                builder.setMessage(bill + " " + code + " " + getString(R.string.codeInQueue));
-                break;
-            }
-            case 4: {   // Processing (4)
-                builder.setMessage(bill + " " + code + " " + getString(R.string.codeProcessing));
-                break;
-            }
-            case 5: {   // Finished (5)
-                builder.setMessage(bill + " " + code + " " + getString(R.string.codeDone));
-                break;
-            }
-            case 6: {   // Database error (6)
-                builder.setMessage(getString(R.string.firebaseError));
-                break;
-            }
-        }
-        /* Disable click outside the alert to turn off */
-        builder.setCancelable(false);
-        /* Set "OK" button */
-        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                // Dismiss the alert
-                dialogInterface.dismiss();
-            }
-        });
-        /* Creat alert on buffer */
-        AlertDialog alertDialog = builder.create();
-        /* Show alert dialog */
-        alertDialog.show();
-
     }
     
     /* Seach in database */
@@ -225,14 +196,14 @@ public class TrackingActivity extends AppCompatActivity {
                         }
                     }
                 }
-                showAlertDialog(temp, compareText);
+                alertDialog.showAlertDialog2(temp, compareText);
             }
             
             /* Firebase error*/
             @Override
             public void onCancelled(DatabaseError databaseError) {
                 Log.w("FIREBASE", "loadPost:onCancelled", databaseError.toException());
-                showAlertDialog(6,"Error!!!");
+                alertDialog.showAlertDialog2(6,"Error!!!");
             }
         });
         return 0;
@@ -249,6 +220,7 @@ public class TrackingActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 // Loop to get data when there is a change on Firebasese
                 for (DataSnapshot data : dataSnapshot.getChildren()) {
+                    a0.add(data.getValue().toString());
                 }
             }
 
@@ -256,7 +228,7 @@ public class TrackingActivity extends AppCompatActivity {
             @Override
             public void onCancelled(DatabaseError databaseError) {
                 Log.w("FIREBASE", "loadPost:onCancelled", databaseError.toException());
-                showAlertDialog(6, "Error");
+                alertDialog.showAlertDialog2(6, "Error");
             }
         });
         return 0;
