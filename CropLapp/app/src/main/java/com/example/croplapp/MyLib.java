@@ -5,9 +5,9 @@ import android.content.DialogInterface;
 import android.support.v7.app.AlertDialog;
 import android.widget.Toast;
 
-public class Test {
+public class MyLib {
     Context context;
-    public Test(Context context) {
+    public MyLib(Context context) {
         this.context = context;
     }
 

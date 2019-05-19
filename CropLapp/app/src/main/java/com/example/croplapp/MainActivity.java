@@ -7,20 +7,25 @@
 
 package com.example.croplapp;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.design.widget.BottomSheetBehavior;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -199,8 +204,9 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Log.d("InfoActivity", "onClick: ");
-                Intent intent4 = new Intent(MainActivity.this, InformationActivity.class);
-                startActivity(intent4);
+//                Intent intent4 = new Intent(MainActivity.this, InformationActivity.class);
+//                startActivity(intent4);
+                eventClick();
             }
         });
 
@@ -220,9 +226,11 @@ public class MainActivity extends AppCompatActivity {
 
                 // Start OptionList activity and get result when called activity return
                 startActivityForResult(intent3, REQUEST_CODE);
-                overridePendingTransition(R.anim.push_left_in,R.anim.push_up_out);
+                overridePendingTransition(R.anim.slide_in_left,R.anim.slide_out_right);
             }
         });
+
+
     }
 
     /* onActivityResult();
@@ -269,5 +277,25 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(getBaseContext(), R.string.backConfirm, Toast.LENGTH_SHORT).show();
         }
         mBackPressed = System.currentTimeMillis();
+    }
+
+    private void eventClick() {
+        View view = getLayoutInflater().inflate(R.layout.bottom_sheet, null);
+        TextView txtView1 = (TextView) view.findViewById(R.id.bottom_sheet_textview1);
+
+        final Dialog mBottomSheetDialog = new Dialog(MainActivity.this, R.style.MaterialDialogSheet);
+        mBottomSheetDialog.setContentView(view);
+        mBottomSheetDialog.setCancelable(true);
+        mBottomSheetDialog.getWindow().setLayout(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+        mBottomSheetDialog.getWindow().setGravity(Gravity.BOTTOM);
+        mBottomSheetDialog.show();
+
+        txtView1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(MainActivity.this, "Clicked Backup", Toast.LENGTH_SHORT).show();
+                mBottomSheetDialog.dismiss();
+            }
+        });
     }
 }

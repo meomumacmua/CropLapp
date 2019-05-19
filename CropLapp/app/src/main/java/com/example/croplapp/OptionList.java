@@ -32,7 +32,7 @@ public class OptionList extends AppCompatActivity{
     /*  */
     public static final String EXTRA_DATA = "EXTRA_DATA";
 
-    Test test = new Test(this);
+    MyLib test = new MyLib(this);
     
     /* onCreat(); 
     * Get bundle data from MainAcvtivity
@@ -72,7 +72,7 @@ public class OptionList extends AppCompatActivity{
 //                fragmentTransaction.add(R.id.frg, new TestFragment());
 //                fragmentTransaction.commit();
                 test.showAlertDialog( 4, "abc");
-                test.OnSeclectListener(new Test.OnSeclect() {
+                test.OnSeclectListener(new MyLib.OnSeclect() {
                     @Override
                     public void onSeclected() {
                         finish();
@@ -137,6 +137,7 @@ Chưa chạy được tác vụ nền
         setResult(AppCompatActivity.RESULT_OK, data);
         // Call the finish() function to close the current Activity and return to MainActivity
         finish();
+        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
     }
 
     public void showNotification() {

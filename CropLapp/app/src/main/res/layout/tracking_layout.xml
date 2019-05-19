@@ -65,12 +65,13 @@
 
             <EditText
                 android:id="@+id/editText"
-                android:singleLine="true"
+
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:hint="Vui lòng nhập số hóa đơn... "
                 android:textColorHint="#FAFAFA"
                 android:textStyle="italic|bold"
+                android:singleLine="true"
                 android:textColor="#FAFAFA"
                 android:textSize="15dp"
                 android:layout_weight="0.5"
