@@ -15,6 +15,7 @@ import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.design.widget.BottomSheetBehavior;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
@@ -47,42 +48,14 @@ public class MainActivity extends AppCompatActivity {
 
     /* */
     ArrayList<String> dataReserve = new ArrayList<String>();
+    String lastTimeAccessDB;
     
     /* Internet connection test function */
     private boolean isNetworkConnected() {
         ConnectivityManager checkNetwork = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         return checkNetwork.getActiveNetworkInfo() != null;
     }
-    
-    /* Get saved data from android-shared-preferences */
-    private void loadAppSetting()  {
-        dataReserve.clear();
-        SharedPreferences sharedPreferences= this.getSharedPreferences("croplabSetting", Context.MODE_PRIVATE);
-        if(sharedPreferences!= null) {
-            // String specifying the search area
-            loadArea = sharedPreferences.getString("area", getString(R.string.areaHanoi));
-            if (!isNetworkConnected()) {
-                int dataReserveLength = sharedPreferences.getInt("dataReserveLength", 0);
-                for (int i = 0; i < dataReserveLength; i++) {
-                    dataReserve.add(sharedPreferences.getString("dataReserve" + i, "0"));
-                }
-            }
-        }
-    }
-    
-    /* Save data a android-shared-preferences */
-    public void saveAppSetting()  {
-        SharedPreferences sharedPreferences= this.getSharedPreferences("croplabSetting", Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString("area", loadArea);
-        int dataReserveLength = dataReserve.size();
-        editor.putInt("dataReserveLength", dataReserveLength);
-        for (int i = 0; i< dataReserveLength; i++) {
-            editor.putString("dataReserve"+i,dataReserve.get(i));
-        }
-        // Save
-        editor.apply();
-    }
+
     
     /* onCreat();
     * Check network
@@ -95,12 +68,10 @@ public class MainActivity extends AppCompatActivity {
         
         /* Check internet */
         if (isNetworkConnected()) {
-//            Log.e("print", "You're connected to us");
             // Load saved data
             onlineStatus = true;
         } else {
             onlineStatus = false;
-//            Log.e("print", "You're alone");
             // Show alert offline and exit
             alertDialog.showAlertDialog1(4,"4");
             alertDialog.OnSeclectListener(new MyLib.OnSeclect() {
@@ -127,12 +98,7 @@ public class MainActivity extends AppCompatActivity {
         TextView showArea = findViewById(R.id.textView);
         showArea.setText(loadArea);
 
-        /*
-        * #1
-        * This function will coming soon
-        */
         /* Action switch to FilmStoreAdapter.java */
-
         Button buttonfilmstore = findViewById(R.id.button_film_store);
         buttonfilmstore.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -141,18 +107,13 @@ public class MainActivity extends AppCompatActivity {
                     Toast.makeText(getBaseContext(), getString(R.string.unavailableWhenOffline), Toast.LENGTH_SHORT).show();
                 } else {
                     Log.d("FilmstoreActivity", "onClick: ");
-
                     Intent intent = new Intent(MainActivity.this, FilmStoreActivity.class);
-
                     // Start activity
                     startActivity(intent);
                 }
             }
         });
-        /*
-        * #1
-        */
-        
+
         /* Action switch to TrackingActivity.java */
         Button buttontracking = findViewById(R.id.button_tracking);
         buttontracking.setOnClickListener(new View.OnClickListener() {
@@ -164,7 +125,13 @@ public class MainActivity extends AppCompatActivity {
                 // Send bundle data (seach area) to destination activity
                 Bundle bundle = new Bundle();
                 bundle.putString("area",loadArea);
-                bundle.putBoolean("state", onlineStatus);
+
+                if (!isNetworkConnected()) {
+                    bundle.putBoolean("state", onlineStatus);
+                    bundle.putStringArrayList("data", dataReserve);
+                    bundle.putString("lastTimeAccessDatabase", lastTimeAccessDB);
+                }
+
                 intent1.putExtras(bundle);
                 // Start activity
                 startActivityForResult(intent1, REQUEST_CODE_TRACK);
@@ -249,8 +216,13 @@ public class MainActivity extends AppCompatActivity {
              * "RESULT_OK" indicates that this result was successful
              */
             if(resultCode == AppCompatActivity.RESULT_OK) {
-                // Receive data from returned Intent
-                dataReserve = data.getStringArrayListExtra(OptionList.EXTRA_DATA);
+                if (onlineStatus) {
+                    // Receive data from returned Intent
+                    dataReserve = data.getStringArrayListExtra(TrackingActivity.TRACK_EXTRA_DATA);
+                    lastTimeAccessDB = data.getStringExtra(TrackingActivity.TRACK_EXTRA_DATE);
+                } else {
+                    int temp = (int) data.getIntExtra(TrackingActivity.TRACK_EXTRA_DATA, 1);
+                }
             } else {
                 // DetailActivity failed, no data returned.
 
@@ -279,6 +251,43 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(getBaseContext(), R.string.backConfirm, Toast.LENGTH_SHORT).show();
         }
         mBackPressed = System.currentTimeMillis();
+    }
+
+    /* Get saved data from android-shared-preferences */
+    private void loadAppSetting()  {
+        dataReserve.clear();
+        SharedPreferences sharedPreferences= this.getSharedPreferences("croplabSetting", Context.MODE_PRIVATE);
+        if(sharedPreferences!= null) {
+            // String specifying the search area
+            loadArea = sharedPreferences.getString("area", getString(R.string.areaHanoi));
+            //if no connect, load from last save
+            if (!isNetworkConnected()) {
+                int dataReserveLength = sharedPreferences.getInt("dataReserveLength", 0);
+                for (int i = 0; i < dataReserveLength; i++) {
+                    dataReserve.add(sharedPreferences.getString("dataReserve" + i, "0"));
+                    lastTimeAccessDB = sharedPreferences.getString("lastTimeAccessDatabase","Không có dữ liệu");
+                }
+            }
+        }
+    }
+
+    /* Save data a android-shared-preferences */
+    public void saveAppSetting()  {
+        SharedPreferences sharedPreferences= this.getSharedPreferences("croplabSetting", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString("area", loadArea);
+
+        int dataReserveLength = dataReserve.size();
+        Log.d("print", dataReserve.size() + "");
+        editor.putInt("dataReserveLength", dataReserveLength);
+
+        for (int i = 0; i < dataReserveLength; i++) {
+            Log.d("print", dataReserve.get(i));
+            editor.putString("dataReserve"+i,dataReserve.get(i));
+        }
+        editor.putString("lastTimeAccessDatabase", lastTimeAccessDB);
+        // Save
+        editor.apply();
     }
 
     private void eventClick() {

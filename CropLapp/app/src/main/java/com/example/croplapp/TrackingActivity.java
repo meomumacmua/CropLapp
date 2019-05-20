@@ -8,15 +8,13 @@
 package com.example.croplapp;
 
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.v7.app.AlertDialog;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.text.InputType;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
@@ -28,24 +26,30 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class TrackingActivity extends AppCompatActivity {
     /* key specifying the search area: "hanoi" or "saigon" */
     String areaToFind;
     /* String specifying the search area: "Hà Nội" or "Sài Gòn" */
     String textReceiver;
+    boolean onlineStatus;
+    /* */
+    ArrayList<String> a0 = new ArrayList<>();
+    String lastTimeAccessDB;
 
     EditText clickedEditText;
 
     /**/
     MyLib alertDialog = new MyLib(this);
 
-    /* */
-    ArrayList<String> a0 = new ArrayList<String>();
+
 
     /* */
-    public static final String EXTRA_DATA = "EXTRA_DATA";
+    public static final String TRACK_EXTRA_DATA = "TRACK_EXTRA_DATA";
+    public static final String TRACK_EXTRA_DATE = "TRACK_EXTRA_DATE";
     /*
     * Feedback when searching data on firebase 
     * 0 = Init
@@ -72,17 +76,24 @@ public class TrackingActivity extends AppCompatActivity {
         Bundle bundle = intent.getExtras();
         if (bundle != null) {
             textReceiver = bundle.getString("area", "Hà Nội");
-
             if (textReceiver.contains(getString(R.string.areaSaigon))){
                 areaToFind = getString(R.string.keySaigon);
             } else {
                 areaToFind = getString(R.string.keyHanoi);
             }
+
+            onlineStatus = bundle.getBoolean("state", true);
+            if(!onlineStatus) {
+                a0 = bundle.getStringArrayList("data");
+                lastTimeAccessDB = bundle.getString("lastTimeAccessDatabase");
+            } else {
+                /* Init Database */
+                if(initDatabase(areaToFind) == 6){
+                    alertDialog.showAlertDialog2(6,"Error");
+                }
+            }
         }
-        /* Init Database */
-        if(initDatabase(areaToFind) == 6){
-            alertDialog.showAlertDialog2(6,"Error");
-        }
+
     }
     
     /* onStart()
@@ -132,10 +143,23 @@ public class TrackingActivity extends AppCompatActivity {
                 if ((text.trim().length() <= 4)  || (Character.isDigit(c))) {   // Invalid code (1)
                     alertDialog.showAlertDialog2(1, text);
                 } else {                                                        // Seach in database
-                    int temp = getDatabase(areaToFind,text);
+                    if(!onlineStatus) {
+                        getDatabase2(areaToFind, text);
+                    } else {
+                        int temp = getDatabase(areaToFind, text);
+                    }
                 }
             }
         });
+
+        if (!onlineStatus) {
+            FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+            fragmentTransaction.add(R.id.frg, new TestFragment());
+            fragmentTransaction.commit();
+//
+//            TextView frgtxt = findViewById(R.id.frg_txt);
+//            frgtxt.setText(lastTimeAccessDB);
+        }
     }
     
     /* onBackPressed()
@@ -145,7 +169,18 @@ public class TrackingActivity extends AppCompatActivity {
     public void onBackPressed(){
         final Intent data = new Intent();
         // Add data to the intent
-        data.putExtra(EXTRA_DATA, a0);
+        if (onlineStatus) {
+            data.putExtra(TRACK_EXTRA_DATA, a0);
+            Date date = new Date();
+            final String DATE_FORMAT = "dd/MM/yyyy";
+            final String TIME_FORMAT_12 = "hh:mm:ss a";
+            final String TIME_FORMAT_24 = "HH:mm:ss";
+            SimpleDateFormat format = new SimpleDateFormat(DATE_FORMAT + " " + TIME_FORMAT_24);
+            data.putExtra(TRACK_EXTRA_DATE, format.format(date));
+        } else {
+
+            data.putExtra(TRACK_EXTRA_DATA, 1);
+        }
 
         /*
          * Set the resultCode to AppCompatActivity.RESULT_OK to show
@@ -164,7 +199,7 @@ public class TrackingActivity extends AppCompatActivity {
         } catch(Exception ignored) {
         }
     }
-    
+
     /* Seach in database */
     public int getDatabase(String areaCode, final String compareText) {
         // Get the FirebaseDatabase object 
@@ -210,6 +245,8 @@ public class TrackingActivity extends AppCompatActivity {
     }
 
     public int initDatabase(String areaCode) {
+        a0.clear();
+//        final int[] i = {0};
         // Get the FirebaseDatabase object 
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         // Connection to the node named areaCode, this node is defined by the Firebase database ('hanoi' or 'saigon')
@@ -221,6 +258,8 @@ public class TrackingActivity extends AppCompatActivity {
                 // Loop to get data when there is a change on Firebasese
                 for (DataSnapshot data : dataSnapshot.getChildren()) {
                     a0.add(data.getValue().toString());
+//                    Log.d("print", a0.get(i[0]));
+//                    i[0]++;
                 }
             }
 
@@ -232,5 +271,22 @@ public class TrackingActivity extends AppCompatActivity {
             }
         });
         return 0;
+    }
+
+    public void getDatabase2(String areaCode, final String compareText) {
+        int temp = 2;
+        for (int i = 0; i < a0.size(); i++) {
+            String value = a0.get(i);
+            if (value.contains(compareText)) {      // Check if the code exists
+                temp = 3;                           // Feedback curent is Received (3)
+                if (value.contains("...")) {        // Continue to check whether the status is processing
+                    temp = 4;                       // Feedback curent is Processing (4)
+                    if (value.contains("OK")) {     // Keep checking if the code is complete
+                        temp = 5;                   // Feedback curent is Finished (5)
+                    }
+                }
+            }
+        }
+        alertDialog.showAlertDialog2(temp, compareText);
     }
 }
