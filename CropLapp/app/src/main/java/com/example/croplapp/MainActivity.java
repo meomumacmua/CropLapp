@@ -277,17 +277,17 @@ public class MainActivity extends AppCompatActivity {
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString("area", loadArea);
 
-        int dataReserveLength = dataReserve.size();
-        Log.d("print", dataReserve.size() + "");
-        editor.putInt("dataReserveLength", dataReserveLength);
 
-        for (int i = 0; i < dataReserveLength; i++) {
-            Log.d("print", dataReserve.get(i));
-            editor.putString("dataReserve"+i,dataReserve.get(i));
-        }
-        editor.putString("lastTimeAccessDatabase", lastTimeAccessDB);
-        // Save
-        editor.apply();
+            int dataReserveLength = dataReserve.size();
+            editor.putInt("dataReserveLength", dataReserveLength);
+
+            for (int i = 0; i < dataReserveLength; i++) {
+                editor.putString("dataReserve" + i, dataReserve.get(i));
+            }
+            editor.putString("lastTimeAccessDatabase", lastTimeAccessDB);
+            // Save
+            editor.apply();
+
     }
 
     private void eventClick() {

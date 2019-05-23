@@ -10,11 +10,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 
 
 public class TestFragment extends Fragment {
 
     Button btFrg;
+    TextView txt;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
@@ -27,6 +29,11 @@ public class TestFragment extends Fragment {
 //                onDestroy();
 //            }
 //        });
+        txt = (TextView) view.findViewById(R.id.frg_txt);
+        Bundle frgBundle = getArguments();
+        if(frgBundle != null) {
+            txt.setText(getString(R.string.lastaccessDB) + " " + frgBundle.getString("lastTimeAccessDatabase"));
+        }
         return view;
     }
 

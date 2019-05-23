@@ -29,6 +29,8 @@ import com.google.firebase.database.ValueEventListener;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Calendar;
+
 
 public class TrackingActivity extends AppCompatActivity {
     /* key specifying the search area: "hanoi" or "saigon" */
@@ -154,7 +156,13 @@ public class TrackingActivity extends AppCompatActivity {
 
         if (!onlineStatus) {
             FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-            fragmentTransaction.add(R.id.frg, new TestFragment());
+
+            TestFragment frgA = new TestFragment();
+            Bundle frgBundle = new Bundle();
+            frgBundle.putString("lastTimeAccessDatabase", lastTimeAccessDB);
+            frgA.setArguments(frgBundle);
+
+            fragmentTransaction.add(R.id.frg, frgA);
             fragmentTransaction.commit();
 //
 //            TextView frgtxt = findViewById(R.id.frg_txt);
@@ -171,11 +179,35 @@ public class TrackingActivity extends AppCompatActivity {
         // Add data to the intent
         if (onlineStatus) {
             data.putExtra(TRACK_EXTRA_DATA, a0);
+
+//            final String DATE_FORMAT = "dd/MM/yyyy";
+//            final String TIME_FORMAT_12 = "hh:mm:ss a";
+//            final String TIME_FORMAT_24 = "HH:mm:ss";
+//            final String timeRegex = getString(R.string.timeRegex);
+//            final String dateReges = getString(R.string.dateRegex);
+//            Calendar calendar = Calendar.getInstance();
+//            SimpleDateFormat formatDate = new SimpleDateFormat(DATE_FORMAT);
+//            SimpleDateFormat formatTime = new SimpleDateFormat(TIME_FORMAT_24);
+//            final String lastTimeAccessDB = formatTime.format(calendar) + formatDate.format(calendar);
+//            Log.d("print",lastTimeAccessDB);
+//            data.putExtra(TRACK_EXTRA_DATE, lastTimeAccessDB);
+
+//            int dayOfMonth = calendar.get(calendar.DAY_OF_MONTH);
+//            int month = calendar.get(calendar.MONTH) + 1;
+//            int year = calendar.get(calendar.YEAR);
+//
+//            int hour = calendar.get(Calendar.HOUR_OF_DAY);
+//            int minute = calendar.get(Calendar.MINUTE);
+//            int second = calendar.get(Calendar.SECOND);
+
+//            String date = dayOfMonth + "/" + month + "/" + year;
+
             Date date = new Date();
             final String DATE_FORMAT = "dd/MM/yyyy";
-            final String TIME_FORMAT_12 = "hh:mm:ss a";
+//            final String TIME_FORMAT_12 = "hh:mm:ss a";
             final String TIME_FORMAT_24 = "HH:mm:ss";
-            SimpleDateFormat format = new SimpleDateFormat(DATE_FORMAT + " " + TIME_FORMAT_24);
+            SimpleDateFormat format = new SimpleDateFormat(TIME_FORMAT_24 + " " + DATE_FORMAT  );
+            Log.d("print", format.format(date));
             data.putExtra(TRACK_EXTRA_DATE, format.format(date));
         } else {
 
