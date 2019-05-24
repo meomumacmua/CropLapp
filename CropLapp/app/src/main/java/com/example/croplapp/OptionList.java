@@ -18,6 +18,8 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 public class OptionList extends AppCompatActivity{
+    /* */
+    boolean DEBUG = false;
     /* String specifying the choosed area: "Hà Nội" or "Sài Gòn" */
     String areaChoosed;
     /*  */
@@ -36,7 +38,11 @@ public class OptionList extends AppCompatActivity{
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
         if (bundle != null) {
-            areaChoosed = bundle.getString("area", getString(R.string.areaHanoiCode));
+            areaChoosed = bundle.getString(getString(R.string.keyArea), getString(R.string.areaHanoiCode));
+
+            if (DEBUG) {
+                Log.d("print", "onCreat - areaChoosed: " + areaChoosed);
+            }
         }
     }
 
@@ -67,7 +73,6 @@ public class OptionList extends AppCompatActivity{
                         finish();
                     }
                 });
-//                showAlertDialog(4, "abc");
 
             }
         });
@@ -85,7 +90,6 @@ Chưa chạy được tác vụ nền
         if (areaChoosed.contains(getString(R.string.areaHcmCode))) {
             showArea.setText(getString(R.string.curentArea) + " " + getString(R.string.areaHcm));
         }
-
 
         /* Get the spinner from the xml. */
         final Spinner dropdown = findViewById(R.id.spinner0);
@@ -109,14 +113,28 @@ Chưa chạy được tác vụ nền
                 switch (position) {
                     case 0:
                         // Whatever you want to happen when the first item gets selected
+                        if (DEBUG) {
+                            Log.d("print", "onDrop - areaChoosed: " + areaChoosed);
+                        }
+
                         break;
                     case 1:
                         areaChoosed = getString(R.string.areaHanoiCode);
                         showArea.setText(getString(R.string.curentArea) + " " + getString(R.string.areaHanoi));
+
+                        if (DEBUG) {
+                            Log.d("print", "onDrop - areaChoosed: " + areaChoosed);
+                        }
+
                         break;
                     case 2:
                         areaChoosed = getString(R.string.areaHcmCode);
                         showArea.setText(getString(R.string.curentArea) + " " + getString(R.string.areaHcm));
+
+                        if (DEBUG) {
+                            Log.d("print", "onDrop - areaChoosed: " + areaChoosed);
+                        }
+
                         break;
 
                 }
@@ -135,7 +153,9 @@ Chưa chạy được tác vụ nền
 
         final Intent data = new Intent();
         // Add data to the intent
-        Log.d("print", areaChoosed);
+        if (DEBUG) {
+            Log.d("print", "onBack - areaChoosed: " + areaChoosed);
+        }
         data.putExtra(EXTRA_DATA, areaChoosed);
 
         /*

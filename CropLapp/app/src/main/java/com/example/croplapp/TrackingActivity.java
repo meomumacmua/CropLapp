@@ -33,6 +33,8 @@ import java.util.Calendar;
 
 
 public class TrackingActivity extends AppCompatActivity {
+    /* */
+    boolean DEBUG = false;
     /* key specifying the search area: "hanoi" or "saigon" */
 //    String currentareaCode;
     /* String specifying the search area: "Hà Nội" or "Sài Gòn" */
@@ -71,23 +73,33 @@ public class TrackingActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.tracking_layout);
-        Log.d("print", "oncreat Track");
+
+        if (DEBUG) {
+            Log.d("print", "onCreat - track");
+        }
         
         /* Get intent bundle */
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
         if (bundle != null) {
-            currentareaCode = bundle.getString("area", "hanoi");
+            currentareaCode = bundle.getString(getString(R.string.keyArea), getString(R.string.areaHanoiCode));
+            onlineStatus = bundle.getBoolean(getString(R.string.keyState), true);
 
-            onlineStatus = bundle.getBoolean("state", true);
             if(!onlineStatus) {
-                a0 = bundle.getStringArrayList("data");
-                lastTimeAccessDB = bundle.getString("lastTimeAccessDatabase");
+                a0 = bundle.getStringArrayList(getString(R.string.keydata));
+                lastTimeAccessDB = bundle.getString(getString(R.string.keyLastTime));
             } else {
                 /* Init Database */
                 if(initDatabase(currentareaCode) == 6){
                     alertDialog.showAlertDialog2(6,"Error");
                 }
+            }
+
+            if (DEBUG) {
+                Log.d("print", "onCreat - bundle - currentareaCode: "   + currentareaCode);
+                Log.d("print", "onCreat - bundle - state: "             + onlineStatus);
+                Log.d("print", "onCreat - bundle - data: "              + a0.get(0));
+                Log.d("print", "onCreat - bundle - time: "              + lastTimeAccessDB);
             }
         }
 
@@ -142,7 +154,8 @@ public class TrackingActivity extends AppCompatActivity {
                     if(!onlineStatus) {
                         getDatabase2(text);
                     } else {
-                        int temp = getDatabase(currentareaCode, text);
+//                        int temp = getDatabase(currentareaCode, text);
+                        getDatabase2(text);
                     }
                 }
             }
@@ -153,7 +166,7 @@ public class TrackingActivity extends AppCompatActivity {
 
             TestFragment frgA = new TestFragment();
             Bundle frgBundle = new Bundle();
-            frgBundle.putString("lastTimeAccessDatabase", lastTimeAccessDB);
+            frgBundle.putString(getString(R.string.keyLastTime), lastTimeAccessDB);
             frgA.setArguments(frgBundle);
 
             fragmentTransaction.add(R.id.frg, frgA);

@@ -29,7 +29,17 @@
     <string name="noticeOffline">Bạn đang ngoại tuyến!!! \n Kết nối mạng và thử lại</string>
     <string name="noticeTitle">"CropLab Thông báo!!!"</string>
 
+    <string name="keyArea">area</string>
+    <string name="keyState">state</string>
+    <string name="keydata">data</string>
+
     <string name="sharePreName">croplabSetting</string>
+    <string name="keyDataHnL">dataReserveHanoiLength</string>
+    <string name="keyDataHn">dataReserveHanoi</string>
+    <string name="keyDataHcmL">dataReserveHcmLength</string>
+    <string name="keyDataHcm">dataReserveHcm</string>
+    <string name="keyLastTime">lastTimeAccessDatabase</string>
+    <string name="keyLastTimeNone">Không có dữ liệu</string>
 
     <string name="backConfirm">Nhấn phím back lần nữa để thoát</string>
 
