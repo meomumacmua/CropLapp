@@ -26,30 +26,21 @@ public class FilmStoreActivity extends AppCompatActivity {
     RecyclerView recyclerView;
     FilmStoreAdapter adapter;
 
-    ArrayList<String> a0 = new ArrayList<String>();
+    ArrayList<String> filmData = new ArrayList<String>();
 
     ProgressDialog progressDialog;
 
-    int arrayListsize = 0;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.list_store);
-
-//        Handler handler = new Handler();
-//
-//        handler.postDelayed(new Runnable() {
-//            public void run() {
-//                finish();
-//            }
-//        }, 20000);
     }
 
     protected void onStart() {
         super.onStart();
         setContentView(R.layout.list_store);
 
-        getDatabase("hanoifilm");
+        getDatabase(getString(R.string.filmHanoi));
 
         progressDialog = new ProgressDialog(this);
         // Setting Title
@@ -65,28 +56,20 @@ public class FilmStoreActivity extends AppCompatActivity {
 
         new CountDownTimer(4000, 1000) {
             public void onTick(long millisUntilFinished) {
-                Log.d("print","seconds remaining: " + millisUntilFinished / 1000);
+//                Log.d("print","seconds remaining: " + millisUntilFinished / 1000);
             }
 
             public void onFinish() {
-                Log.d("print","done!");
+//                Log.d("print","done!");
                 progressDialog.dismiss();
 
-                Log.d("print", a0.size() + "");
+//                Log.d("print", filmData.size() + "");
                 FilmDetails item;
                 addControl();
 
-                for (short i = 0; i < a0.size(); i++) {
-                    String[] split = a0.get(i).toString().split(",");
+                for (short i = 0; i < filmData.size(); i++) {
+                    String[] split = filmData.get(i).split(",");
                     split[3] = split[3].trim();
-//                    Log.d("print", "/" + split[3] + "/");
-
-//                    String filmStateDecode = "...";
-//                    if(split[4].contains("0000")) {
-//                        filmStateDecode = "Hết hàng";
-//                    } else if (split[4].contains("0001")) {
-//                        filmStateDecode = "Còn hàng";
-//                    }
                     item = new FilmDetails(split[0], split[2], split[3], split[4]);
                     list.add(item);
                 }
@@ -94,7 +77,6 @@ public class FilmStoreActivity extends AppCompatActivity {
             }
         }.start();
 
-//        ImageButton buttonRefresh = findViewById(R.id.btn_);
         ImageButton buttonRefresh = findViewById(R.id.button_refresh);
         buttonRefresh.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -116,12 +98,12 @@ public class FilmStoreActivity extends AppCompatActivity {
 
     }
 
-    public void getDatabase(String areaCode) {
+    public void getDatabase(String topic) {
         //Clear arrray buffer before retrieve data
-        a0.clear();
+        filmData.clear();
         // Get the FirebaseDatabase object
         DatabaseReference database;
-        database = FirebaseDatabase.getInstance().getReference(areaCode);
+        database = FirebaseDatabase.getInstance().getReference(topic);
         // Connection to the node named areaCode, this node is defined by the Firebase database ('hanoi' or 'saigon')
         // Access and listen to data changes
         database.addValueEventListener(new ValueEventListener() {
@@ -136,8 +118,7 @@ public class FilmStoreActivity extends AppCompatActivity {
                     String[] value = data.getValue().toString().split(",");
 //                    Log.d("print", data.getValue().toString());
 
-                    a0.add(key + ", " + data.getValue());
-//                    Log.d("print", "a0 " + a0);
+                    filmData.add(key + ", " + data.getValue());
                 }
             }
             /* Firebase error*/

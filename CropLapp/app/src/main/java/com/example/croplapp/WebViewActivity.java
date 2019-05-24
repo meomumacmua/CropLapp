@@ -1,74 +1,65 @@
-/*
-* Name: WebViewActivity.java
-* Author: Nguyen Duc Tien 16020175
-* Purpose: Show store website: https://croplab.vn/
-* Include: Webview
-*/
-
 package com.example.croplapp;
 
+import android.graphics.Bitmap;
 import android.os.Bundle;
+
+
 import android.support.v7.app.AppCompatActivity;
-import android.view.KeyEvent;
-import android.webkit.WebSettings;
+import android.support.v7.widget.Toolbar;
+import android.view.View;
+import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.ImageView;
+import android.widget.ProgressBar;
 
 public class WebViewActivity extends AppCompatActivity {
-
-    private   WebView webView;
+    ProgressBar superProgressBar;
+    ImageView superImageView;
+    WebView superWebView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.view_web);
-    }
-    @Override
-    protected void onStart() {
-        super.onStart();
-        setContentView(R.layout.view_web);
 
-        webView = findViewById(R.id.webView);
-        //Setting webview properties
+        superProgressBar = findViewById(R.id.ProgressBar);
+        superImageView = findViewById(R.id.ImageView);
+        superWebView = findViewById(R.id.WebView);
 
-        webView.getSettings().setJavaScriptEnabled(true);
-        webView.getSettings().setJavaScriptEnabled (true);
-        webView.getSettings().setLoadsImagesAutomatically(true);
-        webView.setVerticalScrollBarEnabled(false);
-        webView.setHorizontalScrollBarEnabled(false);
-        webView.getSettings().setLoadWithOverviewMode(true);
-        webView.getSettings().setUseWideViewPort(true);
-        webView.getSettings().setBuiltInZoomControls(true);
-        webView.getSettings().setDisplayZoomControls(false);
-        webView.getSettings().setDomStorageEnabled(true);
-//        webView.loadUrl("https://croplab.vn/blog");
+        superProgressBar.setMax(100);
 
-        webView.loadUrl("https://www.google.com");
-        
-        webView.setWebViewClient(new WebViewClient() {
+        superWebView.loadUrl("https://www.facebook.com/CropLab/");
+        superWebView.getSettings().setJavaScriptEnabled(true);
+        superWebView.setWebViewClient(new WebViewClient());
+        superWebView.setWebChromeClient(new WebChromeClient(){
             @Override
-            public boolean shouldOverrideUrlLoading(WebView view, String url) {
-                view.loadUrl(url);
-                return true;
+            public void onProgressChanged(WebView view, int newProgress) {
+                super.onProgressChanged(view, newProgress);
+                superProgressBar.setProgress(newProgress);
+            }
+            /*
+                        @Override
+                        public void onReceivedTitle(WebView view, String title) {
+                            super.onReceivedTitle(view, title);
+                            getSupportActionBar().setTitle(title);
+                        }
+            */
+            @Override
+            public void onReceivedIcon(WebView view, Bitmap icon) {
+                super.onReceivedIcon(view, icon);
+                superImageView.setImageBitmap(icon);
             }
         });
 
-//        public void onPageFinished(WebView view, String url) {
-//            view.loadUrl("javascript:alert('hi')");
-//        }
     }
 
-    /* onBackPressed()
-    * Press back button to comeback to previous link
-    * If not back to MainActivity
-    */
     @Override
     public void onBackPressed() {
-        if(webView.canGoBack()) {
-            webView.goBack();
+        if (superWebView.canGoBack()) {
+            superWebView.goBack();
         } else {
-            super.onBackPressed();
+            finish();
         }
     }
 }
-

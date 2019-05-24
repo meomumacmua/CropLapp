@@ -34,9 +34,9 @@ import java.util.Calendar;
 
 public class TrackingActivity extends AppCompatActivity {
     /* key specifying the search area: "hanoi" or "saigon" */
-    String areaToFind;
+//    String currentareaCode;
     /* String specifying the search area: "Hà Nội" or "Sài Gòn" */
-    String textReceiver;
+    String currentareaCode;
     boolean onlineStatus;
     /* */
     ArrayList<String> a0 = new ArrayList<>();
@@ -77,12 +77,7 @@ public class TrackingActivity extends AppCompatActivity {
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
         if (bundle != null) {
-            textReceiver = bundle.getString("area", "Hà Nội");
-            if (textReceiver.contains(getString(R.string.areaSaigon))){
-                areaToFind = getString(R.string.keySaigon);
-            } else {
-                areaToFind = getString(R.string.keyHanoi);
-            }
+            currentareaCode = bundle.getString("area", "hanoi");
 
             onlineStatus = bundle.getBoolean("state", true);
             if(!onlineStatus) {
@@ -90,7 +85,7 @@ public class TrackingActivity extends AppCompatActivity {
                 lastTimeAccessDB = bundle.getString("lastTimeAccessDatabase");
             } else {
                 /* Init Database */
-                if(initDatabase(areaToFind) == 6){
+                if(initDatabase(currentareaCode) == 6){
                     alertDialog.showAlertDialog2(6,"Error");
                 }
             }
@@ -109,7 +104,12 @@ public class TrackingActivity extends AppCompatActivity {
 
         /* Show seach area */
         TextView showArea = findViewById(R.id.textViewArea);
-        showArea.setText(textReceiver);
+        if (currentareaCode.contains(getString(R.string.areaHcmCode))) {
+            showArea.setText(getString(R.string.areaHcm));
+        }
+        if (currentareaCode.contains(getString(R.string.areaHanoiCode))) {
+            showArea.setText(getString(R.string.areaHanoi));
+        }
 
         /* */
         clickedEditText = findViewById(R.id.editText);
@@ -118,12 +118,6 @@ public class TrackingActivity extends AppCompatActivity {
             public void onClick(View view) {
                 clickedEditText.getText().clear();
             }
-//            public void onKey(View v, int keyCode, KeyEvent event) {
-//                if (keyCode == KeyEvent.KEYCODE_NAVIGATE_NEXT) {
-////                    int temp = getDatabase(areaToFind,clickedEditText.getText().toString());
-//                    Log.d("print", keyCode + "");
-//                }
-//            }
         });
 
         /* Seach button */
@@ -146,9 +140,9 @@ public class TrackingActivity extends AppCompatActivity {
                     alertDialog.showAlertDialog2(1, text);
                 } else {                                                        // Seach in database
                     if(!onlineStatus) {
-                        getDatabase2(areaToFind, text);
+                        getDatabase2(text);
                     } else {
-                        int temp = getDatabase(areaToFind, text);
+                        int temp = getDatabase(currentareaCode, text);
                     }
                 }
             }
@@ -305,7 +299,7 @@ public class TrackingActivity extends AppCompatActivity {
         return 0;
     }
 
-    public void getDatabase2(String areaCode, final String compareText) {
+    public void getDatabase2(final String compareText) {
         int temp = 2;
         for (int i = 0; i < a0.size(); i++) {
             String value = a0.get(i);

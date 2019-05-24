@@ -6,16 +6,7 @@
 */
 package com.example.croplapp;
 
-import android.app.Notification;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
-
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.res.Resources;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v4.app.NotificationCompat;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -45,12 +36,10 @@ public class OptionList extends AppCompatActivity{
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
         if (bundle != null) {
-            areaChoosed = bundle.getString("area", "");
+            areaChoosed = bundle.getString("area", getString(R.string.areaHanoiCode));
         }
-
     }
 
-    
     /* onStart(); 
     * Show name of search area
     * Show dropdown list
@@ -90,12 +79,18 @@ Chưa chạy được tác vụ nền
         
         /* Show name of search area */
         final TextView showArea = findViewById(R.id.textView2);
-        showArea.setText(getString(R.string.curentArea) + " " + areaChoosed);
+        if (areaChoosed.contains(getString(R.string.areaHanoiCode))) {
+            showArea.setText(getString(R.string.curentArea) + " " + getString(R.string.areaHanoi));
+        }
+        if (areaChoosed.contains(getString(R.string.areaHcmCode))) {
+            showArea.setText(getString(R.string.curentArea) + " " + getString(R.string.areaHcm));
+        }
+
 
         /* Get the spinner from the xml. */
         final Spinner dropdown = findViewById(R.id.spinner0);
         // Create a list of items for the spinner.
-        String[] items = new String[]{getString(R.string.areaHanoi), getString(R.string.areaSaigon)};
+        String[] items = new String[]{getString(R.string.noneArea), getString(R.string.areaHanoi), getString(R.string.areaHcm)};
         
         /*
         * Create an adapter to describe how the items are displayed, adapters are used in several places in android.
@@ -110,9 +105,21 @@ Chưa chạy được tác vụ nền
         /* Get the text when sellect */
         dropdown.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                areaChoosed = dropdown.getSelectedItem().toString();
-                showArea.setText(getString(R.string.curentArea) + " " + areaChoosed);
+            public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id) {
+                switch (position) {
+                    case 0:
+                        // Whatever you want to happen when the first item gets selected
+                        break;
+                    case 1:
+                        areaChoosed = getString(R.string.areaHanoiCode);
+                        showArea.setText(getString(R.string.curentArea) + " " + getString(R.string.areaHanoi));
+                        break;
+                    case 2:
+                        areaChoosed = getString(R.string.areaHcmCode);
+                        showArea.setText(getString(R.string.curentArea) + " " + getString(R.string.areaHcm));
+                        break;
+
+                }
             }
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
@@ -128,6 +135,7 @@ Chưa chạy được tác vụ nền
 
         final Intent data = new Intent();
         // Add data to the intent
+        Log.d("print", areaChoosed);
         data.putExtra(EXTRA_DATA, areaChoosed);
 
         /*
@@ -138,30 +146,5 @@ Chưa chạy được tác vụ nền
         // Call the finish() function to close the current Activity and return to MainActivity
         finish();
         overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-    }
-
-    public void showNotification() {
-        Log.d("print", "In showNotification();");
-
-
-//        Intent intent = new Intent(this, MainActivity.class);
-        Intent intent = new Intent(Intent.ACTION_MAIN);
-        intent.setClassName("com.example.croplapp", "com.example.croplapp.MainActivity");
-        PendingIntent pi = PendingIntent.getActivity(this, 0, intent, 0);
-
-        Notification notification = new NotificationCompat.Builder(this)
-                .setTicker("Hello Ticker")
-                .setSmallIcon(android.R.drawable.ic_menu_report_image)
-                .setContentTitle("Hello content title")
-                .setContentText("hello content text")
-                .setContentIntent(pi)
-                .setAutoCancel(true)
-                .build();
-        // Play sound
-        notification.defaults = Notification.DEFAULT_SOUND;
-
-        NotificationManager notificationManager =
-                (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-        notificationManager.notify(0, notification);
     }
 }

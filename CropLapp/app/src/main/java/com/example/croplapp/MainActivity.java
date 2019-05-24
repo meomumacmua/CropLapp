@@ -9,17 +9,10 @@ package com.example.croplapp;
 
 import android.app.Dialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.design.widget.BottomSheetBehavior;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Gravity;
@@ -27,7 +20,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -36,7 +28,7 @@ import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity {
 
     /* String specifying the search area: "Hà Nội" or "Sài Gòn" */
-    String loadArea;
+    String currentAreaCode;
     boolean onlineStatus;
 
     /* */
@@ -47,7 +39,9 @@ public class MainActivity extends AppCompatActivity {
     private static final int REQUEST_CODE_TRACK = 1997;
 
     /* */
-    ArrayList<String> dataReserve = new ArrayList<String>();
+    ArrayList<String> dataReserveHanoi = new ArrayList<String>();
+    ArrayList<String> dataReserveHcm = new ArrayList<String>();
+
     String lastTimeAccessDB;
     
     /* Internet connection test function */
@@ -68,7 +62,6 @@ public class MainActivity extends AppCompatActivity {
         
         /* Check internet */
         if (isNetworkConnected()) {
-            // Load saved data
             onlineStatus = true;
         } else {
             onlineStatus = false;
@@ -81,8 +74,9 @@ public class MainActivity extends AppCompatActivity {
                 }
             });
         }
+        // Load saved data
         loadAppSetting();
-        Log.d("print", "oncreat" + " " + loadArea);
+        Log.d("print", "oncreat" + " " + currentAreaCode);
     }
     
     /* onstart(); 
@@ -96,7 +90,14 @@ public class MainActivity extends AppCompatActivity {
 
         /* Show name of search area */
         TextView showArea = findViewById(R.id.textView);
-        showArea.setText(loadArea);
+        if (currentAreaCode.contains(getString(R.string.areaHanoiCode))) {
+            showArea.setText(getString(R.string.areaHanoi));
+        }
+        if (currentAreaCode.contains(getString(R.string.areaHcmCode))) {
+            showArea.setText(getString(R.string.areaHcm));
+        }
+
+
 
         /* Action switch to FilmStoreAdapter.java */
         Button buttonfilmstore = findViewById(R.id.button_film_store);
@@ -124,11 +125,16 @@ public class MainActivity extends AppCompatActivity {
                 Intent intent1 = new Intent(MainActivity.this, TrackingActivity.class);
                 // Send bundle data (seach area) to destination activity
                 Bundle bundle = new Bundle();
-                bundle.putString("area",loadArea);
+                bundle.putString("area",currentAreaCode);
 
                 if (!isNetworkConnected()) {
                     bundle.putBoolean("state", onlineStatus);
-                    bundle.putStringArrayList("data", dataReserve);
+                    if (currentAreaCode.contains(getString(R.string.areaHanoiCode))) {
+                        bundle.putStringArrayList("data", dataReserveHanoi);
+                    }
+                    if (currentAreaCode.contains(getString(R.string.areaHcmCode))) {
+                        bundle.putStringArrayList("data", dataReserveHcm);
+                    }
                     bundle.putString("lastTimeAccessDatabase", lastTimeAccessDB);
                 }
 
@@ -177,7 +183,7 @@ public class MainActivity extends AppCompatActivity {
                 
                 // Send bundle data (seach area) to destination activity
                 Bundle bundle = new Bundle();
-                bundle.putString("area",loadArea);
+                bundle.putString("area",currentAreaCode);
                 intent3.putExtras(bundle);
 
                 // Start OptionList activity and get result when called activity return
@@ -204,7 +210,7 @@ public class MainActivity extends AppCompatActivity {
             */
             if(resultCode == AppCompatActivity.RESULT_OK) {
                 // Receive data from returned Intent
-                loadArea = data.getStringExtra(OptionList.EXTRA_DATA);
+                currentAreaCode = data.getStringExtra(OptionList.EXTRA_DATA);
             } else {
                 // DetailActivity failed, no data returned.
 
@@ -218,7 +224,12 @@ public class MainActivity extends AppCompatActivity {
             if(resultCode == AppCompatActivity.RESULT_OK) {
                 if (onlineStatus) {
                     // Receive data from returned Intent
-                    dataReserve = data.getStringArrayListExtra(TrackingActivity.TRACK_EXTRA_DATA);
+                    if (currentAreaCode.contains(getString(R.string.areaHanoiCode))) {
+                        dataReserveHanoi = data.getStringArrayListExtra(TrackingActivity.TRACK_EXTRA_DATA);
+                    }
+                    if (currentAreaCode.contains(getString(R.string.areaHcmCode))) {
+                        dataReserveHcm = data.getStringArrayListExtra(TrackingActivity.TRACK_EXTRA_DATA);
+                    }
                     lastTimeAccessDB = data.getStringExtra(TrackingActivity.TRACK_EXTRA_DATE);
                 } else {
                     int temp = (int) data.getIntExtra(TrackingActivity.TRACK_EXTRA_DATA, 1);
@@ -255,18 +266,23 @@ public class MainActivity extends AppCompatActivity {
 
     /* Get saved data from android-shared-preferences */
     private void loadAppSetting()  {
-        dataReserve.clear();
+        dataReserveHanoi.clear();
         SharedPreferences sharedPreferences= this.getSharedPreferences("croplabSetting", Context.MODE_PRIVATE);
         if(sharedPreferences!= null) {
             // String specifying the search area
-            loadArea = sharedPreferences.getString("area", getString(R.string.areaHanoi));
+            currentAreaCode = sharedPreferences.getString("area", getString(R.string.areaHanoi));
             //if no connect, load from last save
             if (!isNetworkConnected()) {
-                int dataReserveLength = sharedPreferences.getInt("dataReserveLength", 0);
-                for (int i = 0; i < dataReserveLength; i++) {
-                    dataReserve.add(sharedPreferences.getString("dataReserve" + i, "0"));
-                    lastTimeAccessDB = sharedPreferences.getString("lastTimeAccessDatabase","Không có dữ liệu");
+                int dataReserveHanoiLength = sharedPreferences.getInt("dataReserveHanoiLength", 0);
+                for (int i = 0; i < dataReserveHanoiLength; i++) {
+                    dataReserveHanoi.add(sharedPreferences.getString("dataReserveHanoi" + i, "0"));
                 }
+                int dataReserveHcmLength = sharedPreferences.getInt("dataReserveHcmLength", 0);
+                for (int i = 0; i < dataReserveHcmLength; i++) {
+                    dataReserveHcm.add(sharedPreferences.getString("dataReserveHcm" + i, "0"));
+                }
+
+                lastTimeAccessDB = sharedPreferences.getString("lastTimeAccessDatabase","Không có dữ liệu");
             }
         }
     }
@@ -275,18 +291,23 @@ public class MainActivity extends AppCompatActivity {
     public void saveAppSetting()  {
         SharedPreferences sharedPreferences= this.getSharedPreferences("croplabSetting", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString("area", loadArea);
+        editor.putString("area", currentAreaCode);
 
 
-            int dataReserveLength = dataReserve.size();
-            editor.putInt("dataReserveLength", dataReserveLength);
+        int dataReserveHanoiLength = dataReserveHanoi.size();
+        editor.putInt("dataReserveHanoiLength", dataReserveHanoiLength);
+        for (int i = 0; i < dataReserveHanoiLength; i++) {
+            editor.putString("dataReserveHanoi" + i, dataReserveHanoi.get(i));
+        }
 
-            for (int i = 0; i < dataReserveLength; i++) {
-                editor.putString("dataReserve" + i, dataReserve.get(i));
-            }
-            editor.putString("lastTimeAccessDatabase", lastTimeAccessDB);
-            // Save
-            editor.apply();
+        int dataReserveHcmLength = dataReserveHcm.size();
+        editor.putInt("dataReserveHcmLength", dataReserveHcmLength);
+        for (int i = 0; i < dataReserveHcmLength; i++) {
+            editor.putString("dataReserveHcm" + i, dataReserveHcm.get(i));
+        }
+        editor.putString("lastTimeAccessDatabase", lastTimeAccessDB);
+        // Save
+        editor.apply();
 
     }
 

@@ -2,11 +2,17 @@
 <resources>
     <string name="app_name">CropLapp</string>
     <string name="noneArea">Chọn khu vực</string>
+
     <string name="curentArea">Khu vực hiện tại:</string>
+
     <string name="areaHanoi">Hà Nội</string>
-    <string name="areaSaigon">Sài Gòn</string>
-    <string name="keyHanoi">hanoi</string>
-    <string name="keySaigon">saigon</string>
+    <string name="areaHanoiCode">hanoi</string>
+    <string name="filmHanoi">hanoifilm</string>
+
+    <string name="areaHcm">Hồ Chí Minh</string>
+    <string name="areaHcmCode">hcm</string>
+    <string name="filmHcm">hcmfilm</string>
+
     <string name="instruction1">"- Vui lòng nhập chính xác mã hoá đơn trên phiếu biên nhận.</string>
     <string name="instruction2">" - Để tracking film đen trắng, vui lòng thêm đuôi 'b' ở cuối mã biên nhận,
         ví dụ: 'K1234b'.</string>
@@ -15,15 +21,21 @@
     <string name="instruction4">"- Để tracking film dương bản, vui lòng thêm đuôi 'e' ở cuối mã biên nhận,
         ví dụ: 'K1234e'.</string>
     <string name="instruction5">- Nếu bạn gửi film từ tỉnh khác qua đường chuyển phát, vui lòng tìm kiếm theo tên hoặc thành phố của bạn. VD: Tuấn Anh, hoặc VD: Quảng Ninh.</string>
+
     <string name="filmname">filmname</string>
     <string name="filmprice">filmprice</string>
     <string name="filmstatus">filmstatus</string>
+
     <string name="noticeOffline">Bạn đang ngoại tuyến!!! \n Kết nối mạng và thử lại</string>
     <string name="noticeTitle">"CropLab Thông báo!!!"</string>
+
     <string name="sharePreName">croplabSetting</string>
+
     <string name="backConfirm">Nhấn phím back lần nữa để thoát</string>
+
     <string name="unavailableWhenOffline">Chức năng không khả dụng khi ngoại tuyến!</string>
     <string name="offlineSeach">Tìm kiếm ngoại tuyến</string>
+
     <string name="bill">Mã hóa đơn </string>
     <string name="codeInvalidd">không hợp lệ!\nMời nhập lại chính xác mã hoá đơn!!!</string>
     <string name="codeUnknow">không tìm thấy, vui lòng kiểm tra và nhập lại chính xác mã hoá đơn!</string>
