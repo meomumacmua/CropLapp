@@ -7,6 +7,11 @@ public class FilmDetails {
     public String filmstatus;
     public String filmimage;
 
+    //them
+    public int image;
+    public String title;
+    public String desc;
+    //end
     public FilmDetails() {
     }
 
@@ -16,6 +21,14 @@ public class FilmDetails {
         this.filmimage = filmImage;
         this.filmstatus = filmStatus;
     }
+
+    //them
+    public FilmDetails(int image, String title, String desc) {
+        this.image = image;
+        this.title = title;
+        this.desc = desc;
+    }
+    //end
 
 
     public String getFilmname() {
@@ -49,4 +62,30 @@ public class FilmDetails {
     public void setFilmimage(String filmImage) {
         this.filmimage = filmImage;
     }
+
+    //them
+    public int getImage() {
+        return image;
+    }
+
+    public void setImage(int image) {
+        this.image = image;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getDesc() {
+        return desc;
+    }
+
+    public void setDesc(String desc) {
+        this.desc = desc;
+    }
+    //end
 }

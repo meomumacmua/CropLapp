@@ -60,19 +60,22 @@ public class OptionList extends AppCompatActivity{
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(OptionList.this, MyService.class);
-                startService(intent);  // For the service.
+//                Intent intent = new Intent(OptionList.this, MyService.class);
+//                startService(intent);  // For the service.
 //                showNotification();
 //                FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
 //                fragmentTransaction.add(R.id.frg, new TestFragment());
 //                fragmentTransaction.commit();
-                test.showAlertDialog1( 4, "abc");
-                test.OnSeclectListener(new MyLib.OnSeclect() {
-                    @Override
-                    public void onSeclected() {
-                        finish();
-                    }
-                });
+//                test.showAlertDialog1( 4, "abc");
+//                test.OnSeclectListener(new MyLib.OnSeclect() {
+//                    @Override
+//                    public void onSeclected() {
+//                        finish();
+//                    }
+//                });
+                Log.d("print", "switch");
+//                Intent intent5 = new Intent(OptionList.this, ViewPagerActivity.class);
+//                startActivity(intent5);
 
             }
         });

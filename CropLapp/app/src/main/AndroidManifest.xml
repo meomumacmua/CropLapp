@@ -14,10 +14,11 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
+        <activity android:name=".FilmItem"></activity>
 
         <service
-            android:name="com.example.croplapp.MyService"
-            android:exported="false"/>
+            android:name=".MyService"
+            android:exported="false" />
 
         <activity android:name=".OptionList" />
         <activity android:name=".FilmStoreActivity" />
@@ -25,7 +26,6 @@
         <activity
             android:name=".WebViewActivity"
             android:configChanges="orientation|keyboard|keyboardHidden|screenSize" />
-
         <activity android:name=".InformationActivity" />
         <activity android:name=".MainActivity">
             <intent-filter>
