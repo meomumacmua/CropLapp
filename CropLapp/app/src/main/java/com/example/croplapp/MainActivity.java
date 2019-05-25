@@ -27,13 +27,13 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
     /* */
-    boolean DEBUG = false;
+    boolean DEBUG = true;
     /* String specifying the search area: "Hà Nội" or "Sài Gòn" */
     String currentAreaCode;
     boolean onlineStatus;
 
     /* */
-    MyLib alertDialog = new MyLib(this);
+    MyLib myLib = new MyLib(this);
     
     /* Request code for startActivityForResult() & onActivityResult() function */
     private static final int REQUEST_CODE_AREA = 1998;
@@ -77,8 +77,8 @@ public class MainActivity extends AppCompatActivity {
 
             onlineStatus = false;
             // Show alert offline and exit
-            alertDialog.showAlertDialog1(4,"4");
-            alertDialog.OnSeclectListener(new MyLib.OnSeclect() {
+            myLib.showAlertDialog1(4,"4");
+            myLib.OnSeclectListener(new MyLib.OnSeclect() {
                 @Override
                 public void onSeclected() {
                     finish();
@@ -145,13 +145,6 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                if (DEBUG) {
-                    Log.d("print", "onButton tracking - currentAreaCode: "  + currentAreaCode);
-                    Log.d("print", "onButton tracking - hanoi: "            + dataReserveHanoi.get(0));
-                    Log.d("print", "onButton tracking - hcm: "              + dataReserveHcm.get(0));
-                    Log.d("print", "onButton tracking - time: "             + lastTimeAccessDB);
-                }
-
                 Intent intent1 = new Intent(MainActivity.this, TrackingActivity.class);
                 // Send bundle data (seach area) to destination activity
                 Bundle bundle = new Bundle();
@@ -166,11 +159,21 @@ public class MainActivity extends AppCompatActivity {
                         bundle.putStringArrayList(getString(R.string.keydata), dataReserveHcm);
                     }
                     bundle.putString(getString(R.string.keyLastTime), lastTimeAccessDB);
+
+                    if (DEBUG) {
+                        Log.d("print", "onButton tracking - hanoi: "            + dataReserveHanoi.get(0));
+                        Log.d("print", "onButton tracking - hcm: "              + dataReserveHcm.get(0));
+                        Log.d("print", "onButton tracking - time: "             + lastTimeAccessDB);
+                    }
                 }
 
                 intent1.putExtras(bundle);
                 // Start activity
                 startActivityForResult(intent1, REQUEST_CODE_TRACK);
+
+                if (DEBUG) {
+                    Log.d("print", "onButton tracking - currentAreaCode: "  + currentAreaCode);
+                }
 
             }
         });
@@ -336,19 +339,32 @@ public class MainActivity extends AppCompatActivity {
         SharedPreferences sharedPreferences= this.getSharedPreferences(getString(R.string.sharePreName), Context.MODE_PRIVATE);
         if(sharedPreferences!= null) {
             // String specifying the search area
-            currentAreaCode = sharedPreferences.getString(getString(R.string.keyArea), getString(R.string.areaHanoi));
+            currentAreaCode = sharedPreferences.getString(getString(R.string.keyArea), getString(R.string.areaHanoiCode));
+            if (DEBUG) {
+                Log.d("print", "onLoad - currentAreaCode: " + currentAreaCode);
+            }
             //if no connect, load from last save
             if (!isNetworkConnected()) {
-                int dataReserveHanoiLength = sharedPreferences.getInt(getString(R.string.keyDataHcmL), 0);
+                int dataReserveHanoiLength = sharedPreferences.getInt(getString(R.string.keyDataHnL), 0);
+
+                if (DEBUG) {
+                    Log.d("print", "onLoad - hanoi length: " + dataReserveHanoiLength);
+                }
+
                 for (int i = 0; i < dataReserveHanoiLength; i++) {
                     dataReserveHanoi.add(sharedPreferences.getString(getString(R.string.keyDataHn) + i, "0"));
 
                     if (DEBUG) {
-                        Log.d("print", "onLoad track - hanoi: " + dataReserveHanoi.get(0));
+                        Log.d("print", "onLoad - hanoi: " + dataReserveHanoi.get(0));
                     }
 
                 }
                 int dataReserveHcmLength = sharedPreferences.getInt(getString(R.string.keyDataHcmL), 0);
+
+                if (DEBUG) {
+                    Log.d("print", "onLoad - hcm length: " + dataReserveHcmLength);
+                }
+
                 for (int i = 0; i < dataReserveHcmLength; i++) {
                     dataReserveHcm.add(sharedPreferences.getString(getString(R.string.keyDataHcm) + i, "0"));
 
@@ -376,12 +392,22 @@ public class MainActivity extends AppCompatActivity {
 
 
         int dataReserveHanoiLength = dataReserveHanoi.size();
+
+        if (DEBUG) {
+            Log.d("print", "onSave - hanoi length: " + dataReserveHanoiLength);
+        }
+
         editor.putInt(getString(R.string.keyDataHnL), dataReserveHanoiLength);
         for (int i = 0; i < dataReserveHanoiLength; i++) {
             editor.putString(getString(R.string.keyDataHn) + i, dataReserveHanoi.get(i));
         }
 
         int dataReserveHcmLength = dataReserveHcm.size();
+
+        if (DEBUG) {
+            Log.d("print", "onSave - hcm length: " + dataReserveHcmLength);
+        }
+
         editor.putInt(getString(R.string.keyDataHcmL), dataReserveHcmLength);
         for (int i = 0; i < dataReserveHcmLength; i++) {
             editor.putString(getString(R.string.keyDataHcm) + i, dataReserveHcm.get(i));
@@ -389,15 +415,6 @@ public class MainActivity extends AppCompatActivity {
         editor.putString(getString(R.string.keyLastTime), lastTimeAccessDB);
         // Save
         editor.apply();
-
-        if (DEBUG) {
-            Log.d("print", "onSave - hanoi: " + dataReserveHanoi.get(0));
-        }
-
-        if (DEBUG) {
-            Log.d("print", "onSave - hcm: " + dataReserveHcm.get(0));
-        }
-
     }
 
     private void eventClick() {

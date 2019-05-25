@@ -20,28 +20,23 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.Calendar;
 
 
 public class TrackingActivity extends AppCompatActivity {
+    MyLib myLib = new MyLib(this);
     /* */
-    boolean DEBUG = false;
+    boolean DEBUG = true;
     /* key specifying the search area: "hanoi" or "saigon" */
 //    String currentareaCode;
     /* String specifying the search area: "Hà Nội" or "Sài Gòn" */
     String currentareaCode;
     boolean onlineStatus;
     /* */
-    ArrayList<String> a0 = new ArrayList<>();
+    public ArrayList<String> a0 = new ArrayList<>();
     String lastTimeAccessDB;
 
     EditText clickedEditText;
@@ -85,21 +80,25 @@ public class TrackingActivity extends AppCompatActivity {
             currentareaCode = bundle.getString(getString(R.string.keyArea), getString(R.string.areaHanoiCode));
             onlineStatus = bundle.getBoolean(getString(R.string.keyState), true);
 
-            if(!onlineStatus) {
-                a0 = bundle.getStringArrayList(getString(R.string.keydata));
-                lastTimeAccessDB = bundle.getString(getString(R.string.keyLastTime));
-            } else {
-                /* Init Database */
-                if(initDatabase(currentareaCode) == 6){
-                    alertDialog.showAlertDialog2(6,"Error");
-                }
-            }
-
             if (DEBUG) {
                 Log.d("print", "onCreat - bundle - currentareaCode: "   + currentareaCode);
                 Log.d("print", "onCreat - bundle - state: "             + onlineStatus);
-                Log.d("print", "onCreat - bundle - data: "              + a0.get(0));
-                Log.d("print", "onCreat - bundle - time: "              + lastTimeAccessDB);
+            }
+
+            if(!onlineStatus) {
+                a0 = bundle.getStringArrayList(getString(R.string.keydata));
+                lastTimeAccessDB = bundle.getString(getString(R.string.keyLastTime));
+
+                if (DEBUG) {
+                    Log.d("print", "onCreat - bundle - time: " + lastTimeAccessDB);
+                    Log.d("print", "onCreat - bundle - data: " + a0.get(0));
+                }
+
+            } else {
+                /* Init Database */
+                if(myLib.initDatabase(currentareaCode, a0) == 6){
+                    alertDialog.showAlertDialog2(6,"Error");
+                }
             }
         }
 
@@ -151,12 +150,7 @@ public class TrackingActivity extends AppCompatActivity {
                 if ((text.trim().length() <= 4)  || (Character.isDigit(c))) {   // Invalid code (1)
                     alertDialog.showAlertDialog2(1, text);
                 } else {                                                        // Seach in database
-                    if(!onlineStatus) {
-                        getDatabase2(text);
-                    } else {
-//                        int temp = getDatabase(currentareaCode, text);
-                        getDatabase2(text);
-                    }
+                    getDatabase(text);
                 }
             }
         });
@@ -187,34 +181,11 @@ public class TrackingActivity extends AppCompatActivity {
         if (onlineStatus) {
             data.putExtra(TRACK_EXTRA_DATA, a0);
 
-//            final String DATE_FORMAT = "dd/MM/yyyy";
-//            final String TIME_FORMAT_12 = "hh:mm:ss a";
-//            final String TIME_FORMAT_24 = "HH:mm:ss";
-//            final String timeRegex = getString(R.string.timeRegex);
-//            final String dateReges = getString(R.string.dateRegex);
-//            Calendar calendar = Calendar.getInstance();
-//            SimpleDateFormat formatDate = new SimpleDateFormat(DATE_FORMAT);
-//            SimpleDateFormat formatTime = new SimpleDateFormat(TIME_FORMAT_24);
-//            final String lastTimeAccessDB = formatTime.format(calendar) + formatDate.format(calendar);
-//            Log.d("print",lastTimeAccessDB);
-//            data.putExtra(TRACK_EXTRA_DATE, lastTimeAccessDB);
-
-//            int dayOfMonth = calendar.get(calendar.DAY_OF_MONTH);
-//            int month = calendar.get(calendar.MONTH) + 1;
-//            int year = calendar.get(calendar.YEAR);
-//
-//            int hour = calendar.get(Calendar.HOUR_OF_DAY);
-//            int minute = calendar.get(Calendar.MINUTE);
-//            int second = calendar.get(Calendar.SECOND);
-
-//            String date = dayOfMonth + "/" + month + "/" + year;
-
             Date date = new Date();
             final String DATE_FORMAT = "dd/MM/yyyy";
 //            final String TIME_FORMAT_12 = "hh:mm:ss a";
             final String TIME_FORMAT_24 = "HH:mm:ss";
             SimpleDateFormat format = new SimpleDateFormat(TIME_FORMAT_24 + " " + DATE_FORMAT  );
-            Log.d("print", format.format(date));
             data.putExtra(TRACK_EXTRA_DATE, format.format(date));
         } else {
 
@@ -239,80 +210,12 @@ public class TrackingActivity extends AppCompatActivity {
         }
     }
 
-    /* Seach in database */
-    public int getDatabase(String areaCode, final String compareText) {
-        // Get the FirebaseDatabase object 
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        // Connection to the node named areaCode, this node is defined by the Firebase database ('hanoi' or 'saigon')
-        DatabaseReference myRef = database.getReference(areaCode);
-        // Access and listen to data changes
-        myRef.addValueEventListener(new ValueEventListener() {
-            /*
-            * Default Feedback is No-code-found (2), until the code is found
-            */
-            int temp = 2;
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                // Loop to get data when there is a change on Firebase
-                for (DataSnapshot data : dataSnapshot.getChildren()) {
-                    // Get the key of the data
-                    // String key = data.getKey();
-                    
-                    // Transfer data into string then check
-                    String value = data.getValue().toString();
-                    if (value.contains(compareText)) {      // Check if the code exists
-                        temp = 3;                           // Feedback curent is Received (3)
-                        if (value.contains("...")) {        // Continue to check whether the status is processing
-                            temp = 4;                       // Feedback curent is Processing (4)
-                            if (value.contains("OK")) {     // Keep checking if the code is complete
-                                temp = 5;                   // Feedback curent is Finished (5)
-                            }
-                        }
-                    }
-                }
-                alertDialog.showAlertDialog2(temp, compareText);
-            }
-            
-            /* Firebase error*/
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                Log.w("FIREBASE", "loadPost:onCancelled", databaseError.toException());
-                alertDialog.showAlertDialog2(6,"Error!!!");
-            }
-        });
-        return 0;
-    }
+    public void getDatabase(final String compareText) {
 
-    public int initDatabase(String areaCode) {
-        a0.clear();
-//        final int[] i = {0};
-        // Get the FirebaseDatabase object 
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        // Connection to the node named areaCode, this node is defined by the Firebase database ('hanoi' or 'saigon')
-        DatabaseReference myRef = database.getReference(areaCode);
-        // Access and listen to data changes
-        myRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                // Loop to get data when there is a change on Firebasese
-                for (DataSnapshot data : dataSnapshot.getChildren()) {
-                    a0.add(data.getValue().toString());
-//                    Log.d("print", a0.get(i[0]));
-//                    i[0]++;
-                }
-            }
+        if (DEBUG) {
+            Log.d("print", "onCreat - getdatabase2 - data: " + a0.get(0));
+        }
 
-            /* Firebase error*/
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                Log.w("FIREBASE", "loadPost:onCancelled", databaseError.toException());
-                alertDialog.showAlertDialog2(6, "Error");
-            }
-        });
-        return 0;
-    }
-
-    public void getDatabase2(final String compareText) {
         int temp = 2;
         for (int i = 0; i < a0.size(); i++) {
             String value = a0.get(i);
