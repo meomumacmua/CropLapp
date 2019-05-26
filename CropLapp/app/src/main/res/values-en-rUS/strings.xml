@@ -3,9 +3,11 @@
     <string name="app_name">CropLapp</string>
     <string name="noneArea">Area Selection</string>
 
-    <string name="currentArea">current area </string>
+    <string name="currentareaS">current area </string>
 
     <string name="areaHanoi">Ha Noi</string>
+    <string name="areaSaigon">Ho Chi Minh</string>
+
     <string name="areaHanoiCode">hanoi</string>
     <string name="filmHanoi">hanoifilm</string>
 
@@ -60,5 +62,5 @@
     <string name="dateRegex">/</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="title_activity_web_view">WebView</string>
+
 </resources>

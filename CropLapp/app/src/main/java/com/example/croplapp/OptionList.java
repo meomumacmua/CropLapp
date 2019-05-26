@@ -79,11 +79,11 @@ public class OptionList extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 if(i == 0){
-                    setLocale("en");
+                    setLocale("vi");
                     recreate();
                 }
                 else if (i == 1){
-                    setLocale("vi");
+                    setLocale("en");
                     recreate();
                 }
                 dialogInterface.dismiss();
