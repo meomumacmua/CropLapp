@@ -110,10 +110,10 @@ public class MainActivity extends AppCompatActivity {
         }
 
         TextView showArea = findViewById(R.id.textView);
-        if (currentAreaCode.contains(getString(R.string.areaHanoiCode))) {
+        if (currentAreaCode.contains(getString(R.string.areaHanoi))) {
             showArea.setText(getString(R.string.areaHanoi));
         }
-        if (currentAreaCode.contains(getString(R.string.areaHcmCode))) {
+        if (currentAreaCode.contains(getString(R.string.areaHcm))) {
             showArea.setText(getString(R.string.areaHcm));
         }
 
