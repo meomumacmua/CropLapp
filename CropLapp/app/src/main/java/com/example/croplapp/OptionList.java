@@ -173,6 +173,7 @@ public class OptionList extends AppCompatActivity {
             }
         });
 
+
         Button button=findViewById(R.id.buttonNotification);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
