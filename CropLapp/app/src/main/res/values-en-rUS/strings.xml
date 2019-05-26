@@ -3,11 +3,9 @@
     <string name="app_name">CropLapp</string>
     <string name="noneArea">Area Selection</string>
 
-    <string name="currentareaS">current area </string>
+    <string name="currentArea">current area </string>
 
     <string name="areaHanoi">Ha Noi</string>
-    <string name="areaSaigon">Ho Chi Minh</string>
-
     <string name="areaHanoiCode">hanoi</string>
     <string name="filmHanoi">hanoifilm</string>
 
