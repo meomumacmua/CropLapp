@@ -17,7 +17,7 @@ import com.github.paolorotolo.appintro.model.SliderPage;
  * Created by FRAMGIA\ngo.dinh.ngoc on 25/06/2017.
  */
 
-public class IntroActivity extends AppIntro2 {
+public class IntroActivity extends AppIntro {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -26,7 +26,7 @@ public class IntroActivity extends AppIntro2 {
     protected void onStart() {
         super.onStart();
 
-        setFlowAnimation();
+        setFadeAnimation();
 
         // Just create a `SliderPage` and provide title, description, background and image.
         // AppIntro will do the rest.

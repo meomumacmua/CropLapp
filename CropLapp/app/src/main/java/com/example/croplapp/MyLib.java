@@ -141,6 +141,32 @@ public class MyLib {
 
     }
 
+    public void showAlertDialog3() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setTitle(context.getString(R.string.noticeTitle));
+        builder.setMessage(context.getString(R.string.noticeOffline));
+        /* Disable click outside the alert to turn off */
+        builder.setCancelable(false);
+        /* Set "OK" button */
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                // Dismiss the alert
+                dialogInterface.dismiss();
+                // Exit when there is no internet connection
+//                finish();
+                onSeclect.onSeclected();
+            }
+        });
+
+//        Toast.makeText(context, R.string.unavailableWhenOffline, Toast.LENGTH_SHORT).show();
+
+        /* Creat alert on buffer */
+        AlertDialog alertDialog = builder.create();
+        /* Show alert dialog */
+        alertDialog.show();
+    }
+
     public interface OnSeclect {
         void onSeclected();
     }

@@ -14,7 +14,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-
+        <activity android:name=".Welcome"></activity>
 
         <service
             android:name=".MyService"
@@ -28,15 +28,17 @@
             android:name=".WebViewActivity"
             android:configChanges="orientation|keyboard|keyboardHidden|screenSize" />
         <activity android:name=".MainActivity" />
+        <activity android:name=".IntroActivity" />
 
-        <activity android:name=".IntroActivity">
+        <activity
+            android:name=".SplashActivity"
+            android:theme="@style/SplashscreenTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
     </application>
 
 </manifest>
