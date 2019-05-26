@@ -14,26 +14,29 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".FilmItem"></activity>
+
 
         <service
             android:name=".MyService"
             android:exported="false" />
 
+        <activity android:name=".FilmItem" />
         <activity android:name=".OptionList" />
         <activity android:name=".FilmStoreActivity" />
         <activity android:name=".TrackingActivity" />
         <activity
             android:name=".WebViewActivity"
             android:configChanges="orientation|keyboard|keyboardHidden|screenSize" />
-        <activity android:name=".InformationActivity" />
-        <activity android:name=".MainActivity">
+        <activity android:name=".MainActivity" />
+
+        <activity android:name=".IntroActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
     </application>
 
 </manifest>

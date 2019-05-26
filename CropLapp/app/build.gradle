@@ -29,6 +29,7 @@ dependencies {
     //Tiến
     implementation 'com.google.firebase:firebase-database:16.1.0'
     implementation 'com.android.support:design:27.1.1'
+    implementation 'com.github.AppIntro:AppIntro:4.2.3'
     //
     implementation 'com.android.support.constraint:constraint-layout:1.1.3'
     implementation 'com.android.support:support-v4:27.1.1'
