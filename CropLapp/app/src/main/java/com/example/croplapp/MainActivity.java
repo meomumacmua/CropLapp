@@ -351,27 +351,10 @@ public class MainActivity extends AppCompatActivity {
                     Log.d("print", "onLoad - hanoi length: " + dataReserveHanoiLength);
                 }
 
-                for (int i = 0; i < dataReserveHanoiLength; i++) {
-                    dataReserveHanoi.add(sharedPreferences.getString(getString(R.string.keyDataHn) + i, "0"));
-
-                    if (DEBUG) {
-                        Log.d("print", "onLoad - hanoi: " + dataReserveHanoi.get(0));
-                    }
-
-                }
                 int dataReserveHcmLength = sharedPreferences.getInt(getString(R.string.keyDataHcmL), 0);
 
                 if (DEBUG) {
                     Log.d("print", "onLoad - hcm length: " + dataReserveHcmLength);
-                }
-
-                for (int i = 0; i < dataReserveHcmLength; i++) {
-                    dataReserveHcm.add(sharedPreferences.getString(getString(R.string.keyDataHcm) + i, "0"));
-
-                    if (DEBUG) {
-                        Log.d("print", "onLoad - hcm: " + dataReserveHcm.get(0));
-                    }
-
                 }
 
                 lastTimeAccessDB = sharedPreferences.getString(getString(R.string.keyLastTime),getString(R.string.keyLastTimeNone));

@@ -13,42 +13,52 @@ import java.util.ArrayList;
 
 public class SplashActivity extends AppCompatActivity {
     boolean DEBUG = true;
-    public PrefManager prefManager;
+    boolean firstStart;
     MyLib myLib = new MyLib(this);
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        if(!isNetworkConnected()) {
-            myLib.showAlertDialog3();
-            myLib.OnSeclectListener(new MyLib.OnSeclect() {
-                @Override
-                public void onSeclected() {
-                    finish();
-                }
-            });
-        } else {
-            new CountDownTimer(1000, 1000) {
-                public void onTick(long millisUntilFinished) {
-//                Log.d("print","seconds remaining: " + millisUntilFinished / 1000);
-                }
-
-                public void onFinish() {
+        new CountDownTimer(1000, 1000) {
+            public void onTick(long millisUntilFinished) {
+//               Log.d("print","seconds remaining: " + millisUntilFinished / 1000);
+            }
+            public void onFinish() {
 //          Log.d("print","done!");
-                    // Checking for first time launch - before calling setContentView()
-                    prefManager = new PrefManager(SplashActivity.this);
-                    if (!prefManager.isFirstTimeLaunch()) {
-                        Intent intent1 = new Intent(SplashActivity.this, MainActivity.class);
+                // Checking for first time launch - before calling setContentView()
+
+                SharedPreferences setting = getSharedPreferences("PRE", 0);
+                firstStart = setting.getBoolean("first_time_start", true);
+                if (firstStart) {
+                    final SharedPreferences.Editor editor = setting.edit();
+                    if(isNetworkConnected()) {
+
+                        editor.putBoolean("first_time_start", false);
+                        editor.commit();
+
+                        Intent intent1 = new Intent(SplashActivity.this, IntroActivity.class);
                         startActivity(intent1);
                         finish();
                     } else {
-                        Intent intent2 = new Intent(SplashActivity.this, IntroActivity.class);
-                        startActivity(intent2);
-                        finish();
+                        myLib.showAlertDialog3();
+                        myLib.OnSeclectListener(new MyLib.OnSeclect() {
+                            @Override
+                            public void onSeclected() {
+                                editor.putBoolean("first_time_start", true);
+                                editor.commit();
+
+                                finish();
+                            }
+                        });
+
                     }
                 }
-            }.start();
-        }
+                else {
+                    Intent intent2 = new Intent(SplashActivity.this, MainActivity.class);
+                    startActivity(intent2);
+                    finish();
+                }
+            }
+        }.start();
     }
     /* Internet connection test function */
     private boolean isNetworkConnected() {
