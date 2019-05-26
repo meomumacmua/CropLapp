@@ -1,12 +1,26 @@
 /*
-* OMane: OptionList.java
-* Author: Nguyen Duc Tien 16020175
-* Purpose: Change search area: "Hà Nội" or "Sài Gòn"
-* Include: AdapterView, Spinner, Intent bundle
-*/
+ * OMane: OptionList.java
+ * Author: Nguyen Duc Tien 16020175
+ * Purpose: Change search area: "Hà Nội" or "Sài Gòn"
+ * Include: AdapterView, Spinner, Intent bundle
+ */
 package com.example.croplapp;
 
+import android.app.Activity;
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.res.Configuration;
+import android.content.res.Resources;
+import android.graphics.Color;
+import android.os.Handler;
+import android.support.v4.app.NotificationCompat;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -17,157 +31,233 @@ import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-public class OptionList extends AppCompatActivity{
-    /* */
-    boolean DEBUG = false;
+import java.util.Locale;
+
+public class OptionList extends AppCompatActivity {
     /* String specifying the choosed area: "Hà Nội" or "Sài Gòn" */
     String areaChoosed;
     /*  */
     public static final String EXTRA_DATA = "EXTRA_DATA";
 
-    MyLib test = new MyLib(this);
-    
-    /* onCreat(); 
-    * Get bundle data from MainAcvtivity
-    */
+
+    /* onCreat();
+     * Get bundle data from MainAcvtivity
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        loadLocale();
         setContentView(R.layout.activity_option_list);
+
+//        ActionBar actionBar = getSupportActionBar();
+//        actionBar.setTitle(getResources().getString(R.string.app_name));
+
+//        Button changeLang = findViewById(R.id.changeLang);
+        Button cL = findViewById(R.id.changeLang);
+        cL.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+//                showChangeLanguageDialog();
+                Log.d("print", "onclick");
+                showAlertDialog(4, "4");
+            }
+        });
 
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
         if (bundle != null) {
-            areaChoosed = bundle.getString(getString(R.string.keyArea), getString(R.string.areaHanoiCode));
-
-            if (DEBUG) {
-                Log.d("print", "onCreat - areaChoosed: " + areaChoosed);
-            }
+            areaChoosed = bundle.getString("area", "");
         }
+
     }
 
-    /* onStart(); 
-    * Show name of search area
-    * Show dropdown list
-    * Get sellected dropdown list item
-    */
+    private void showChangeLanguageDialog(){
+        final String[] listItems = {"English", "Vietnamese"};
+        AlertDialog.Builder mBuilder = new AlertDialog.Builder(this);
+        mBuilder.setTitle("Select Language...");
+        mBuilder.setSingleChoiceItems(listItems, -1, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                if(i == 0){
+                    setLocale("en");
+                    recreate();
+                }
+                else if (i == 1){
+                    setLocale("vi");
+                    recreate();
+                }
+                dialogInterface.dismiss();
+            }
+        });
+
+        AlertDialog mDialog = mBuilder.create();
+        mDialog.show();
+    }
+
+    /* Alert dialog funtiion*/
+    public void showAlertDialog(final int feedBack, String code) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("CropLab !!!");
+        switch (feedBack) {
+            case 4:
+            {
+                // Set the message
+                builder.setMessage("Select Language");
+            }
+        }
+        /* Disable click outside the alert to turn off */
+        builder.setCancelable(false);
+        /* Set "OK" button */
+        builder.setPositiveButton("English", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                setLocale("en");
+                recreate();
+                // Dismiss the alert
+                dialogInterface.dismiss();
+                // Exit when there is no internet connection
+            }
+        });
+
+        //////////////////////////////////////////////////
+        builder.setNegativeButton("Vietnamese", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                setLocale("vi");
+                recreate();
+                // Dismiss the alert
+                dialogInterface.dismiss();
+                // Exit when there is no internet connection
+            }
+        });
+        /* Creat alert on buffer */
+        AlertDialog alertDialog = builder.create();
+        /* Show alert dialog */
+        alertDialog.show();
+    }
+
+    private void setLocale(String lang) {
+        Locale locale = new Locale(lang);
+        Locale.setDefault(locale);
+        Configuration config = new Configuration();
+        config.locale = locale;
+        getBaseContext().getResources().updateConfiguration(config, getBaseContext().getResources().getDisplayMetrics());
+        SharedPreferences.Editor editor = getSharedPreferences("Settings", MODE_PRIVATE).edit();
+        editor.putString("My Lang", lang);
+        editor.apply();
+    }
+
+    public void loadLocale(){
+        SharedPreferences prefs = getSharedPreferences("Settings", Activity.MODE_PRIVATE);
+        String language = prefs.getString("My Lang","");
+        setLocale(language);
+    }
+
+    /* onStart();
+     * Show name of search area
+     * Show dropdown list
+     * Get sellected dropdown list item
+     */
     @Override
     protected void onStart() {
         super.onStart();
         setContentView(R.layout.activity_option_list);
 
-        Button button=findViewById(R.id.buttonOption);
+        Button cL = findViewById(R.id.changeLang);
+        cL.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+//                showChangeLanguageDialog();
+                Log.d("print", "onclick");
+                showAlertDialog(4, "4");
+            }
+        });
+
+        Button button=findViewById(R.id.buttonNotification);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                Intent intent = new Intent(OptionList.this, MyService.class);
-//                startService(intent);  // For the service.
+//                Intent i = new Intent(OptionList.this, MyService.class);
+//                startService(i);  // For the service.
 //                showNotification();
-//                FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-//                fragmentTransaction.add(R.id.frg, new TestFragment());
-//                fragmentTransaction.commit();
-//                test.showAlertDialog1( 4, "abc");
-//                test.OnSeclectListener(new MyLib.OnSeclect() {
-//                    @Override
-//                    public void onSeclected() {
-//                        finish();
-//                    }
-//                });
-                Log.d("print", "switch");
-//                Intent intent5 = new Intent(OptionList.this, ViewPagerActivity.class);
-//                startActivity(intent5);
-
             }
         });
-        /*
-        Load được ảnh (ko load được do link ko có .jpg)
-Thông báo hệ thống (thanh thông báo trên cùng của màn hình)
-Chưa chạy được tác vụ nền
-         */
-        
+
         /* Show name of search area */
         final TextView showArea = findViewById(R.id.textView2);
-        if (areaChoosed.contains(getString(R.string.areaHanoiCode))) {
-            showArea.setText(getString(R.string.curentArea) + " " + getString(R.string.areaHanoi));
-        }
-        if (areaChoosed.contains(getString(R.string.areaHcmCode))) {
-            showArea.setText(getString(R.string.curentArea) + " " + getString(R.string.areaHcm));
-        }
+        showArea.setText(getString(R.string.currentArea) + areaChoosed);
 
         /* Get the spinner from the xml. */
         final Spinner dropdown = findViewById(R.id.spinner0);
         // Create a list of items for the spinner.
-        String[] items = new String[]{getString(R.string.noneArea), getString(R.string.areaHanoi), getString(R.string.areaHcm)};
-        
+        String[] items = new String[]{getString(R.string.areaHanoi), getString(R.string.areaHcm)};
+
         /*
-        * Create an adapter to describe how the items are displayed, adapters are used in several places in android.
-        * There are multiple variations of this, but this is the basic variant.
-        */
-        ArrayAdapter<String> adapter = new ArrayAdapter<>
-                (this, android.R.layout.simple_spinner_dropdown_item, items);
-        
+         * Create an adapter to describe how the items are displayed, adapters are used in several places in android.
+         * There are multiple variations of this, but this is the basic variant.
+         */
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, items);
+
         /* Set the spinners adapter */
         dropdown.setAdapter(adapter);
-        
+
         /* Get the text when sellect */
         dropdown.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id) {
-                switch (position) {
-                    case 0:
-                        // Whatever you want to happen when the first item gets selected
-                        if (DEBUG) {
-                            Log.d("print", "onDrop - areaChoosed: " + areaChoosed);
-                        }
-
-                        break;
-                    case 1:
-                        areaChoosed = getString(R.string.areaHanoiCode);
-                        showArea.setText(getString(R.string.curentArea) + " " + getString(R.string.areaHanoi));
-
-                        if (DEBUG) {
-                            Log.d("print", "onDrop - areaChoosed: " + areaChoosed);
-                        }
-
-                        break;
-                    case 2:
-                        areaChoosed = getString(R.string.areaHcmCode);
-                        showArea.setText(getString(R.string.curentArea) + " " + getString(R.string.areaHcm));
-
-                        if (DEBUG) {
-                            Log.d("print", "onDrop - areaChoosed: " + areaChoosed);
-                        }
-
-                        break;
-
-                }
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                areaChoosed = dropdown.getSelectedItem().toString();
+                showArea.setText(getString(R.string.currentArea) + areaChoosed);
             }
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
             }
         });
     }
-    
+
     /*
-    * onbackpressed();
-    * Press back to return MainActivity and send new name of seach area (if changed)
-    */
+     * onbackpressed();
+     * Press back to return MainActivity and send new name of seach area (if changed)
+     */
     public void onBackPressed() {
 
         final Intent data = new Intent();
         // Add data to the intent
-        if (DEBUG) {
-            Log.d("print", "onBack - areaChoosed: " + areaChoosed);
-        }
         data.putExtra(EXTRA_DATA, areaChoosed);
 
         /*
-        * Set the resultCode to AppCompatActivity.RESULT_OK to show
-        * instance was successful and contains returned results
-        */
+         * Set the resultCode to AppCompatActivity.RESULT_OK to show
+         * instance was successful and contains returned results
+         */
         setResult(AppCompatActivity.RESULT_OK, data);
         // Call the finish() function to close the current Activity and return to MainActivity
         finish();
-        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
     }
+
+    public void showNotification() {
+        while (true) {
+            try {
+                //set time in mili
+                Thread.sleep(3000);
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            Log.d("print", "In showNotification();");
+            PendingIntent pi = PendingIntent.getActivity(this, 0, new Intent(this, MainActivity.class), 0);
+            Resources r = getResources();
+            Notification notification = new NotificationCompat.Builder(this)
+                    .setTicker("Hello Ticker")
+                    .setSmallIcon(android.R.drawable.ic_menu_report_image)
+                    .setContentTitle("Hello content title")
+                    .setContentText("hello content text")
+                    .setContentIntent(pi)
+                    .setAutoCancel(true)
+                    .build();
+
+            NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+            notificationManager.notify(0, notification);
+        }
+    }
+
 }

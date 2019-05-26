@@ -22,7 +22,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/curentArea"
+            android:text="TextView"
             android:textSize="15dp"/>
 
     </LinearLayout>
@@ -45,13 +45,18 @@
             android:spinnerMode="dialog"
             android:prompt="@string/noneArea"/>
 
-        <Button
-            android:id="@+id/buttonOption"
+        <Button style="@style/Widget.AppCompat.Button.Borderless.Colored"
+
+            android:id="@+id/buttonNotification"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Button" />
-
-
+            android:text="Button"
+            />
+        <Button style="@style/Widget.AppCompat.Button.Colored"
+            android:id="@+id/changeLang"
+            android:text="Language"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
 
     </LinearLayout>
 

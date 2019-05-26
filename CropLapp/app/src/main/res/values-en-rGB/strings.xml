@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">CropLapp</string>
+    <string name="noneArea">Area Selection</string>
+
+    <string name="currentArea">current area </string>
+
+    <string name="areaHanoi">Ha Noi</string>
+    <string name="areaHanoiCode">hanoi</string>
+    <string name="filmHanoi">hanoifilm</string>
+
+    <string name="areaHcm">Ho Chi Minh</string>
+    <string name="areaHcmCode">hcm</string>
+    <string name="filmHcm">hcmfilm</string>
+
+    <string name="instruction1">"- Please correct invoice.</string>
+    <string name="instruction2">" - For monochrome film, please add 'b' tag at the end of bill,
+        ví dụ: 'K1234b'.</string>
+    <string name="instruction3">" - For cinematic film, please add 'c' tag at the end of bill,
+        ví dụ: 'K1234c'.</string>
+    <string name="instruction4">"- For positive film, please add 'e' tag at the end of bill,
+        ví dụ: 'K1234e'.</string>
+    <string name="instruction5">- If you ship from others town, search by your hometown name . VD: Tuấn Anh, hoặc VD: Quảng Ninh.</string>
+
+    <string name="filmname">filmname</string>
+    <string name="filmprice">filmprice</string>
+    <string name="filmstatus">filmstatus</string>
+
+    <string name="noticeOffline">You are offline!!! \n Reconnect and try Again</string>
+    <string name="noticeTitle">"CropLab Arlert !!!"</string>
+
+    <string name="keyArea">area</string>
+    <string name="keyState">state</string>
+    <string name="keydata">data</string>
+
+    <string name="sharePreName">croplabSetting</string>
+    <string name="keyDataHnL">dataReserveHanoiLength</string>
+    <string name="keyDataHn">dataReserveHanoi</string>
+    <string name="keyDataHcmL">dataReserveHcmLength</string>
+    <string name="keyDataHcm">dataReserveHcm</string>
+    <string name="keyLastTime">lastTimeAccessDatabase</string>
+    <string name="keyLastTimeNone">No Data</string>
+
+    <string name="backConfirm">Press Back again to exit</string>
+
+    <string name="unavailableWhenOffline">Not available offline mode!</string>
+    <string name="offlineSeach">Offline Search</string>
+
+    <string name="bill">Code Bill</string>
+    <string name="codeInvalidd">illegal!\nEnter your correct bill!!!</string>
+    <string name="codeUnknow">Not found, Please check and try Again!</string>
+    <string name="codeInQueue">Your order currently precessing, please wait! ♥</string>
+    <string name="codeProcessing">Your film currently procressing, please wait! ♥</string>
+    <string name="codeDone">Your film has finish, You can get negative ver in 3 month! ♥</string>
+
+    <string name="firebaseError">Connect to Database got Error  \n Please comeback later!!!</string>
+
+    <string name="lastaccessDB">Latest update  :</string>
+    <string name="timeRegex">:</string>
+    <string name="dateRegex">/</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_web_view">WebView</string>
+</resources>
