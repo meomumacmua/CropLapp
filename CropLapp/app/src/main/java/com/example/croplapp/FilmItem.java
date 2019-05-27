@@ -1,6 +1,7 @@
 package com.example.croplapp;
 
 import android.animation.ArgbEvaluator;
+import android.content.Intent;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -20,18 +21,25 @@ public class FilmItem extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_film_item);
+        Intent intent = getIntent();
+        Bundle bundle = intent.getExtras();
+
+        String iso = bundle.getString("iso");
+        String shot = bundle.getString("shot");
+        int nPic = bundle.getInt("nPic");
+        String link = bundle.getString("link");
+        String[] split = link.split(";");
 
         models = new ArrayList<>();
-        models.add(new FilmDetails(R.mipmap.information, "Brochure", "Brochure is an informative paper document (often also used for advertising) that can be folded into a template"));
-        models.add(new FilmDetails(R.mipmap.information, "Sticker", "Sticker is a type of label: a piece of printed paper, plastic, vinyl, or other material with pressure sensitive adhesive on one side"));
-        models.add(new FilmDetails(R.mipmap.information, "Poster", "Poster is any piece of printed paper designed to be attached to a wall or vertical surface."));
-        models.add(new FilmDetails(R.mipmap.information, "Namecard", "Business cards are cards bearing business information about a company or individual."));
+        for (int i = 0; i < nPic; i++) {
+            models.add(new FilmDetails(iso, shot,0,split[i]));
+        }
 
         adapter = new FilmImagesAdapter(models, this);
 
         viewPager = findViewById(R.id.viewPager);
         viewPager.setAdapter(adapter);
-        viewPager.setPadding(130, 0, 130, 0);
+        viewPager.setPadding(0, 0, 0, 0);
 
         Integer[] colors_temp = {
                 getResources().getColor(R.color.colorAccent),
