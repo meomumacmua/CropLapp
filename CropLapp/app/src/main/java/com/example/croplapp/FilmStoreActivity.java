@@ -23,6 +23,7 @@ import java.util.List;
 
 public class FilmStoreActivity extends AppCompatActivity {
     List<FilmDetails> list;
+    List<FilmDetails> listItem;
     RecyclerView recyclerView;
     FilmStoreAdapter adapter;
 
@@ -65,12 +66,26 @@ public class FilmStoreActivity extends AppCompatActivity {
 
 //                Log.d("print", filmData.size() + "");
                 FilmDetails item;
+                FilmDetails itemExtend;
                 addControl();
 
                 for (short i = 0; i < filmData.size(); i++) {
                     String[] split = filmData.get(i).split(",");
-                    split[3] = split[3].trim();
-                    item = new FilmDetails(split[0], split[2], split[3], split[4]);
+//                    split[3] = split[3].trim();
+//                    split[8] = split[8].trim();
+//                    String[] mSplit = split[8].split(";");
+//                    int nPic = mSplit.length;
+//                    Log.d("print", "3" + split[3]);
+//                    Log.d("print", "8 " + mSplit[1]);
+//                    Log.d("print", "8 " + nPic);
+//                    Log.d("print", "8_1" + split[8].split(",")[1]);
+//                    int nPic = split[8].split(",").length;
+//                    item = new FilmDetails(split[0], split[2], split[3], split[4]);
+//                    itemExtend = new FilmDetails(split[6], split[7], nPic, split[8]);
+//                    list.add(item);
+//                    listItem.add(itemExtend);
+                    Log.d("print", filmData.get(i));
+                    item = new FilmDetails(filmData.get(i));
                     list.add(item);
                 }
                 adapter.notifyDataSetChanged();

@@ -10,6 +10,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
+
 import java.util.List;
 
 public class FilmImagesAdapter extends PagerAdapter {
@@ -39,15 +41,18 @@ public class FilmImagesAdapter extends PagerAdapter {
         View view = layoutInflater.inflate(R.layout.film_images_item, container, false);
 
         ImageView imageView;
-        TextView title, desc;
+        TextView iso, shot;
+        int nPic = models.get(position).getnPic();
 
-        imageView = view.findViewById(R.id.image);
-//        title = view.findViewById(R.id.title);
-//        desc = view.findViewById(R.id.desc);
+        iso = view.findViewById(R.id.film_item_iso);
+        shot = view.findViewById(R.id.film_item_shot);
+        imageView = view.findViewById(R.id.film_item_image);
 
-//        imageView.setImageResource(models.get(position).getImage());
-//        title.setText(models.get(position).getTitle());
-//        desc.setText(models.get(position).getDesc());
+        for (int i = 0; i < nPic; i++) {
+            iso.setText(models.get(position).getIso());
+            shot.setText(models.get(position).getShot());
+            Picasso.get().load(models.get(position).getLink()).placeholder(R.mipmap.loading).error(R.mipmap.file).into(imageView);
+        }
 
         view.setOnClickListener(new View.OnClickListener() {
             @Override

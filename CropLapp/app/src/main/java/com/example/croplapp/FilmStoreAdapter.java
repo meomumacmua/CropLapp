@@ -2,6 +2,7 @@ package com.example.croplapp;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;;
 import android.view.LayoutInflater;
@@ -56,6 +57,12 @@ public class FilmStoreAdapter extends RecyclerView.Adapter<FilmStoreAdapter.View
                 public void onClick(View view) {
                     Toast.makeText(activity, "Coming soon!", Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(activity, FilmItem.class);
+                    Bundle bundle = new Bundle();
+                    bundle.putString("iso", filmDetails.getIso());
+                    bundle.putString("shot", filmDetails.getShot());
+                    bundle.putInt("nPic", filmDetails.getnPic());
+                    bundle.putString("link", filmDetails.getLink());
+                    intent.putExtras(bundle);
                     activity.startActivity(intent);
                 }
             });

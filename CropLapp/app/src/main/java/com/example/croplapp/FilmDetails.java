@@ -8,9 +8,10 @@ public class FilmDetails {
     public String filmimage;
 
     //them
-    public int image;
-    public String title;
-    public String desc;
+    public String iso;
+    public String shot;
+    public String link;
+    public int nPic;
     //end
     public FilmDetails() {
     }
@@ -23,10 +24,24 @@ public class FilmDetails {
     }
 
     //them
-    public FilmDetails(int image, String title, String desc) {
-        this.image = image;
-        this.title = title;
-        this.desc = desc;
+    public FilmDetails(String iso, String shot, int nPic,String link) {
+        this.iso = iso;
+        this.shot = shot;
+        this.link = link;
+        this.nPic = nPic;
+    }
+
+    public FilmDetails(String filmDetail)
+    {
+        String[] array = filmDetail.split(",");
+        this.filmname = array[0];
+        this.filmprice = array[2];
+        this.filmimage = array[3].trim();
+        this.filmstatus = array[4];
+        this.iso = array[6];
+        this.shot = array[7];
+        this.link = array[8].trim();
+        this.nPic = array[8].split(";").length;
     }
     //end
 
@@ -64,28 +79,36 @@ public class FilmDetails {
     }
 
     //them
-    public int getImage() {
-        return image;
+    public String getIso() {
+        return iso;
     }
 
-    public void setImage(int image) {
-        this.image = image;
+    public void setIso(String iso) {
+        this.iso = iso;
     }
 
-    public String getTitle() {
-        return title;
+    public String getShot() {
+        return shot;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public void setShot(String shot) {
+        this.shot = shot;
     }
 
-    public String getDesc() {
-        return desc;
+    public String getLink() {
+        return link;
     }
 
-    public void setDesc(String desc) {
-        this.desc = desc;
+    public void setLink(String link) {
+        this.link = link;
+    }
+
+    public int getnPic() {
+        return nPic;
+    }
+
+    public void setnPic(int nPic) {
+        this.nPic = nPic;
     }
     //end
 }
