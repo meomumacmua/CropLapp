@@ -26,6 +26,7 @@ public class WebViewActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.view_web);
 
+        // Quick exit
         Button buttonCancel =findViewById(R.id.cancelBtn);
         buttonCancel.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
@@ -50,6 +51,7 @@ public class WebViewActivity extends AppCompatActivity {
                 superProgressBar.setProgress(newProgress);
                 superProgressBar.setProgress(newProgress);
 
+                // Loading bar
                 if(newProgress == 100){
                     AlphaAnimation fadeOut;
                     fadeOut = new AlphaAnimation(1, 0);

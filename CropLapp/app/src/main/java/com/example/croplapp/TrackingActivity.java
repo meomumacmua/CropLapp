@@ -9,7 +9,9 @@ package com.example.croplapp;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
@@ -28,6 +30,7 @@ import java.util.Date;
 
 public class TrackingActivity extends AppCompatActivity {
     MyLib myLib = new MyLib(this);
+    boolean canGoBack = false;
     /* */
     boolean DEBUG = true;
     /* key specifying the search area: "hanoi" or "saigon" */
@@ -37,18 +40,11 @@ public class TrackingActivity extends AppCompatActivity {
     boolean onlineStatus;
     /* */
     public ArrayList<String> a0 = new ArrayList<>();
+
     String lastTimeAccessDB;
 
     EditText clickedEditText;
 
-    /**/
-    MyLib alertDialog = new MyLib(this);
-
-
-
-    /* */
-    public static final String TRACK_EXTRA_DATA = "TRACK_EXTRA_DATA";
-    public static final String TRACK_EXTRA_DATE = "TRACK_EXTRA_DATE";
     /*
     * Feedback when searching data on firebase 
     * 0 = Init
@@ -72,36 +68,6 @@ public class TrackingActivity extends AppCompatActivity {
         if (DEBUG) {
             Log.d("print", "onCreat - track");
         }
-        
-        /* Get intent bundle */
-        Intent intent = getIntent();
-        Bundle bundle = intent.getExtras();
-        if (bundle != null) {
-            currentareaCode = bundle.getString(getString(R.string.keyArea), getString(R.string.areaHanoiCode));
-            onlineStatus = bundle.getBoolean(getString(R.string.keyState), true);
-
-            if (DEBUG) {
-                Log.d("print", "onCreat - bundle - currentareaCode: "   + currentareaCode);
-                Log.d("print", "onCreat - bundle - state: "             + onlineStatus);
-            }
-
-            if(!onlineStatus) {
-                a0 = bundle.getStringArrayList(getString(R.string.keydata));
-                lastTimeAccessDB = bundle.getString(getString(R.string.keyLastTime));
-
-                if (DEBUG) {
-                    Log.d("print", "onCreat - bundle - time: " + lastTimeAccessDB);
-                    Log.d("print", "onCreat - bundle - data: " + a0.get(0));
-                }
-
-            } else {
-                /* Init Database */
-                if(myLib.initDatabase(currentareaCode, a0) == 6){
-                    alertDialog.showAlertDialog2(6,"Error");
-                }
-            }
-        }
-
     }
     
     /* onStart()
@@ -112,6 +78,108 @@ public class TrackingActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         setContentView(R.layout.tracking_layout);
+
+        SharedPreferences sharedPreferences = this.getSharedPreferences(getString(R.string.sharePreName), Context.MODE_PRIVATE);
+        final SharedPreferences.Editor editor = sharedPreferences.edit();
+
+        /* Get intent bundle */
+        Intent intent = getIntent();
+        Bundle bundle = intent.getExtras();
+        if (bundle != null) {
+            currentareaCode = bundle.getString(getString(R.string.keyArea), getString(R.string.areaHanoiCode));
+            onlineStatus = bundle.getBoolean(getString(R.string.keyState), true);
+
+            if (DEBUG) {
+                Log.d("print", "onStart - bundle - currentareaCode: "   + currentareaCode);
+                Log.d("print", "onStart - bundle - state: "             + onlineStatus);
+            }
+
+            if(onlineStatus) {
+                /* Init Database */
+                if(myLib.initDatabase(currentareaCode) == 6){
+                    myLib.showAlertDialog2(6,"Error");
+                }
+                myLib.OnRecievedListener(new MyLib.OnRecieved() {
+                    //Save data to SharedPreferences
+                    @Override
+                    public void onReceived(ArrayList<String> list) {
+
+                        a0.clear();
+                        a0 = list;
+                        if (currentareaCode.contains(getString(R.string.areaHanoiCode))) {
+                            editor.putString(getString(R.string.keyLastTimeHn), myLib.getTimer());
+                            editor.putInt(getString(R.string.keyDataHnL), a0.size());
+
+                            Log.d("print", "save hn time " + myLib.getTimer());
+                            Log.d("print", "save hn L " + list.size());
+
+                            for (int i = 0; i < list.size(); i++) {
+                                editor.putString(getString(R.string.keyDataHn) + i, list.get(i));
+//                                Log.d("print", "save hanoi " + i + " " + a0.get(i));
+                            }
+                        } else if (currentareaCode.contains(getString(R.string.areaHcmCode))) {
+                            editor.putString(getString(R.string.keyLastTimeHcm), myLib.getTimer());
+                            Log.d("print", "save hcm time " + myLib.getTimer());
+                            editor.putInt(getString(R.string.keyDataHcmL), a0.size());
+                            for (int i = 0; i < a0.size(); i++) {
+                                editor.putString(getString(R.string.keyDataHcm) + i, a0.get(i));
+//                                Log.d("print", "save hcm " + i + " " + list.get(i));
+                            }
+                        }
+                        editor.apply();
+                        canGoBack = true;
+                    }
+
+                });
+
+            } else {
+                canGoBack = true;
+                //Load data from SharedPreferences
+//                SharedPreferences sharedPreferences= TrackingActivity.this.getSharedPreferences(getString(R.string.sharePreName), MODE_PRIVATE);
+
+                if (currentareaCode.contains(getString(R.string.areaHanoiCode))) {
+                    lastTimeAccessDB = sharedPreferences.getString(getString(R.string.keyLastTimeHn), getString(R.string.keyLastTimeNone));
+                    int datasize = sharedPreferences.getInt(getString(R.string.keyDataHnL), 0);
+                    Log.d("print", "load hanoi L" + datasize);
+                    a0.clear();
+                    for (int i = 0; i < datasize; i++) {
+                        a0.add(sharedPreferences.getString(getString(R.string.keyDataHn) + i, ""));
+                        Log.d("print", "load hanoi " + i + " " + a0.get(i));
+
+                    }
+                }
+
+                if (currentareaCode.contains(getString(R.string.areaHcmCode))) {
+                    lastTimeAccessDB = sharedPreferences.getString(getString(R.string.keyLastTimeHcm), getString(R.string.keyLastTimeNone));
+                    int datasize = sharedPreferences.getInt(getString(R.string.keyDataHcmL), 0);
+                    a0.clear();
+                    for (int i = 0; i < datasize; i++) {
+                        a0.add(sharedPreferences.getString(getString(R.string.keyDataHcm) + i, ""));
+                        Log.d("print", "load hcm " + i + " " + a0.get(i));
+                    }
+                }
+
+                FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+                TestFragment frgA = new TestFragment();
+                Bundle frgBundle = new Bundle();
+                if (currentareaCode.contains(getString(R.string.areaHanoiCode))) {
+                    frgBundle.putString(getString(R.string.keyTime), lastTimeAccessDB);
+                }
+
+                if (currentareaCode.contains(getString(R.string.areaHcmCode))) {
+                    frgBundle.putString(getString(R.string.keyTime), lastTimeAccessDB);
+                }
+
+                frgA.setArguments(frgBundle);
+                fragmentTransaction.add(R.id.frg, frgA);
+                fragmentTransaction.commit();
+
+                if (DEBUG) {
+                    Log.d("print", "onStart - bundle - time: " + lastTimeAccessDB);
+//                    Log.d("print", "onCreat - bundle - data: " + a0.get(0));
+                }
+            }
+        }
 
         /* Show seach area */
         TextView showArea = findViewById(R.id.textViewArea);
@@ -148,27 +216,20 @@ public class TrackingActivity extends AppCompatActivity {
                 */
                 char c = text.charAt(0);
                 if ((text.trim().length() <= 4)  || (Character.isDigit(c))) {   // Invalid code (1)
-                    alertDialog.showAlertDialog2(1, text);
-                } else {                                                        // Seach in database
+                    myLib.showAlertDialog2(1, text);
+                } else {
+//                    new CountDownTimer(700, 1000) {
+//                        public void onTick(long millisUntilFinished) {
+//                        }
+//                        public void onFinish() {
+//                            // Seach in database
+//                            getDatabase(text);
+//                        }
+//                    }.start();
                     getDatabase(text);
                 }
             }
         });
-
-        if (!onlineStatus) {
-            FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-
-            TestFragment frgA = new TestFragment();
-            Bundle frgBundle = new Bundle();
-            frgBundle.putString(getString(R.string.keyLastTime), lastTimeAccessDB);
-            frgA.setArguments(frgBundle);
-
-            fragmentTransaction.add(R.id.frg, frgA);
-            fragmentTransaction.commit();
-//
-//            TextView frgtxt = findViewById(R.id.frg_txt);
-//            frgtxt.setText(lastTimeAccessDB);
-        }
     }
     
     /* onBackPressed()
@@ -176,29 +237,34 @@ public class TrackingActivity extends AppCompatActivity {
     */
     @Override
     public void onBackPressed(){
-        final Intent data = new Intent();
-        // Add data to the intent
-        if (onlineStatus) {
-            data.putExtra(TRACK_EXTRA_DATA, a0);
 
-            Date date = new Date();
-            final String DATE_FORMAT = "dd/MM/yyyy";
+//        final Intent data = new Intent();
+//        // Add data to the intent
+//        if (onlineStatus) {
+//            data.putExtra(TRACK_EXTRA_DATA, a0);
+//
+//            Date date = new Date();
+//            final String DATE_FORMAT = "dd/MM/yyyy";
 //            final String TIME_FORMAT_12 = "hh:mm:ss a";
-            final String TIME_FORMAT_24 = "HH:mm:ss";
-            SimpleDateFormat format = new SimpleDateFormat(TIME_FORMAT_24 + " " + DATE_FORMAT  );
-            data.putExtra(TRACK_EXTRA_DATE, format.format(date));
-        } else {
-
-            data.putExtra(TRACK_EXTRA_DATA, 1);
+//            final String TIME_FORMAT_24 = "HH:mm:ss";
+//            SimpleDateFormat format = new SimpleDateFormat(TIME_FORMAT_24 + " " + DATE_FORMAT  );
+//            data.putExtra(TRACK_EXTRA_DATE, format.format(date));
+//
+//            Log.d("print", format.format(date));
+//        } else {
+//            data.putExtra(TRACK_EXTRA_DATA, 1);
+//        }
+//
+//        /*
+//         * Set the resultCode to AppCompatActivity.RESULT_OK to show
+//         * instance was successful and contains returned results
+//         */
+//        setResult(AppCompatActivity.RESULT_OK, data);
+//        // Call the finish() function to close the current Activity and return to MainActivity
+        if (canGoBack) {
+            finish();
         }
-
-        /*
-         * Set the resultCode to AppCompatActivity.RESULT_OK to show
-         * instance was successful and contains returned results
-         */
-        setResult(AppCompatActivity.RESULT_OK, data);
-        // Call the finish() function to close the current Activity and return to MainActivity
-        finish();
+//        finish();
     }
 
     /* Hide keyboard function */
@@ -211,11 +277,6 @@ public class TrackingActivity extends AppCompatActivity {
     }
 
     public void getDatabase(final String compareText) {
-
-        if (DEBUG) {
-            Log.d("print", "onCreat - getdatabase2 - data: " + a0.get(0));
-        }
-
         int temp = 2;
         for (int i = 0; i < a0.size(); i++) {
             String value = a0.get(i);
@@ -229,6 +290,6 @@ public class TrackingActivity extends AppCompatActivity {
                 }
             }
         }
-        alertDialog.showAlertDialog2(temp, compareText);
+        myLib.showAlertDialog2(temp, compareText);
     }
 }

@@ -12,7 +12,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
-
+//Show last time access database on fragment
 public class TestFragment extends Fragment {
 
     Button btFrg;
@@ -29,14 +29,11 @@ public class TestFragment extends Fragment {
 //                onDestroy();
 //            }
 //        });
-        txt = (TextView) view.findViewById(R.id.frg_txt);
+        txt = view.findViewById(R.id.frg_txt);
         Bundle frgBundle = getArguments();
         if(frgBundle != null) {
-            txt.setText(getString(R.string.lastaccessDB) + " " + frgBundle.getString("lastTimeAccessDatabase"));
+            txt.setText(getString(R.string.lastaccessDB) + " " + frgBundle.getString(getString(R.string.keyTime)));
         }
         return view;
     }
-
-
-
 }

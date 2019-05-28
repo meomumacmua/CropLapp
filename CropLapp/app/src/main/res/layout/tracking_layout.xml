@@ -73,7 +73,7 @@
 
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:hint="Vui lòng nhập số hóa đơn... "
+                android:hint="@string/inputhere"
                 android:textColorHint="#FAFAFA"
                 android:textStyle="italic|bold"
                 android:singleLine="true"
@@ -113,7 +113,7 @@
                 android:id="@+id/huongdan"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text=" Hướng dẫn tìm kiếm tracking!"
+                android:text="@string/instruction0"
                 android:textStyle="bold"
                 android:textSize="25dp"
                 android:gravity="center_horizontal"

@@ -20,17 +20,14 @@ public class SplashActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         new CountDownTimer(1000, 1000) {
             public void onTick(long millisUntilFinished) {
-//               Log.d("print","seconds remaining: " + millisUntilFinished / 1000);
             }
             public void onFinish() {
-//          Log.d("print","done!");
-                // Checking for first time launch - before calling setContentView()
-
+                // If first start, move to IntroActivity. If not, move to MainActivity
                 SharedPreferences setting = getSharedPreferences("PRE", 0);
                 firstStart = setting.getBoolean("first_time_start", true);
                 if (firstStart) {
                     final SharedPreferences.Editor editor = setting.edit();
-                    if(isNetworkConnected()) {
+                    if(myLib.isNetworkConnected()) {
 
                         editor.putBoolean("first_time_start", false);
                         editor.commit();
@@ -45,7 +42,6 @@ public class SplashActivity extends AppCompatActivity {
                             public void onSeclected() {
                                 editor.putBoolean("first_time_start", true);
                                 editor.commit();
-
                                 finish();
                             }
                         });
@@ -59,10 +55,5 @@ public class SplashActivity extends AppCompatActivity {
                 }
             }
         }.start();
-    }
-    /* Internet connection test function */
-    private boolean isNetworkConnected() {
-        ConnectivityManager checkNetwork = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-        return checkNetwork.getActiveNetworkInfo() != null;
     }
 }

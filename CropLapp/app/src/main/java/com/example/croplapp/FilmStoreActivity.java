@@ -23,7 +23,6 @@ import java.util.List;
 
 public class FilmStoreActivity extends AppCompatActivity {
     List<FilmDetails> list;
-    List<FilmDetails> listItem;
     RecyclerView recyclerView;
     FilmStoreAdapter adapter;
 
@@ -71,20 +70,6 @@ public class FilmStoreActivity extends AppCompatActivity {
 
                 for (short i = 0; i < filmData.size(); i++) {
                     String[] split = filmData.get(i).split(",");
-//                    split[3] = split[3].trim();
-//                    split[8] = split[8].trim();
-//                    String[] mSplit = split[8].split(";");
-//                    int nPic = mSplit.length;
-//                    Log.d("print", "3" + split[3]);
-//                    Log.d("print", "8 " + mSplit[1]);
-//                    Log.d("print", "8 " + nPic);
-//                    Log.d("print", "8_1" + split[8].split(",")[1]);
-//                    int nPic = split[8].split(",").length;
-//                    item = new FilmDetails(split[0], split[2], split[3], split[4]);
-//                    itemExtend = new FilmDetails(split[6], split[7], nPic, split[8]);
-//                    list.add(item);
-//                    listItem.add(itemExtend);
-                    Log.d("print", filmData.get(i));
                     item = new FilmDetails(filmData.get(i));
                     list.add(item);
                 }
@@ -99,13 +84,12 @@ public class FilmStoreActivity extends AppCompatActivity {
                 onRestart();
             }
         });
+
     }
 
-
+    //Reload store
     @Override
     protected void onRestart() {
-
-        // TODO Auto-generated method stub
         super.onRestart();
         Intent i1 = new Intent(FilmStoreActivity.this, FilmStoreActivity.class);  //your class
         startActivity(i1);
@@ -130,10 +114,10 @@ public class FilmStoreActivity extends AppCompatActivity {
                     String key = data.getKey().toString();
 //                    Log.d("print", key);
                     // Transfer data into string then check
-                    String[] value = data.getValue().toString().split(",");
+//                    String[] value = data.getValue().toString().split(",");
 //                    Log.d("print", data.getValue().toString());
 
-                    filmData.add(key + ", " + data.getValue());
+                    filmData.add(key + "," + data.getValue());
                 }
             }
             /* Firebase error*/
@@ -145,6 +129,7 @@ public class FilmStoreActivity extends AppCompatActivity {
         });
     }
 
+    // Add adapter to recycleview
     public void addControl() {
         recyclerView = (RecyclerView) findViewById(R.id.rv_listfilm);
         list = new ArrayList<>();

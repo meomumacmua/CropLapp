@@ -30,11 +30,8 @@ import android.widget.TextView;
 import java.util.Locale;
 
 public class OptionList extends AppCompatActivity {
-    /* String specifying the choosed area: "Hà Nội" or "Sài Gòn" */
+    /* Specifying the search area: hanoi for "Hà Nội", hcm for "Hồ Chí Minh" */
     String areaChoosed;
-    /*  */
-    public static final String EXTRA_DATA = "EXTRA_DATA";
-
 
     /* onCreat();
      * Get bundle data from MainAcvtivity
@@ -42,25 +39,12 @@ public class OptionList extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        loadLocale();
         setContentView(R.layout.activity_option_list);
-
-//        ActionBar actionBar = getSupportActionBar();
-//        actionBar.setTitle(getResources().getString(R.string.app_name));
-
-//        Button changeLang = findViewById(R.id.changeLang);
-        Button cL = findViewById(R.id.changeLang);
-        cL.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-//                showChangeLanguageDialog();
-                Log.d("print", "onclick");
-                showAlertDialog(4, "4");
-            }
-        });
+        loadLocale();
 
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
+        // Get data from MainActivity
         if (bundle != null) {
             areaChoosed = bundle.getString("area", "");
         }
@@ -159,8 +143,8 @@ public class OptionList extends AppCompatActivity {
         super.onStart();
         setContentView(R.layout.activity_option_list);
 
-        Button cL = findViewById(R.id.changeLang);
-        cL.setOnClickListener(new View.OnClickListener() {
+        Button changeLang = findViewById(R.id.changeLang);
+        changeLang.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 //                showChangeLanguageDialog();
@@ -215,6 +199,8 @@ public class OptionList extends AppCompatActivity {
      * onbackpressed();
      * Press back to return MainActivity and send new name of seach area (if changed)
      */
+    /*  */
+    public static final String EXTRA_DATA = "EXTRA_DATA";
     public void onBackPressed() {
 
         final Intent data = new Intent();

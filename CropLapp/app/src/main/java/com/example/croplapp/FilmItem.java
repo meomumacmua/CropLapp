@@ -21,6 +21,8 @@ public class FilmItem extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_film_item);
+
+        //Get data from FilmStoreAdapter
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
 
@@ -30,9 +32,11 @@ public class FilmItem extends AppCompatActivity {
         String link = bundle.getString("link");
         String[] split = link.split(";");
 
+        // Add item
         models = new ArrayList<>();
+        models.clear();
         for (int i = 0; i < nPic; i++) {
-            models.add(new FilmDetails(iso, shot,0,split[i]));
+            models.add(new FilmDetails(iso, shot,nPic,split[i]));
         }
 
         adapter = new FilmImagesAdapter(models, this);
@@ -41,11 +45,12 @@ public class FilmItem extends AppCompatActivity {
         viewPager.setAdapter(adapter);
         viewPager.setPadding(0, 0, 0, 0);
 
+        // Set Background color
         Integer[] colors_temp = {
-                getResources().getColor(R.color.tran),
-                getResources().getColor(R.color.tran),
-                getResources().getColor(R.color.tran),
-                getResources().getColor(R.color.tran)
+                getResources().getColor(R.color.trans),
+                getResources().getColor(R.color.trans),
+                getResources().getColor(R.color.trans),
+                getResources().getColor(R.color.trans)
         };
 
         colors = colors_temp;
@@ -54,20 +59,20 @@ public class FilmItem extends AppCompatActivity {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 
-                if (position < (adapter.getCount() -1) && position < (colors.length - 1)) {
-                    viewPager.setBackgroundColor(
-
-                            (Integer) argbEvaluator.evaluate(
-                                    positionOffset,
-                                    colors[position],
-                                    colors[position + 1]
-                            )
-                    );
-                }
-
-                else {
-                    viewPager.setBackgroundColor(colors[colors.length - 1]);
-                }
+//                if (position < (adapter.getCount() -1) && position < (colors.length - 1)) {
+//                    viewPager.setBackgroundColor(
+//
+//                            (Integer) argbEvaluator.evaluate(
+//                                    positionOffset,
+//                                    colors[position],
+//                                    colors[position + 1]
+//                            )
+//                    );
+//                }
+//
+//                else {
+//                    viewPager.setBackgroundColor(colors[colors.length - 1]);
+//                }
             }
 
             @Override
@@ -81,5 +86,14 @@ public class FilmItem extends AppCompatActivity {
             }
         });
 
+    }
+
+    // Call again FilmstoreActivity, kill current activity
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent intent = new Intent(FilmItem.this, FilmStoreActivity.class);
+        startActivity(intent);
+        finish();
     }
 }

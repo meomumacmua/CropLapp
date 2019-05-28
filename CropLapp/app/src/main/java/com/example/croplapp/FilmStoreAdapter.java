@@ -1,6 +1,7 @@
 package com.example.croplapp;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -12,18 +13,23 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
 public class FilmStoreAdapter extends RecyclerView.Adapter<FilmStoreAdapter.ViewHolder>{
     private List<FilmDetails> filmList;
-    private Activity activity;
-    public FilmStoreAdapter(Activity activity, List<FilmDetails> filmList){
-        this.activity = activity;
+    public Context context;
+    boolean switched = false;
+
+    //Constructor
+    public FilmStoreAdapter(Context context, List<FilmDetails> filmList){
+        this.context = context;
         this.filmList = filmList;
     }
 
+    //Get id
     public class ViewHolder extends  RecyclerView.ViewHolder{
         TextView filmprice, filmname,filmstatus;
         ImageView filmimage;
@@ -39,39 +45,43 @@ public class FilmStoreAdapter extends RecyclerView.Adapter<FilmStoreAdapter.View
 
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_store_item,parent,false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_store_item, parent,false);
         return new ViewHolder(view);
     }
 
+    //Set value
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder viewHolder, int position) {
+    public void onBindViewHolder(@NonNull final ViewHolder viewHolder, int position) {
         final FilmDetails filmDetails = filmList.get(position);
 
         viewHolder.filmname.setText(filmDetails.getFilmname());
         viewHolder.filmprice.setText(filmDetails.getFilmprice());
         viewHolder.filmstatus.setText(filmDetails.getFilmstatus());
-        Picasso.get().load(filmDetails.getFilmimage()).placeholder(R.mipmap.loading).error(R.mipmap.file).into(viewHolder.filmimage);
+        Glide.with(context).load(filmDetails.getFilmimage()).placeholder(R.mipmap.loading).error(R.mipmap.file).into(viewHolder.filmimage);
 
+        //When seclected, call FilmItem, kill current acticity
         viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Toast.makeText(activity, "Coming soon!", Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(activity, FilmItem.class);
+                    Intent intent = new Intent(context, FilmItem.class);
                     Bundle bundle = new Bundle();
+
                     bundle.putString("iso", filmDetails.getIso());
                     bundle.putString("shot", filmDetails.getShot());
                     bundle.putInt("nPic", filmDetails.getnPic());
                     bundle.putString("link", filmDetails.getLink());
                     intent.putExtras(bundle);
-                    activity.startActivity(intent);
+
+                    context.startActivity(intent);
+                    ((Activity)context).finish();
                 }
             });
         }
-
         @Override
         public int getItemCount() {
             return filmList.size();
         }
-    }
+
+}
 
 

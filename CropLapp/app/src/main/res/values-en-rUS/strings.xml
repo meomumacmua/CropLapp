@@ -3,7 +3,7 @@
     <string name="app_name">CropLapp</string>
     <string name="noneArea">Area Selection</string>
 
-    <string name="currentArea">current area </string>
+    <string name="currentArea">Current area </string>
 
     <string name="areaHanoi">Ha Noi</string>
     <string name="areaHanoiCode">hanoi</string>
@@ -13,13 +13,15 @@
     <string name="areaHcmCode">hcm</string>
     <string name="filmHcm">hcmfilm</string>
 
+    <string name="inputhere">Type bill here...</string>
+    <string name="instruction0">Manual instruction</string>
     <string name="instruction1">"- Please correct invoice.</string>
     <string name="instruction2">" - For monochrome film, please add 'b' tag at the end of bill,
-        ví dụ: 'K1234b'.</string>
+        example: 'K1234b'.</string>
     <string name="instruction3">" - For cinematic film, please add 'c' tag at the end of bill,
-        ví dụ: 'K1234c'.</string>
+        example: 'K1234c'.</string>
     <string name="instruction4">"- For positive film, please add 'e' tag at the end of bill,
-        ví dụ: 'K1234e'.</string>
+        example: 'K1234e'.</string>
     <string name="instruction5">- If you ship from others town, search by your hometown name . VD: Tuấn Anh, hoặc VD: Quảng Ninh.</string>
 
     <string name="filmname">filmname</string>
@@ -38,7 +40,10 @@
     <string name="keyDataHn">dataReserveHanoi</string>
     <string name="keyDataHcmL">dataReserveHcmLength</string>
     <string name="keyDataHcm">dataReserveHcm</string>
-    <string name="keyLastTime">lastTimeAccessDatabase</string>
+
+    <string name="keyTime">keyTime</string>
+    <string name="keyLastTimeHn">lastTimeAccessDbHn</string>
+    <string name="keyLastTimeHcm">lastTimeAccessDbHcm</string>
     <string name="keyLastTimeNone">No Data</string>
 
     <string name="backConfirm">Press Back again to exit</string>
@@ -60,5 +65,6 @@
     <string name="dateRegex">/</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_web_view">WebView</string>
 
 </resources>

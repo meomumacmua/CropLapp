@@ -10,15 +10,17 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
 public class FilmImagesAdapter extends PagerAdapter {
-    private List<FilmDetails> models;
-    private LayoutInflater layoutInflater;
-    private Context context;
+    public List<FilmDetails> models;
+    public LayoutInflater layoutInflater;
+    public Context context;
 
+    //Constructor
     public FilmImagesAdapter(List<FilmDetails> models, Context context) {
         this.models = models;
         this.context = context;
@@ -34,26 +36,28 @@ public class FilmImagesAdapter extends PagerAdapter {
         return view.equals(object);
     }
 
+    //Set adapter
     @NonNull
     @Override
     public Object instantiateItem(@NonNull ViewGroup container, final int position) {
         layoutInflater = LayoutInflater.from(context);
-        View view = layoutInflater.inflate(R.layout.film_images_item, container, false);
-
         ImageView imageView;
         TextView iso, shot;
-        int nPic = models.get(position).getnPic();
+
+        View view;
+        view = layoutInflater .inflate(R.layout.film_images_item, container, false);
 
         iso = view.findViewById(R.id.film_item_iso);
         shot = view.findViewById(R.id.film_item_shot);
         imageView = view.findViewById(R.id.film_item_image);
 
-        for (int i = 0; i < nPic; i++) {
-            iso.setText(models.get(position).getIso());
-            shot.setText(models.get(position).getShot());
-            Picasso.get().load(models.get(position).getLink()).placeholder(R.mipmap.loading).error(R.mipmap.file).into(imageView);
-        }
+        iso.setText(models.get(position).getIso());
+        shot.setText(models.get(position).getShot());
+        int nPic = models.get(position).getnPic();
+//        Log.d("print", "link " + models.get(position).getLink());
 
+        Glide.with(context).load(models.get(position).getLink()).placeholder(R.mipmap.loading).error(R.mipmap.file).into(imageView);
+        //When seclected
         view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -65,11 +69,9 @@ public class FilmImagesAdapter extends PagerAdapter {
 
             }
         });
-
         container.addView(view, 0);
         return view;
     }
-
     @Override
     public void destroyItem(@NonNull ViewGroup container, int position, @NonNull Object object) {
         container.removeView((View)object);

@@ -13,6 +13,8 @@
     <string name="areaHcmCode">hcm</string>
     <string name="filmHcm">hcmfilm</string>
 
+    <string name="inputhere">Vui lòng nhập số hóa đơn...</string>
+    <string name="instruction0">Hướng dẫn tìm kiếm</string>
     <string name="instruction1">"- Vui lòng nhập chính xác mã hoá đơn trên phiếu biên nhận.</string>
     <string name="instruction2">" - Để tracking film đen trắng, vui lòng thêm đuôi 'b' ở cuối mã biên nhận,
         ví dụ: 'K1234b'.</string>
@@ -20,7 +22,8 @@
         ví dụ: 'K1234c'.</string>
     <string name="instruction4">"- Để tracking film dương bản, vui lòng thêm đuôi 'e' ở cuối mã biên nhận,
         ví dụ: 'K1234e'.</string>
-    <string name="instruction5">- Nếu bạn gửi film từ tỉnh khác qua đường chuyển phát, vui lòng tìm kiếm theo tên hoặc thành phố của bạn. VD: Tuấn Anh, hoặc VD: Quảng Ninh.</string>
+    <string name="instruction5">- Nếu bạn gửi film từ tỉnh khác qua đường chuyển phát,
+        vui lòng tìm kiếm theo tên hoặc thành phố của bạn. VD: Tuấn Anh, hoặc VD: Quảng Ninh.</string>
 
     <string name="filmname">filmname</string>
     <string name="filmprice">filmprice</string>
@@ -38,7 +41,10 @@
     <string name="keyDataHn">dataReserveHanoi</string>
     <string name="keyDataHcmL">dataReserveHcmLength</string>
     <string name="keyDataHcm">dataReserveHcm</string>
-    <string name="keyLastTime">lastTimeAccessDatabase</string>
+
+    <string name="keyTime">keyTime</string>
+    <string name="keyLastTimeHn">lastTimeAccessDbHn</string>
+    <string name="keyLastTimeHcm">lastTimeAccessDbHcm</string>
     <string name="keyLastTimeNone">Không có dữ liệu</string>
 
     <string name="backConfirm">Nhấn phím back lần nữa để thoát</string>
@@ -55,7 +61,7 @@
 
     <string name="firebaseError">Gặp sự cố khi kết nối đến cơ sở dữ liệu \nBạn vui lòng quay lại sau!!!</string>
 
-    <string name="lastaccessDB">Cập nhật cơ sở dữ liệu lần cuối vào:</string>
+    <string name="lastaccessDB">Cập nhật dữ liệu lần cuối vào:</string>
     <string name="timeRegex">:</string>
     <string name="dateRegex">/</string>
     <!-- TODO: Remove or change this placeholder text -->

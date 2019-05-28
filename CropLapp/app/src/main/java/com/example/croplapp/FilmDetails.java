@@ -6,24 +6,21 @@ public class FilmDetails {
     public String filmprice;
     public String filmstatus;
     public String filmimage;
-
-    //them
     public String iso;
     public String shot;
     public String link;
     public int nPic;
-    //end
-    public FilmDetails() {
-    }
 
-    public FilmDetails(String filmName, String filmPrice, String filmImage, String filmStatus) {
-        this.filmname = filmName;
-        this.filmprice = filmPrice;
-        this.filmimage = filmImage;
-        this.filmstatus = filmStatus;
-    }
-
-    //them
+//    public FilmDetails() {
+//    }
+//
+//    public FilmDetails(String filmName, String filmPrice, String filmImage, String filmStatus) {
+//        this.filmname = filmName;
+//        this.filmprice = filmPrice;
+//        this.filmimage = filmImage;
+//        this.filmstatus = filmStatus;
+//    }
+//
     public FilmDetails(String iso, String shot, int nPic,String link) {
         this.iso = iso;
         this.shot = shot;
@@ -31,6 +28,7 @@ public class FilmDetails {
         this.nPic = nPic;
     }
 
+    // Constructor
     public FilmDetails(String filmDetail)
     {
         String[] array = filmDetail.split(",");
@@ -43,8 +41,6 @@ public class FilmDetails {
         this.link = array[8].trim();
         this.nPic = array[8].split(";").length;
     }
-    //end
-
 
     public String getFilmname() {
         return filmname;
@@ -78,7 +74,6 @@ public class FilmDetails {
         this.filmimage = filmImage;
     }
 
-    //them
     public String getIso() {
         return iso;
     }
@@ -110,5 +105,4 @@ public class FilmDetails {
     public void setnPic(int nPic) {
         this.nPic = nPic;
     }
-    //end
 }

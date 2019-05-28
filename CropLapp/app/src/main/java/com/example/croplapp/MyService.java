@@ -6,7 +6,9 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Resources;
+import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Handler;
 import android.os.IBinder;
@@ -15,9 +17,13 @@ import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 import android.widget.Toast;
 
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.ArrayList;
 import java.util.Date;
 
 public class MyService extends IntentService {
+    MyLib myLib = new MyLib(this);
 
     public MyService() {
         super("MyService");
@@ -26,20 +32,76 @@ public class MyService extends IntentService {
     // Invoked when this intent service is started.
     @Override
     protected void onHandleIntent(Intent intent) {
-        if (intent != null) {
-            // Log current thread info.
+//        if (intent != null) {
             Log.d("print", "IntentService");
-//            for (int i = 0; i < 3000000; i++);
-//            showNotification();
+            final String topic = intent.getStringExtra("Service");
+            Log.d("print","get " + topic);
+//            final int[] i = {0};
+//            new CountDownTimer(2000, 1000) {
+//                public void onTick(long millisUntilFinished) {
+////                Log.d("print","seconds remaining: " + millisUntilFinished / 1000);
+//                }
+//
+//                public void onFinish() {
+//                    Log.d("print","get" + text + "num" + i[0]);
+//                    i[0]++;
+//                    if (i[0] < 2) {
+//                        start();
+//                    } else {
+//                        showNotification();
+//                    }
+//                }
+//            }.start();
+//
+//        }
+        int result =  DownloadFile(new String(topic));
+        Log.e("print", "done");
+        showNotification();
+    }
+
+    public int  DownloadFile(final String topic) {
+//        boolean[] check = {false};
+        try {
+            Log.d("print", "start");
+            Thread.sleep(5000);
+            if(myLib.isNetworkConnected()) {
+                myLib.initDatabase(topic);
+                myLib.OnRecievedListener(new MyLib.OnRecieved() {
+                    boolean check = false;
+                    @Override
+                    public void onReceived(ArrayList<String> list) {
+                        for (int i = 0; i < list.size(); i++) {
+                            if (list.get(i).contains(topic)) {
+                                if (list.get(i).contains("OK")) {
+                                    Log.d("print", "end");
+                                    check = true;
+                                    showNotification();
+                                    onDestroy();
+                                }
+                            }
+                        }
+                        if (!check) {
+                            Log.d("print", "repeat 1");
+                            DownloadFile(topic);
+
+                        }
+                    }
+                });
+            }
+            else {
+                Log.d("print", "repeart 2");
+                DownloadFile(topic);
+            }
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
+        Log.d("print", "out");
+        return 100;
     }
 
     @Override
     public void onCreate() {
         super.onCreate();
-        for (int i = 0; i < 3000000; i++);
-        showNotification();
-
     }
 
     @Override
@@ -62,50 +124,11 @@ public class MyService extends IntentService {
 
         startForeground(0, notification);
 
+        // Play sound
+        notification.defaults = Notification.DEFAULT_SOUND;
+
         NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
         notificationManager.notify(0, notification);
     }
-    //    /* Seach in database */
-//    public int getDatabase(String areaCode, final String compareText) {
-//        // Get the FirebaseDatabase object
-//        FirebaseDatabase database = FirebaseDatabase.getInstance();
-//        // Connection to the node named areaCode, this node is defined by the Firebase database ('hanoi' or 'saigon')
-//        DatabaseReference myRef = database.getReference(areaCode);
-//        // Access and listen to data changes
-//        myRef.addValueEventListener(new ValueEventListener() {
-//            /*
-//            * Default Feedback is No-code-found (2), until the code is found
-//            */
-//            int temp = 2;
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-//                // Loop to get data when there is a change on Firebase
-//                for (DataSnapshot data : dataSnapshot.getChildren()) {
-//                    // Get the key of the data
-//                    // String key = data.getKey();
-//
-//                    // Transfer data into string then check
-//                    String value = data.getValue().toString();
-//                    if (value.contains(compareText)) {      // Check if the code exists
-//                        temp = 3;                           // Feedback curent is Received (3)
-//                        if (value.contains("...")) {        // Continue to check whether the status is processing
-//                            temp = 4;                       // Feedback curent is Processing (4)
-//                            if (value.contains("OK")) {     // Keep checking if the code is complete
-//                                temp = 5;                   // Feedback curent is Finished (5)
-//                            }
-//                        }
-//                    }
-//                }
-//                alertDialog.showAlertDialog2(temp, compareText);
-//            }
-//
-//            /* Firebase error*/
-//            @Override
-//            public void onCancelled(DatabaseError databaseError) {
-//                Log.w("FIREBASE", "loadPost:onCancelled", databaseError.toException());
-//                alertDialog.showAlertDialog2(6,"Error!!!");
-//            }
-//        });
-//        return 0;
-//    }
+        /* Seach in database */
 }

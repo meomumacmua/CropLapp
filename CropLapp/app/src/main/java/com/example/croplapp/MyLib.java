@@ -1,8 +1,14 @@
 package com.example.croplapp;
 
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.net.ConnectivityManager;
 import android.support.annotation.NonNull;
+import android.support.v4.app.NotificationCompat;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.widget.Toast;
@@ -13,7 +19,11 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+
+import static android.content.Context.NOTIFICATION_SERVICE;
 
 public class MyLib {
     Context context;
@@ -21,10 +31,9 @@ public class MyLib {
         this.context = context;
     }
 
-    public int initDatabase(String areaCode, final ArrayList<String> dataR) {
-        dataR.clear();
-
-//        final int[] i = {0};
+    // Get data from firebase
+    public int initDatabase(String areaCode) {
+        final ArrayList<String> listReceived = new ArrayList<>();
         // Get the FirebaseDatabase object
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         // Connection to the node named areaCode, this node is defined by the Firebase database ('hanoi' or 'saigon')
@@ -35,10 +44,10 @@ public class MyLib {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 // Loop to get data when there is a change on Firebasese
                 for (DataSnapshot data : dataSnapshot.getChildren()) {
-                    dataR.add(data.getValue().toString());
-//                    Log.d("print", a0.get(i[0]));
-//                    i[0]++;
+                    listReceived.add(data.getValue().toString());
                 }
+                // Done!
+                onReceived.onReceived(listReceived);
             }
 
             /* Firebase error*/
@@ -91,7 +100,6 @@ public class MyLib {
         alertDialog.show();
     }
 
-    /* Alert dialog funtiion*/
     public void showAlertDialog2(int feedBack ,String code) {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setTitle(context.getString(R.string.noticeTitle));
@@ -167,13 +175,36 @@ public class MyLib {
         alertDialog.show();
     }
 
-    public interface OnSeclect {
-        void onSeclected();
+    // Get sys time
+    public String getTimer() {
+        Date date = new Date();
+        final String DATE_FORMAT = "dd/MM/yyyy";
+        final String TIME_FORMAT_12 = "hh:mm:ss a";
+        final String TIME_FORMAT_24 = "HH:mm:ss";
+        SimpleDateFormat format = new SimpleDateFormat(TIME_FORMAT_24 + " " + DATE_FORMAT  );
+        return format.format(date);
     }
 
-    private OnSeclect onSeclect;
+    // Check network
+    public boolean isNetworkConnected() {
+        ConnectivityManager checkNetwork = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        return checkNetwork.getActiveNetworkInfo() != null;
+    }
 
+    // Interface seclect
+    public interface OnSeclect {
+        void onSeclected();
+
+    }
+    private OnSeclect onSeclect;
     public void OnSeclectListener(OnSeclect onSeclect) {
         this.onSeclect = onSeclect;
     }
+
+    // Interface recievied
+    public interface OnRecieved {
+        void onReceived(ArrayList<String> list);
+    }
+    private OnRecieved onReceived;
+    public  void OnRecievedListener(OnRecieved onReceived) { this.onReceived = onReceived;}
 }

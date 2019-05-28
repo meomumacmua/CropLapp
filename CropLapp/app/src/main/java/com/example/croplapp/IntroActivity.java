@@ -13,10 +13,6 @@ import com.github.paolorotolo.appintro.AppIntro2;
 import com.github.paolorotolo.appintro.AppIntroFragment;
 import com.github.paolorotolo.appintro.model.SliderPage;
 
-/**
- * Created by FRAMGIA\ngo.dinh.ngoc on 25/06/2017.
- */
-
 public class IntroActivity extends AppIntro {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -26,23 +22,24 @@ public class IntroActivity extends AppIntro {
     protected void onStart() {
         super.onStart();
 
+        // Set animation
         setFadeAnimation();
 
-        // Just create a `SliderPage` and provide title, description, background and image.
-        // AppIntro will do the rest.
+        //Set value for page1
         SliderPage sliderPage = new SliderPage();
         sliderPage.setTitle("title1");
         sliderPage.setDescription("description1");
         sliderPage.setImageDrawable(R.mipmap.information);
         sliderPage.setBgColor(getResources().getColor(R.color.colorAccent));
-
+        //Add
         addSlide(AppIntroFragment.newInstance(sliderPage));
 
+        //Set value for page1
         sliderPage.setTitle("title2");
         sliderPage.setDescription("description2");
         sliderPage.setImageDrawable(R.mipmap.information);
         sliderPage.setBgColor(getResources().getColor(R.color.colorAccent));
-
+        //Add
         addSlide(AppIntroFragment.newInstance(sliderPage));
 
         // OPTIONAL METHODS
@@ -54,13 +51,9 @@ public class IntroActivity extends AppIntro {
         showSkipButton(true);
 
         setProgressButtonEnabled(true);
-
-        // Turn vibration on and set intensity.
-        // NOTE: you will probably need to ask VIBRATE permission in Manifest.
-//        setVibrate(true);
-//        setVibrateIntensity(30);
     }
 
+    // Skip seclected
     @Override
     public void onSkipPressed(Fragment currentFragment) {
         super.onSkipPressed(currentFragment);
@@ -70,6 +63,7 @@ public class IntroActivity extends AppIntro {
         finish();
     }
 
+    // Done seclected
     @Override
     public void onDonePressed(Fragment currentFragment) {
         super.onDonePressed(currentFragment);
