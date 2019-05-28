@@ -10,19 +10,15 @@ import android.app.Activity;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
-
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.content.res.Resources;
-import android.graphics.Color;
-import android.os.Handler;
+import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -174,15 +170,15 @@ public class OptionList extends AppCompatActivity {
         });
 
 
-        Button button=findViewById(R.id.buttonNotification);
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-//                Intent i = new Intent(OptionList.this, MyService.class);
-//                startService(i);  // For the service.
-//                showNotification();
-            }
-        });
+//        Button button=findViewById(R.id.buttonNotification);
+//        button.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+////                Intent i = new Intent(OptionList.this, MyService.class);
+////                startService(i);  // For the service.
+////                showNotification();
+//            }
+//        });
 
         /* Show name of search area */
         final TextView showArea = findViewById(R.id.textView2);

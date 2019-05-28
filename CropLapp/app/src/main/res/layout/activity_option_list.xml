@@ -36,26 +36,27 @@
 
         <Spinner
             android:id="@+id/spinner0"
-            android:layout_width="250dp"
+            android:layout_width="150dp"
             android:layout_height="wrap_content"
             android:layout_margin="1dp"
             android:layout_gravity="center"
             android:gravity="center"
             android:background="@android:drawable/btn_dropdown"
             android:spinnerMode="dialog"
-            android:prompt="@string/noneArea"/>
-
-        <Button style="@style/Widget.AppCompat.Button.Borderless.Colored"
-
-            android:id="@+id/buttonNotification"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Button"
+            android:prompt="@string/noneArea"
             />
+
+        <!--<Button style="@style/Widget.AppCompat.Button.Borderless.Colored"-->
+
+            <!--android:id="@+id/buttonNotification"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:text="Button"-->
+            <!--/>-->
         <Button style="@style/Widget.AppCompat.Button.Colored"
             android:id="@+id/changeLang"
             android:text="Language"
-            android:layout_width="wrap_content"
+            android:layout_width="150dp"
             android:layout_height="wrap_content" />
 
     </LinearLayout>
