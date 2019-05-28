@@ -42,10 +42,10 @@ public class FilmItem extends AppCompatActivity {
         viewPager.setPadding(0, 0, 0, 0);
 
         Integer[] colors_temp = {
-                getResources().getColor(R.color.colorAccent),
-                getResources().getColor(R.color.colorAccent),
-                getResources().getColor(R.color.colorAccent),
-                getResources().getColor(R.color.colorAccent)
+                getResources().getColor(R.color.tran),
+                getResources().getColor(R.color.tran),
+                getResources().getColor(R.color.tran),
+                getResources().getColor(R.color.tran)
         };
 
         colors = colors_temp;
