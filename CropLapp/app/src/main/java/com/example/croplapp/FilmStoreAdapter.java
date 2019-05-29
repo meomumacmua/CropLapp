@@ -66,6 +66,8 @@ public class FilmStoreAdapter extends RecyclerView.Adapter<FilmStoreAdapter.View
                     Intent intent = new Intent(context, FilmItem.class);
                     Bundle bundle = new Bundle();
 
+                    bundle.putString("name", filmDetails.getFilmname());
+                    bundle.putString("price", filmDetails.getFilmprice());
                     bundle.putString("iso", filmDetails.getIso());
                     bundle.putString("shot", filmDetails.getShot());
                     bundle.putInt("nPic", filmDetails.getnPic());

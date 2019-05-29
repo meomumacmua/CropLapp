@@ -42,19 +42,21 @@ public class FilmImagesAdapter extends PagerAdapter {
     public Object instantiateItem(@NonNull ViewGroup container, final int position) {
         layoutInflater = LayoutInflater.from(context);
         ImageView imageView;
-        TextView iso, shot;
+        TextView name, price, iso, shot;
 
         View view;
         view = layoutInflater .inflate(R.layout.film_images_item, container, false);
 
+        name = view.findViewById(R.id.film_item_name);
+        price = view.findViewById(R.id.film_item_price);
         iso = view.findViewById(R.id.film_item_iso);
         shot = view.findViewById(R.id.film_item_shot);
         imageView = view.findViewById(R.id.film_item_image);
 
+        name.setText(models.get(position).getFilmname());
+        price.setText(models.get(position).getFilmprice());
         iso.setText(models.get(position).getIso());
         shot.setText(models.get(position).getShot());
-        int nPic = models.get(position).getnPic();
-//        Log.d("print", "link " + models.get(position).getLink());
 
         Glide.with(context).load(models.get(position).getLink()).placeholder(R.mipmap.loading).error(R.mipmap.file).into(imageView);
         //When seclected

@@ -31,7 +31,7 @@ import java.util.Locale;
 
 public class OptionList extends AppCompatActivity {
     /* Specifying the search area: hanoi for "Hà Nội", hcm for "Hồ Chí Minh" */
-    String areaChoosed;
+    String areaChoosedCode;
 
     /* onCreat();
      * Get bundle data from MainAcvtivity
@@ -46,92 +46,11 @@ public class OptionList extends AppCompatActivity {
         Bundle bundle = intent.getExtras();
         // Get data from MainActivity
         if (bundle != null) {
-            areaChoosed = bundle.getString("area", "");
+            areaChoosedCode = bundle.getString("area", "");
         }
-
     }
 
-    private void showChangeLanguageDialog(){
-        final String[] listItems = {"English", "Vietnamese"};
-        AlertDialog.Builder mBuilder = new AlertDialog.Builder(this);
-        mBuilder.setTitle("Select Language...");
-        mBuilder.setSingleChoiceItems(listItems, -1, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                if(i == 0){
-                    setLocale("vi");
-                    recreate();
-                }
-                else if (i == 1){
-                    setLocale("en");
-                    recreate();
-                }
-                dialogInterface.dismiss();
-            }
-        });
 
-        AlertDialog mDialog = mBuilder.create();
-        mDialog.show();
-    }
-
-    /* Alert dialog funtiion*/
-    public void showAlertDialog(final int feedBack, String code) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("CropLab !!!");
-        switch (feedBack) {
-            case 4:
-            {
-                // Set the message
-                builder.setMessage("Select Language");
-            }
-        }
-        /* Disable click outside the alert to turn off */
-        builder.setCancelable(false);
-        /* Set "OK" button */
-        builder.setPositiveButton("English", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                setLocale("en");
-                recreate();
-                // Dismiss the alert
-                dialogInterface.dismiss();
-                // Exit when there is no internet connection
-            }
-        });
-
-        //////////////////////////////////////////////////
-        builder.setNegativeButton("Vietnamese", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                setLocale("vi");
-                recreate();
-                // Dismiss the alert
-                dialogInterface.dismiss();
-                // Exit when there is no internet connection
-            }
-        });
-        /* Creat alert on buffer */
-        AlertDialog alertDialog = builder.create();
-        /* Show alert dialog */
-        alertDialog.show();
-    }
-
-    private void setLocale(String lang) {
-        Locale locale = new Locale(lang);
-        Locale.setDefault(locale);
-        Configuration config = new Configuration();
-        config.locale = locale;
-        getBaseContext().getResources().updateConfiguration(config, getBaseContext().getResources().getDisplayMetrics());
-        SharedPreferences.Editor editor = getSharedPreferences("Settings", MODE_PRIVATE).edit();
-        editor.putString("My Lang", lang);
-        editor.apply();
-    }
-
-    public void loadLocale(){
-        SharedPreferences prefs = getSharedPreferences("Settings", Activity.MODE_PRIVATE);
-        String language = prefs.getString("My Lang","");
-        setLocale(language);
-    }
 
     /* onStart();
      * Show name of search area
@@ -166,33 +85,79 @@ public class OptionList extends AppCompatActivity {
 
         /* Show name of search area */
         final TextView showArea = findViewById(R.id.textView2);
-        showArea.setText(getString(R.string.currentArea) + areaChoosed);
+        if (areaChoosedCode.contains(getString(R.string.areaHanoiCode))) {
+            showArea.setText(getString(R.string.currentArea) + " " + getString(R.string.areaHanoi));
+        } else if (areaChoosedCode.contains(getString(R.string.areaHcmCode))) {
+            showArea.setText(getString(R.string.currentArea) + " " + getString(R.string.areaHcm));
+        }
+
+
 
         /* Get the spinner from the xml. */
-        final Spinner dropdown = findViewById(R.id.spinner0);
+        final Spinner dropdownArea = findViewById(R.id.spinner0);
+//        final Spinner dropdownLang = findViewById(R.id.spinner1);
         // Create a list of items for the spinner.
-        String[] items = new String[]{getString(R.string.areaHanoi), getString(R.string.areaHcm)};
-
+        String[] itemsArea = new String[]{getString(R.string.chosseArea) ,getString(R.string.areaHanoi), getString(R.string.areaHcm)};
+//        String[] itemsLang = new String[]{getString(R.string.choseLang) ,getString(R.string.vi), getString(R.string.en)};
         /*
          * Create an adapter to describe how the items are displayed, adapters are used in several places in android.
          * There are multiple variations of this, but this is the basic variant.
          */
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, items);
+        ArrayAdapter<String> adapterArea = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, itemsArea);
+//        ArrayAdapter<String> adapterLang = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, itemsLang);
 
         /* Set the spinners adapter */
-        dropdown.setAdapter(adapter);
+        dropdownArea.setAdapter(adapterArea);
+//        dropdownLang.setAdapter(adapterLang);
 
         /* Get the text when sellect */
-        dropdown.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        dropdownArea.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                areaChoosed = dropdown.getSelectedItem().toString();
-                showArea.setText(getString(R.string.currentArea) + areaChoosed);
+            public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
+                switch (position) {
+                    case 0: {
+                        break;
+                    }
+                    case 1: {
+                        areaChoosedCode = getString(R.string.areaHanoiCode);
+                        showArea.setText(getString(R.string.currentArea) + " " + getString(R.string.areaHanoi));
+                        break;
+                    }
+                    case 2: {
+                        areaChoosedCode = getString(R.string.areaHcmCode);
+                        showArea.setText(getString(R.string.currentArea) + " " + getString(R.string.areaHcm));
+                        break;
+                    }
+                }
+                
             }
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
             }
         });
+//        dropdownLang.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+//            @Override
+//            public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
+//                switch (position) {
+//                    case 0: {
+//                        break;
+//                    }
+//                    case 1: {
+//                        setLocale("vi");
+//                        recreate();
+//                        break;
+//                    }
+//                    case 2: {
+//                        setLocale("en");
+//                        recreate();
+//                        break;
+//                    }
+//                }
+//            }
+//            @Override
+//            public void onNothingSelected(AdapterView<?> adapterView) {
+//            }
+//        });
     }
 
     /*
@@ -205,7 +170,7 @@ public class OptionList extends AppCompatActivity {
 
         final Intent data = new Intent();
         // Add data to the intent
-        data.putExtra(EXTRA_DATA, areaChoosed);
+        data.putExtra(EXTRA_DATA, areaChoosedCode);
 
         /*
          * Set the resultCode to AppCompatActivity.RESULT_OK to show
@@ -214,6 +179,67 @@ public class OptionList extends AppCompatActivity {
         setResult(AppCompatActivity.RESULT_OK, data);
         // Call the finish() function to close the current Activity and return to MainActivity
         finish();
+    }
+
+    /* Alert dialog funtiion*/
+    public void showAlertDialog(final int feedBack, String code) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("CropLab !!!");
+        switch (feedBack) {
+            case 4:
+            {
+                // Set the message
+                builder.setMessage(getString(R.string.choseLang));
+            }
+        }
+        /* Disable click outside the alert to turn off */
+        builder.setCancelable(false);
+        /* Set "OK" button */
+        builder.setPositiveButton(getString(R.string.en), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                setLocale("en");
+                recreate();
+                // Dismiss the alert
+                dialogInterface.dismiss();
+                // Exit when there is no internet connection
+            }
+        });
+
+        //////////////////////////////////////////////////
+        builder.setNegativeButton(getString(R.string.vi), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                setLocale("vi");
+                recreate();
+                // Dismiss the alert
+                dialogInterface.dismiss();
+                // Exit when there is no internet connection
+            }
+        });
+        /* Creat alert on buffer */
+        AlertDialog alertDialog = builder.create();
+        /* Show alert dialog */
+        alertDialog.show();
+    }
+
+    // Set seclected language
+    private void setLocale(String lang) {
+        Locale locale = new Locale(lang);
+        Locale.setDefault(locale);
+        Configuration config = new Configuration();
+        config.locale = locale;
+        getBaseContext().getResources().updateConfiguration(config, getBaseContext().getResources().getDisplayMetrics());
+        SharedPreferences.Editor editor = getSharedPreferences("Settings", MODE_PRIVATE).edit();
+        editor.putString("My Lang", lang);
+        editor.apply();
+    }
+
+    // Apply seclected language
+    public void loadLocale(){
+        SharedPreferences prefs = getSharedPreferences("Settings", Activity.MODE_PRIVATE);
+        String language = prefs.getString("My Lang","");
+        setLocale(language);
     }
 
     public void showNotification() {
@@ -241,6 +267,28 @@ public class OptionList extends AppCompatActivity {
             NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
             notificationManager.notify(0, notification);
         }
+    }
+    private void showChangeLanguageDialog(){
+        final String[] listItems = {"English", "Vietnamese"};
+        AlertDialog.Builder mBuilder = new AlertDialog.Builder(this);
+        mBuilder.setTitle("Select Language...");
+        mBuilder.setSingleChoiceItems(listItems, -1, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                if(i == 0){
+                    setLocale("vi");
+                    recreate();
+                }
+                else if (i == 1){
+                    setLocale("en");
+                    recreate();
+                }
+                dialogInterface.dismiss();
+            }
+        });
+
+        AlertDialog mDialog = mBuilder.create();
+        mDialog.show();
     }
 
 }

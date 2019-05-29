@@ -27,7 +27,7 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
     /*DEBUG mode*/
-    boolean DEBUG = false;
+    boolean DEBUG = true;
     /* Specifying the search area: hanoi for "Hà Nội", hcm for "Hồ Chí Minh" */
     String currentAreaCode;
     /* Network connection */

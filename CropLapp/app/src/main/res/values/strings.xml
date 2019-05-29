@@ -1,7 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="btnLang">Ngôn ngữ</string>
+    <string name="choseLang">Chọn ngôn ngữ</string>
+    <string name="vi">Tiếng Việt</string>
+    <string name="en">English</string>
+
     <string name="app_name">CropLapp</string>
-    <string name="noneArea">Chọn khu vực</string>
+    <string name="chosseArea">Chọn khu vực</string>
 
     <string name="currentArea">Khu vực hiện tại:</string>
 
@@ -25,6 +30,8 @@
     <string name="instruction5">- Nếu bạn gửi film từ tỉnh khác qua đường chuyển phát,
         vui lòng tìm kiếm theo tên hoặc thành phố của bạn. VD: Tuấn Anh, hoặc VD: Quảng Ninh.</string>
 
+    <string name="storeGetData">Tải dữ liệu cửa hàng...</string>
+    <string name="storeLoaing">Đang tải, chờ chút nhé!</string>
     <string name="filmname">filmname</string>
     <string name="filmprice">filmprice</string>
     <string name="filmstatus">filmstatus</string>

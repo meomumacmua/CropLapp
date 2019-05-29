@@ -30,6 +30,8 @@ public class FilmStoreActivity extends AppCompatActivity {
 
     ProgressDialog progressDialog;
 
+    MyLib myLib = new MyLib(this);
+
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,42 +42,53 @@ public class FilmStoreActivity extends AppCompatActivity {
         super.onStart();
         setContentView(R.layout.list_store);
 
-        getDatabase(getString(R.string.filmHanoi));
+        // Get store data from database
+        myLib.initDatabaseStore(getString(R.string.filmHanoi));
+        myLib.OnRecievedStoreListener(new MyLib.OnRecievedStore() {
+            @Override
+            public void onReceivedStore(ArrayList<String> list) {
+                progressDialog.dismiss();
+                filmData = list;
+                for (int i = 0; i < filmData.size(); i++) {
+                }
+                addToAdapter();
+            }
+        });
 
         progressDialog = new ProgressDialog(this);
         // Setting Title
-        progressDialog.setTitle("ProgressDialog");
+        progressDialog.setTitle(getString(R.string.storeGetData));
         // Setting Message
-        progressDialog.setMessage("Loading...");
+        progressDialog.setMessage(getString(R.string.storeLoaing));
         // Progress Dialog Style Spinner
         progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         // Display Progress Dialog
         progressDialog.show();
         // Cannot Cancel Progress Dialog
-        progressDialog.setCancelable(false);
+        progressDialog.setCancelable(true);
 
-        new CountDownTimer(4000, 1000) {
-            public void onTick(long millisUntilFinished) {
-//                Log.d("print","seconds remaining: " + millisUntilFinished / 1000);
-            }
-
-            public void onFinish() {
-//                Log.d("print","done!");
-                progressDialog.dismiss();
-
-//                Log.d("print", filmData.size() + "");
-                FilmDetails item;
-                FilmDetails itemExtend;
-                addControl();
-
-                for (short i = 0; i < filmData.size(); i++) {
-                    String[] split = filmData.get(i).split(",");
-                    item = new FilmDetails(filmData.get(i));
-                    list.add(item);
-                }
-                adapter.notifyDataSetChanged();
-            }
-        }.start();
+//        new CountDownTimer(4000, 1000) {
+//            public void onTick(long millisUntilFinished) {
+////                Log.d("print","seconds remaining: " + millisUntilFinished / 1000);
+//            }
+//
+//            public void onFinish() {
+////                Log.d("print","done!");
+//                progressDialog.dismiss();
+//
+////                Log.d("print", filmData.size() + "");
+//                FilmDetails item;
+//                FilmDetails itemExtend;
+//                addControl();
+//
+//                for (short i = 0; i < filmData.size(); i++) {
+//                    String[] split = filmData.get(i).split(",");
+//                    item = new FilmDetails(filmData.get(i));
+//                    list.add(item);
+//                }
+//                adapter.notifyDataSetChanged();
+//            }
+//        }.start();
 
         ImageButton buttonRefresh = findViewById(R.id.button_refresh);
         buttonRefresh.setOnClickListener(new View.OnClickListener() {
@@ -127,6 +140,18 @@ public class FilmStoreActivity extends AppCompatActivity {
                 //showAlertDialog(6,"Error!!!");
             }
         });
+    }
+
+    public void addToAdapter(){
+        FilmDetails item;
+        addControl();
+
+        for (short i = 0; i < filmData.size(); i++) {
+            String[] split = filmData.get(i).split(",");
+            item = new FilmDetails(filmData.get(i));
+            list.add(item);
+        }
+        adapter.notifyDataSetChanged();
     }
 
     // Add adapter to recycleview

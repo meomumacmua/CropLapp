@@ -32,22 +32,52 @@ public class MyLib {
     }
 
     // Get data from firebase
-    public int initDatabase(String areaCode) {
-        final ArrayList<String> listReceived = new ArrayList<>();
+    public int initDatabaseTrack(final String topic) {
+        final ArrayList<String> listReceivedTrack = new ArrayList<>();
+
         // Get the FirebaseDatabase object
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         // Connection to the node named areaCode, this node is defined by the Firebase database ('hanoi' or 'saigon')
-        DatabaseReference myRef = database.getReference(areaCode);
+        DatabaseReference myRef = database.getReference(topic);
         // Access and listen to data changes
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 // Loop to get data when there is a change on Firebasese
                 for (DataSnapshot data : dataSnapshot.getChildren()) {
-                    listReceived.add(data.getValue().toString());
+                    listReceivedTrack.add(data.getValue().toString());
                 }
                 // Done!
-                onReceived.onReceived(listReceived);
+                onReceivedTrack.onReceivedTrack(listReceivedTrack);
+            }
+
+            /* Firebase error*/
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Log.w("FIREBASE", "loadPost:onCancelled", databaseError.toException());
+                showAlertDialog2(6, "Error");
+            }
+        });
+        return 0;
+    }
+
+    public int initDatabaseStore(final String topic) {
+        final ArrayList<String> listReceivedStore = new ArrayList<>();
+
+        // Get the FirebaseDatabase object
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        // Connection to the node named areaCode, this node is defined by the Firebase database ('hanoi' or 'saigon')
+        DatabaseReference myRef = database.getReference(topic);
+        // Access and listen to data changes
+        myRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                // Loop to get data when there is a change on Firebasese
+                for (DataSnapshot data : dataSnapshot.getChildren()) {
+                    listReceivedStore.add(data.getKey() + "," + data.getValue());
+                }
+                // Done!
+                onReceivedStore.onReceivedStore(listReceivedStore);
             }
 
             /* Firebase error*/
@@ -194,17 +224,29 @@ public class MyLib {
     // Interface seclect
     public interface OnSeclect {
         void onSeclected();
-
     }
     private OnSeclect onSeclect;
     public void OnSeclectListener(OnSeclect onSeclect) {
         this.onSeclect = onSeclect;
     }
 
-    // Interface recievied
-    public interface OnRecieved {
-        void onReceived(ArrayList<String> list);
+    // Interface recieviedTrack
+    public interface OnRecievedTrack {
+        void onReceivedTrack(ArrayList<String> list);
     }
-    private OnRecieved onReceived;
-    public  void OnRecievedListener(OnRecieved onReceived) { this.onReceived = onReceived;}
+    private OnRecievedTrack onReceivedTrack;
+    public  void OnRecievedTrackListener(OnRecievedTrack onReceivedTrack)
+    {
+        this.onReceivedTrack = onReceivedTrack;
+    }
+
+    // Interface recieviedStore
+    public interface OnRecievedStore {
+        void onReceivedStore(ArrayList<String> list);
+    }
+    private OnRecievedStore onReceivedStore;
+    public  void OnRecievedStoreListener(OnRecievedStore onReceivedStore)
+    {
+        this.onReceivedStore = onReceivedStore;
+    }
 }

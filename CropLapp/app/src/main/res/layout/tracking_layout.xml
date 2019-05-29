@@ -19,7 +19,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="1.6"
+            android:layout_weight="1.8"
             android:orientation="vertical">
 
             <LinearLayout
@@ -32,10 +32,16 @@
                 <ImageView
                     android:layout_width="230dp"
                     android:layout_height="100dp"
-                    android:layout_gravity="center|bottom"
-
+                    android:layout_gravity="center|top"
                     android:src="@mipmap/trackingimage"/>
 
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:layout_weight="4">
                 <TextView
                     android:id="@+id/textViewArea"
                     android:textColor="@color/text_shadow_white"
@@ -43,13 +49,6 @@
                     android:layout_gravity="center"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="4">
             </LinearLayout>
 
         </LinearLayout>
@@ -115,9 +114,9 @@
                 android:layout_height="wrap_content"
                 android:text="@string/instruction0"
                 android:textStyle="bold"
-                android:textSize="25dp"
+                android:textSize="20dp"
                 android:gravity="center_horizontal"
-                android:paddingTop="15dp"
+                android:paddingTop="7dp"
                 android:textColor="#ffffff"
                 android:fontFamily="@font/opensans0regular" />
 
@@ -128,7 +127,7 @@
                 android:textColor="#ffffff"
                 android:fontFamily="@font/opensans0regular"
                 android:gravity="center_horizontal"
-                android:paddingTop="15dp"
+                android:paddingTop="10dp"
                 android:paddingLeft="7dp"
                 android:paddingRight="7dp" />
 
@@ -139,7 +138,7 @@
                 android:textColor="#ffffff"
                 android:fontFamily="@font/opensans0regular"
                 android:gravity="center_horizontal"
-                android:paddingTop="15dp"
+                android:paddingTop="10dp"
                 android:paddingLeft="7dp"
                 android:paddingRight="7dp" />
             <TextView
@@ -149,7 +148,7 @@
                 android:textColor="#ffffff"
                 android:fontFamily="@font/opensans0regular"
                 android:gravity="center_horizontal"
-                android:paddingTop="15dp"
+                android:paddingTop="10dp"
                 android:paddingLeft="7dp"
                 android:paddingRight="7dp" />
             <TextView
@@ -159,7 +158,7 @@
                 android:textColor="#ffffff"
                 android:fontFamily="@font/opensans0regular"
                 android:gravity="center_horizontal"
-                android:paddingTop="15dp"
+                android:paddingTop="10dp"
                 android:paddingLeft="7dp"
                 android:paddingRight="7dp" />
             <TextView
@@ -169,7 +168,7 @@
                 android:textColor="#ffffff"
                 android:fontFamily="@font/opensans0regular"
                 android:gravity="center_horizontal"
-                android:paddingTop="15dp"
+                android:paddingTop="10dp"
                 android:paddingLeft="7dp"
                 android:paddingRight="7dp" />
         </LinearLayout>

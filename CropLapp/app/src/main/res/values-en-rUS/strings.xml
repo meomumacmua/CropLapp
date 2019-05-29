@@ -1,9 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">CropLapp</string>
-    <string name="noneArea">Area Selection</string>
+    <string name="btnLang">Language</string>
+    <string name="choseLang">Select Language</string>
+    <string name="vi">Tiếng Việt</string>
+    <string name="en">English</string>
 
-    <string name="currentArea">Current area </string>
+    <string name="app_name">CropLapp</string>
+    <string name="chosseArea">Seclect area</string>
+
+    <string name="currentArea">Current area:</string>
 
     <string name="areaHanoi">Ha Noi</string>
     <string name="areaHanoiCode">hanoi</string>
@@ -24,6 +29,8 @@
         example: 'K1234e'.</string>
     <string name="instruction5">- If you ship from others town, search by your hometown name . VD: Tuấn Anh, hoặc VD: Quảng Ninh.</string>
 
+    <string name="storeGetData">Get data from store... </string>
+    <string name="storeLoaing">Loading, please wait</string>
     <string name="filmname">filmname</string>
     <string name="filmprice">filmprice</string>
     <string name="filmstatus">filmstatus</string>

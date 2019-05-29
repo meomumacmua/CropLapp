@@ -65,11 +65,11 @@ public class MyService extends IntentService {
             Log.d("print", "start");
             Thread.sleep(5000);
             if(myLib.isNetworkConnected()) {
-                myLib.initDatabase(topic);
-                myLib.OnRecievedListener(new MyLib.OnRecieved() {
+                myLib.initDatabaseTrack(topic);
+                myLib.OnRecievedTrackListener(new MyLib.OnRecievedTrack() {
                     boolean check = false;
                     @Override
-                    public void onReceived(ArrayList<String> list) {
+                    public void onReceivedTrack(ArrayList<String> list) {
                         for (int i = 0; i < list.size(); i++) {
                             if (list.get(i).contains(topic)) {
                                 if (list.get(i).contains("OK")) {

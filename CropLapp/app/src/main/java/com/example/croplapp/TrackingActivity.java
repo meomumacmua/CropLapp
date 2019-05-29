@@ -96,14 +96,13 @@ public class TrackingActivity extends AppCompatActivity {
 
             if(onlineStatus) {
                 /* Init Database */
-                if(myLib.initDatabase(currentareaCode) == 6){
+                if(myLib.initDatabaseTrack(currentareaCode) == 6){
                     myLib.showAlertDialog2(6,"Error");
                 }
-                myLib.OnRecievedListener(new MyLib.OnRecieved() {
+                myLib.OnRecievedTrackListener(new MyLib.OnRecievedTrack() {
                     //Save data to SharedPreferences
                     @Override
-                    public void onReceived(ArrayList<String> list) {
-
+                    public void onReceivedTrack(ArrayList<String> list) {
                         a0.clear();
                         a0 = list;
                         if (currentareaCode.contains(getString(R.string.areaHanoiCode))) {
@@ -129,7 +128,6 @@ public class TrackingActivity extends AppCompatActivity {
                         editor.apply();
                         canGoBack = true;
                     }
-
                 });
 
             } else {

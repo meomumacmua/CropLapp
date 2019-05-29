@@ -26,6 +26,8 @@ public class FilmItem extends AppCompatActivity {
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
 
+        String name = bundle.getString("name");
+        String price = bundle.getString("price");
         String iso = bundle.getString("iso");
         String shot = bundle.getString("shot");
         int nPic = bundle.getInt("nPic");
@@ -36,7 +38,7 @@ public class FilmItem extends AppCompatActivity {
         models = new ArrayList<>();
         models.clear();
         for (int i = 0; i < nPic; i++) {
-            models.add(new FilmDetails(iso, shot,nPic,split[i]));
+            models.add(new FilmDetails(name, price,iso, shot,nPic,split[i]));
         }
 
         adapter = new FilmImagesAdapter(models, this);

@@ -21,7 +21,9 @@ public class FilmDetails {
 //        this.filmstatus = filmStatus;
 //    }
 //
-    public FilmDetails(String iso, String shot, int nPic,String link) {
+    public FilmDetails(String filmname,String filmprice, String iso, String shot, int nPic,String link) {
+        this.filmname = filmname;
+        this.filmprice = filmprice;
         this.iso = iso;
         this.shot = shot;
         this.link = link;
