@@ -1,5 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="info1">Author\nNguyen Duc Tien - 16020175\nDuong Quoc Anh - 16020102</string>
+    <string name="info2">Image advisor: Vu Tuan Anh\nCroplabHaNoi</string>
+
+    <string name="tytle1">Seach</string>
+    <string name="description1">Search easily, have suggestions if you forget your code.</string>
+    <string name="tytle2">Results</string>
+    <string name="description2">Specific results of each film process: received, pending, processing and completed.
+        So please feel free to send your film to us!</string>
+    <string name="tytle3">Filmstore</string>
+    <string name="description3">While waiting for the photo to come, you can see the types of movies we have!
+        There are also photos from that film, no more hesitation!</string>
+    <string name="tytle4">Option</string>
+    <string name="description4">You can choose labs in Hanoi or Ho Chi Minh City.
+        Languages can be selected in Vietnamese or English. Or you can review Intro</string>
+    <string name="tytle5">You are ready!</string>
+    <string name="description5">Go to the app and try it now, if you need to review, please select Intro in the Option</string>
+    <string name="intro">intro</string>
+
     <string name="btnLang">Language</string>
     <string name="choseLang">Select Language</string>
     <string name="vi">Tiếng Việt</string>

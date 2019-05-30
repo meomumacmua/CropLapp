@@ -14,6 +14,7 @@ import com.github.paolorotolo.appintro.AppIntroFragment;
 import com.github.paolorotolo.appintro.model.SliderPage;
 
 public class IntroActivity extends AppIntro {
+    String intro;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -22,25 +23,57 @@ public class IntroActivity extends AppIntro {
     protected void onStart() {
         super.onStart();
 
+        Intent intent = getIntent();
+        Bundle bundle = intent.getExtras();
+        intro = bundle.getString(getString(R.string.intro));
+
         // Set animation
         setFadeAnimation();
 
         //Set value for page1
         SliderPage sliderPage = new SliderPage();
-        sliderPage.setTitle("title1");
-        sliderPage.setDescription("description1");
+        sliderPage.setTitle(getString(R.string.tytle1));
+        sliderPage.setDescription(getString(R.string.description1));
+        sliderPage.setImageDrawable(R.mipmap.track);
+        sliderPage.setBgColor(getResources().getColor(R.color.colorAccent));
+        //Add
+        addSlide(AppIntroFragment.newInstance(sliderPage));
+
+        //Set value for page2
+        sliderPage.setTitle(getString(R.string.tytle2));
+        sliderPage.setDescription(getString(R.string.description2));
         sliderPage.setImageDrawable(R.mipmap.information);
         sliderPage.setBgColor(getResources().getColor(R.color.colorAccent));
         //Add
         addSlide(AppIntroFragment.newInstance(sliderPage));
 
-        //Set value for page1
-        sliderPage.setTitle("title2");
-        sliderPage.setDescription("description2");
+        //Set value for page3
+        sliderPage.setTitle(getString(R.string.tytle3));
+        sliderPage.setDescription(getString(R.string.description3));
+        sliderPage.setImageDrawable(R.mipmap.filmstore);
+        sliderPage.setBgColor(getResources().getColor(R.color.colorAccent));
+        //Add
+        addSlide(AppIntroFragment.newInstance(sliderPage));
+
+        //Set value for page4
+        sliderPage.setTitle(getString(R.string.tytle4));
+        sliderPage.setDescription(getString(R.string.description4));
         sliderPage.setImageDrawable(R.mipmap.information);
         sliderPage.setBgColor(getResources().getColor(R.color.colorAccent));
         //Add
         addSlide(AppIntroFragment.newInstance(sliderPage));
+
+        //Set value for page5
+        sliderPage.setTitle(getString(R.string.tytle5));
+        sliderPage.setDescription(getString(R.string.description5));
+        sliderPage.setImageDrawable(R.mipmap.information);
+        sliderPage.setBgColor(getResources().getColor(R.color.colorAccent));
+        //Add
+        addSlide(AppIntroFragment.newInstance(sliderPage));
+
+
+
+
 
         // OPTIONAL METHODS
         // Override bar/separator color.
@@ -58,21 +91,28 @@ public class IntroActivity extends AppIntro {
     public void onSkipPressed(Fragment currentFragment) {
         super.onSkipPressed(currentFragment);
         // Do something when users tap on Skip button.
-        Intent intent = new Intent(this, MainActivity.class);
-        startActivity(intent);
-        finish();
+        startMain();
     }
 
     // Done seclected
     @Override
     public void onDonePressed(Fragment currentFragment) {
         super.onDonePressed(currentFragment);
-        // Do something when users tap on Done button.
-        Intent intent = new Intent(this, MainActivity.class);
-        startActivity(intent);
-        finish();
+        // Do something when users tap on Done button
+        startMain();
     }
 
+    private void startMain()
+    {
+        if (intro.contains(getString(R.string.intro))) {
+            Intent intent = new Intent(this, MainActivity.class);
+            startActivity(intent);
+            finish();
+        } else {
+            finish();
+        }
+
+    }
     @Override
     public void onSlideChanged(@Nullable Fragment oldFragment, @Nullable Fragment newFragment) {
         super.onSlideChanged(oldFragment, newFragment);

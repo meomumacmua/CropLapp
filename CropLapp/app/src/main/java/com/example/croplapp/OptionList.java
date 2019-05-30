@@ -68,20 +68,22 @@ public class OptionList extends AppCompatActivity {
             public void onClick(View view) {
 //                showChangeLanguageDialog();
                 Log.d("print", "onclick");
-                showAlertDialog(4, "4");
+                showChangLangDialog();
             }
         });
 
 
-//        Button button=findViewById(R.id.buttonNotification);
-//        button.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-////                Intent i = new Intent(OptionList.this, MyService.class);
-////                startService(i);  // For the service.
-////                showNotification();
-//            }
-//        });
+        Button button=findViewById(R.id.intro);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent4 = new Intent(OptionList.this, IntroActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putString(getString(R.string.intro),"1");
+                intent4.putExtras(bundle);
+                startActivity(intent4);
+            }
+        });
 
         /* Show name of search area */
         final TextView showArea = findViewById(R.id.textView2);
@@ -182,16 +184,10 @@ public class OptionList extends AppCompatActivity {
     }
 
     /* Alert dialog funtiion*/
-    public void showAlertDialog(final int feedBack, String code) {
+    public void showChangLangDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("CropLab !!!");
-        switch (feedBack) {
-            case 4:
-            {
-                // Set the message
-                builder.setMessage(getString(R.string.choseLang));
-            }
-        }
+        builder.setMessage(getString(R.string.choseLang));
         /* Disable click outside the alert to turn off */
         builder.setCancelable(false);
         /* Set "OK" button */
@@ -267,28 +263,6 @@ public class OptionList extends AppCompatActivity {
             NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
             notificationManager.notify(0, notification);
         }
-    }
-    private void showChangeLanguageDialog(){
-        final String[] listItems = {"English", "Vietnamese"};
-        AlertDialog.Builder mBuilder = new AlertDialog.Builder(this);
-        mBuilder.setTitle("Select Language...");
-        mBuilder.setSingleChoiceItems(listItems, -1, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                if(i == 0){
-                    setLocale("vi");
-                    recreate();
-                }
-                else if (i == 1){
-                    setLocale("en");
-                    recreate();
-                }
-                dialogInterface.dismiss();
-            }
-        });
-
-        AlertDialog mDialog = mBuilder.create();
-        mDialog.show();
     }
 
 }

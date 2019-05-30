@@ -165,10 +165,7 @@ public class MainActivity extends AppCompatActivity {
                 if (DEBUG) {
                     Log.d("print", "onButton Info");
                 }
-
-                Intent intent4 = new Intent(MainActivity.this, IntroActivity.class);
-                startActivity(intent4);
-//                eventClick();
+                eventClick();
             }
         });
 

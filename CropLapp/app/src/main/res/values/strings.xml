@@ -1,5 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="info1">Tác giả\nNguyễn Đức Tiến - 16020175\nDương Quốc Anh - 16020102</string>
+    <string name="info2">Cố vấn hình ảnh: Vũ Tuấn Anh\nCroplabHaNoi</string>
+
+    <string name="tytle1">Tìm kiếm</string>
+    <string name="description1">Tìm kiếm dễ dàng, có sẵn các gợi ý nếu bạn quên mã của mình</string>
+    <string name="tytle2">Kết quả</string>
+    <string name="description2">Kết quả cụ thể từng quá trình xử lí film: đã tiếp nhận, đang chờ xử lí, đang xử lí và hoàn thành.
+    Vì vậy hãy yên tâm giao film của bạn cho chúng mình!</string>
+    <string name="tytle3">Filmstore</string>
+    <string name="description3">Trong lúc chờ đợi film về, bạn có thể ghé qua xem các loại phim chúng mình đang có nhé!
+         Có cả ảnh chụp từ film đó nữa, khỏi phải đắn đo!</string>
+    <string name="tytle4">Tùy chọn</string>
+    <string name="description4">Có thể chọn lựa lab ở Hà Nội hoặc Hồ Chí Minh.
+         Ngôn ngữ có thể chọn Tiếng Việt hoặc English. Hoặc bạn có thể xem lại Intro</string>
+    <string name="tytle5">Sẵn sàng!</string>
+    <string name="description5">Vào ứng dụng và thử ngay thôi, nếu cần xem lại hãy chọn Intro trong Option nhé</string>
+    <string name="intro">Intro</string>
+
     <string name="btnLang">Ngôn ngữ</string>
     <string name="choseLang">Chọn ngôn ngữ</string>
     <string name="vi">Tiếng Việt</string>

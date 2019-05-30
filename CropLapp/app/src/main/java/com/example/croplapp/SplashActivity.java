@@ -33,6 +33,9 @@ public class SplashActivity extends AppCompatActivity {
                         editor.commit();
 
                         Intent intent1 = new Intent(SplashActivity.this, IntroActivity.class);
+                        Bundle bundle = new Bundle();
+                        bundle.putString(getString(R.string.intro), getString(R.string.intro));
+                        intent1.putExtras(bundle);
                         startActivity(intent1);
                         finish();
                     } else {
