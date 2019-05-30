@@ -1,3 +1,9 @@
+/*
+ * OMane: SplashActivity.java
+ * Author: Duong Quoc Anh 16020102
+ * Purpose: Welcomescreen
+ * Include: check first open
+ */
 package com.example.croplapp;
 
 import android.content.Context;
