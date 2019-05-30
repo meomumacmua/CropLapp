@@ -1,3 +1,9 @@
+/*
+* FilmDetails.java
+* Author: Nguyen Duc Tien 16020175
+* Purpose: Film object
+* Include: Contructor, get/set method
+*/
 package com.example.croplapp;
 
 public class FilmDetails {
@@ -21,6 +27,7 @@ public class FilmDetails {
 //        this.filmstatus = filmStatus;
 //    }
 //
+    // Constructor
     public FilmDetails(String filmname,String filmprice, String iso, String shot, int nPic,String link) {
         this.filmname = filmname;
         this.filmprice = filmprice;
