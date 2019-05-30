@@ -1,3 +1,9 @@
+/*
+* Name: MyLib.java
+* Author: Nguyen Duc Tien 16020175, Duong Quoc Anh 16020102
+* Purpose: custom function to reuse
+* Include: initDatabaseTrack, initDatabaseStore, showAlertDialog, getTimer, isNetworkConnected
+*/
 package com.example.croplapp;
 
 import android.app.Notification;
