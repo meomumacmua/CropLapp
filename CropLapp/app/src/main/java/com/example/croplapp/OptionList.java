@@ -1,8 +1,8 @@
 /*
  * OMane: OptionList.java
- * Author: Nguyen Duc Tien 16020175
- * Purpose: Change search area: "Hà Nội" or "Sài Gòn"
- * Include: AdapterView, Spinner, Intent bundle
+ * Author: Nguyen Duc Tien 16020175, Duong Quoc Anh 16020102
+ * Purpose: Change search area: "Hà Nội" or "Sài Gòn", change language, show intro
+ * Include: AdapterView, Spinner, setLang, loadLang
  */
 package com.example.croplapp;
 
