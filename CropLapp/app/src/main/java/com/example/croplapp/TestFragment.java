@@ -1,3 +1,9 @@
+/*
+ * OMane: TestFragment.java
+ * Author: Duong Quoc Anh 16020102
+ * Purpose: show last tiem access database when offline
+ * Include: setText, Intent
+ */
 package com.example.croplapp;
 
 import android.content.Context;
@@ -22,15 +28,9 @@ public class TestFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_test, container, false);
-//        btFrg = view.findViewById(R.id.frgButton);
-//        btFrg.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                onDestroy();
-//            }
-//        });
         txt = view.findViewById(R.id.frg_txt);
         Bundle frgBundle = getArguments();
+        
         if(frgBundle != null) {
             txt.setText(getString(R.string.lastaccessDB) + " " + frgBundle.getString(getString(R.string.keyTime)));
         }
