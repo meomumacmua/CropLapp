@@ -1,3 +1,9 @@
+/*
+* FilmImagesAdapter.java
+* Author: Nguyen Duc Tien 16020175
+* Purpose: Film object
+* Include: Contructor, instantiateItem, destroyItem
+*/
 package com.example.croplapp;
 
 import android.content.Context;
