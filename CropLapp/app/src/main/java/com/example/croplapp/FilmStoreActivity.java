@@ -1,5 +1,5 @@
 /*
-* FilmItem.java
+* FilmStoreActivity.java
 * Author: Nguyen Duc Tien 16020175
 * Purpose: Film store activity
 * Include: initDatabaseStore, interact with filmitem
