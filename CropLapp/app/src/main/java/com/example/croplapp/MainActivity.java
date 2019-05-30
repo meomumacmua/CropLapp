@@ -1,6 +1,6 @@
 /*
 * Name: MainActivity.java
-* Author: Nguyen Duc Tien 16020175
+* Author: Nguyen Duc Tien 16020175, Duong Quoc Anh 16020102
 * Purpose: Home screen
 * Include: alert dialog, Intent bundle, Shared preference, network check
 */
