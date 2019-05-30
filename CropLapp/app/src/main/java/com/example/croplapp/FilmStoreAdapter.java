@@ -1,3 +1,9 @@
+/*
+* FilmImagesAdapter.java
+* Author: Nguyen Duc Tien 16020175
+* Purpose: Adapter 
+* Include: Contructor, ViewHolder, onCreateViewHolder, setOnClickListener
+*/
 package com.example.croplapp;
 
 import android.app.Activity;
