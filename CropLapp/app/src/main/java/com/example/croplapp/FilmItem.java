@@ -1,3 +1,9 @@
+/*
+* FilmItem.java
+* Author: Nguyen Duc Tien 16020175
+* Purpose: Film extend activity
+* Include: Contructor, instantiateItem, destroyItem
+*/
 package com.example.croplapp;
 
 import android.animation.ArgbEvaluator;
