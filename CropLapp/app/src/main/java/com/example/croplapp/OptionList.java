@@ -33,6 +33,8 @@ public class OptionList extends AppCompatActivity {
     /* Specifying the search area: hanoi for "Hà Nội", hcm for "Hồ Chí Minh" */
     String areaChoosedCode;
 
+    /* Language*/
+    String language;
     /* onCreat();
      * Get bundle data from MainAcvtivity
      */
@@ -41,6 +43,7 @@ public class OptionList extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_option_list);
         loadLocale();
+        setLocale(language);
 
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
@@ -219,7 +222,7 @@ public class OptionList extends AppCompatActivity {
         alertDialog.show();
     }
 
-    // Set seclected language
+    // Get language from sharedPreferences
     private void setLocale(String lang) {
         Locale locale = new Locale(lang);
         Locale.setDefault(locale);
@@ -234,7 +237,7 @@ public class OptionList extends AppCompatActivity {
     // Apply seclected language
     public void loadLocale(){
         SharedPreferences prefs = getSharedPreferences("Settings", Activity.MODE_PRIVATE);
-        String language = prefs.getString("My Lang","");
+        language = prefs.getString("My Lang","");
         setLocale(language);
     }
 

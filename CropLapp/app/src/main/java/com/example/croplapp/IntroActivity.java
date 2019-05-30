@@ -33,41 +33,51 @@ public class IntroActivity extends AppIntro {
         //Set value for page1
         SliderPage sliderPage = new SliderPage();
         sliderPage.setTitle(getString(R.string.tytle1));
+        sliderPage.setTitleColor(getResources().getColor(R.color.colorPrimary));
+        sliderPage.setDescColor(getResources().getColor(R.color.colorPrimary));
         sliderPage.setDescription(getString(R.string.description1));
         sliderPage.setImageDrawable(R.mipmap.track);
-        sliderPage.setBgColor(getResources().getColor(R.color.colorAccent));
+        sliderPage.setBgColor(getResources().getColor(R.color.light_font));
         //Add
         addSlide(AppIntroFragment.newInstance(sliderPage));
 
         //Set value for page2
         sliderPage.setTitle(getString(R.string.tytle2));
         sliderPage.setDescription(getString(R.string.description2));
-        sliderPage.setImageDrawable(R.mipmap.information);
-        sliderPage.setBgColor(getResources().getColor(R.color.colorAccent));
+        sliderPage.setTitleColor(getResources().getColor(R.color.colorPrimary));
+        sliderPage.setDescColor(getResources().getColor(R.color.colorPrimary));
+        sliderPage.setImageDrawable(R.mipmap.code);
+        sliderPage.setBgColor(getResources().getColor(R.color.light_font));
         //Add
         addSlide(AppIntroFragment.newInstance(sliderPage));
 
         //Set value for page3
         sliderPage.setTitle(getString(R.string.tytle3));
         sliderPage.setDescription(getString(R.string.description3));
+        sliderPage.setTitleColor(getResources().getColor(R.color.colorPrimary));
+        sliderPage.setDescColor(getResources().getColor(R.color.colorPrimary));
         sliderPage.setImageDrawable(R.mipmap.filmstore);
-        sliderPage.setBgColor(getResources().getColor(R.color.colorAccent));
+        sliderPage.setBgColor(getResources().getColor(R.color.light_font));
         //Add
         addSlide(AppIntroFragment.newInstance(sliderPage));
 
         //Set value for page4
         sliderPage.setTitle(getString(R.string.tytle4));
         sliderPage.setDescription(getString(R.string.description4));
-        sliderPage.setImageDrawable(R.mipmap.information);
-        sliderPage.setBgColor(getResources().getColor(R.color.colorAccent));
+        sliderPage.setTitleColor(getResources().getColor(R.color.colorPrimary));
+        sliderPage.setDescColor(getResources().getColor(R.color.colorPrimary));
+        sliderPage.setImageDrawable(R.mipmap.option);
+        sliderPage.setBgColor(getResources().getColor(R.color.light_font));
         //Add
         addSlide(AppIntroFragment.newInstance(sliderPage));
 
         //Set value for page5
         sliderPage.setTitle(getString(R.string.tytle5));
         sliderPage.setDescription(getString(R.string.description5));
-        sliderPage.setImageDrawable(R.mipmap.information);
-        sliderPage.setBgColor(getResources().getColor(R.color.colorAccent));
+        sliderPage.setTitleColor(getResources().getColor(R.color.colorPrimary));
+        sliderPage.setDescColor(getResources().getColor(R.color.colorPrimary));
+        sliderPage.setImageDrawable(R.mipmap.done);
+        sliderPage.setBgColor(getResources().getColor(R.color.light_font));
         //Add
         addSlide(AppIntroFragment.newInstance(sliderPage));
 

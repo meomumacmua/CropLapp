@@ -41,7 +41,7 @@ public class WebViewActivity extends AppCompatActivity {
 
         superProgressBar.setMax(100);
 
-        superWebView.loadUrl("https://google.com");
+        superWebView.loadUrl("https://www.facebook.com/CropLab/");
         superWebView.getSettings().setJavaScriptEnabled(true);
         superWebView.setWebViewClient(new WebViewClient());
         superWebView.setWebChromeClient(new WebChromeClient(){

@@ -216,14 +216,6 @@ public class TrackingActivity extends AppCompatActivity {
                 if ((text.trim().length() <= 4)  || (Character.isDigit(c))) {   // Invalid code (1)
                     myLib.showAlertDialog2(1, text);
                 } else {
-//                    new CountDownTimer(700, 1000) {
-//                        public void onTick(long millisUntilFinished) {
-//                        }
-//                        public void onFinish() {
-//                            // Seach in database
-//                            getDatabase(text);
-//                        }
-//                    }.start();
                     getDatabase(text);
                 }
             }
@@ -236,33 +228,9 @@ public class TrackingActivity extends AppCompatActivity {
     @Override
     public void onBackPressed(){
 
-//        final Intent data = new Intent();
-//        // Add data to the intent
-//        if (onlineStatus) {
-//            data.putExtra(TRACK_EXTRA_DATA, a0);
-//
-//            Date date = new Date();
-//            final String DATE_FORMAT = "dd/MM/yyyy";
-//            final String TIME_FORMAT_12 = "hh:mm:ss a";
-//            final String TIME_FORMAT_24 = "HH:mm:ss";
-//            SimpleDateFormat format = new SimpleDateFormat(TIME_FORMAT_24 + " " + DATE_FORMAT  );
-//            data.putExtra(TRACK_EXTRA_DATE, format.format(date));
-//
-//            Log.d("print", format.format(date));
-//        } else {
-//            data.putExtra(TRACK_EXTRA_DATA, 1);
-//        }
-//
-//        /*
-//         * Set the resultCode to AppCompatActivity.RESULT_OK to show
-//         * instance was successful and contains returned results
-//         */
-//        setResult(AppCompatActivity.RESULT_OK, data);
-//        // Call the finish() function to close the current Activity and return to MainActivity
         if (canGoBack) {
             finish();
         }
-//        finish();
     }
 
     /* Hide keyboard function */

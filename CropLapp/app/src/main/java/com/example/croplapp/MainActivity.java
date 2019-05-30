@@ -11,7 +11,6 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -22,8 +21,6 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
     /*DEBUG mode*/
@@ -165,7 +162,7 @@ public class MainActivity extends AppCompatActivity {
                 if (DEBUG) {
                     Log.d("print", "onButton Info");
                 }
-                eventClick();
+                infoShow();
             }
         });
 
@@ -273,8 +270,9 @@ public class MainActivity extends AppCompatActivity {
         editor.apply();
     }
 
-    private void eventClick() {
-        View view = getLayoutInflater().inflate(R.layout.bottom_sheet, null);
+    /* show info */
+    public void infoShow() {
+        View view = getLayoutInflater().inflate(R.layout.bottom_sheet_info, null);
         TextView txtView1 = (TextView) view.findViewById(R.id.bottom_sheet_textview1);
 
         final Dialog mBottomSheetDialog = new Dialog(MainActivity.this, R.style.MaterialDialogSheet);
@@ -292,4 +290,25 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
+    /* show webAccess */
+//    public void webOptionAccess() {
+//        View view = getLayoutInflater().inflate(R.layout.bottom_sheet_info, null);
+//        TextView txtView1 = (TextView) view.findViewById(R.id.bottom_sheet_textview1);
+//
+//        final Dialog mBottomSheetDialog = new Dialog(MainActivity.this, R.style.MaterialDialogSheet);
+//        mBottomSheetDialog.setContentView(view);
+//        mBottomSheetDialog.setCancelable(true);
+//        mBottomSheetDialog.getWindow().setLayout(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+//        mBottomSheetDialog.getWindow().setGravity(Gravity.BOTTOM);
+//        mBottomSheetDialog.show();
+//
+//        txtView1.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Toast.makeText(MainActivity.this, "Clicked Backup", Toast.LENGTH_SHORT).show();
+//                mBottomSheetDialog.dismiss();
+//            }
+//        });
+//    }
 }

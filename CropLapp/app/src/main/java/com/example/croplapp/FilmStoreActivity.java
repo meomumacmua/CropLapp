@@ -26,12 +26,13 @@ public class FilmStoreActivity extends AppCompatActivity {
     RecyclerView recyclerView;
     FilmStoreAdapter adapter;
 
+    // Data from firebase save into here
     ArrayList<String> filmData = new ArrayList<String>();
 
     ProgressDialog progressDialog;
 
+    //custom lib
     MyLib myLib = new MyLib(this);
-
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -67,29 +68,6 @@ public class FilmStoreActivity extends AppCompatActivity {
         // Cannot Cancel Progress Dialog
         progressDialog.setCancelable(true);
 
-//        new CountDownTimer(4000, 1000) {
-//            public void onTick(long millisUntilFinished) {
-////                Log.d("print","seconds remaining: " + millisUntilFinished / 1000);
-//            }
-//
-//            public void onFinish() {
-////                Log.d("print","done!");
-//                progressDialog.dismiss();
-//
-////                Log.d("print", filmData.size() + "");
-//                FilmDetails item;
-//                FilmDetails itemExtend;
-//                addControl();
-//
-//                for (short i = 0; i < filmData.size(); i++) {
-//                    String[] split = filmData.get(i).split(",");
-//                    item = new FilmDetails(filmData.get(i));
-//                    list.add(item);
-//                }
-//                adapter.notifyDataSetChanged();
-//            }
-//        }.start();
-
         ImageButton buttonRefresh = findViewById(R.id.button_refresh);
         buttonRefresh.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -110,41 +88,9 @@ public class FilmStoreActivity extends AppCompatActivity {
 
     }
 
-    public void getDatabase(String topic) {
-        //Clear arrray buffer before retrieve data
-        filmData.clear();
-        // Get the FirebaseDatabase object
-        DatabaseReference database;
-        database = FirebaseDatabase.getInstance().getReference(topic);
-        // Connection to the node named areaCode, this node is defined by the Firebase database ('hanoi' or 'saigon')
-        // Access and listen to data changes
-        database.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                // Loop to get data when there is a change on Firebase
-                for (DataSnapshot data : dataSnapshot.getChildren()) {
-                    // Get the key of the data
-                    String key = data.getKey().toString();
-//                    Log.d("print", key);
-                    // Transfer data into string then check
-//                    String[] value = data.getValue().toString().split(",");
-//                    Log.d("print", data.getValue().toString());
-
-                    filmData.add(key + "," + data.getValue());
-                }
-            }
-            /* Firebase error*/
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-                Log.w("FIREBASE", "loadPost:onCancelled", databaseError.toException());
-                //showAlertDialog(6,"Error!!!");
-            }
-        });
-    }
-
     public void addToAdapter(){
         FilmDetails item;
-        addControl();
+        creatRecycleview();
 
         for (short i = 0; i < filmData.size(); i++) {
             String[] split = filmData.get(i).split(",");
@@ -155,7 +101,8 @@ public class FilmStoreActivity extends AppCompatActivity {
     }
 
     // Add adapter to recycleview
-    public void addControl() {
+    public void creatRecycleview
+    () {
         recyclerView = (RecyclerView) findViewById(R.id.rv_listfilm);
         list = new ArrayList<>();
         adapter = new FilmStoreAdapter(this,list);

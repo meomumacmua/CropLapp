@@ -7,6 +7,7 @@
     android:orientation="vertical"
     tools:context=".OptionList"
     android:layout_gravity="center"
+    android:background="@mipmap/backoption"
     >
 
     <LinearLayout
