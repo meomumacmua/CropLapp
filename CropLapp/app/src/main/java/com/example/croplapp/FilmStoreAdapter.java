@@ -1,5 +1,5 @@
 /*
-* FilmImagesAdapter.java
+* FilmStoreAdapter.java
 * Author: Nguyen Duc Tien 16020175
 * Purpose: Adapter 
 * Include: Contructor, ViewHolder, onCreateViewHolder, setOnClickListener
