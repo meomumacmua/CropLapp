@@ -1,3 +1,9 @@
+/*
+* IntroActivity.java
+* Author: Duong Quoc Anh 16020102
+* Purpose: Intro
+* Include: SliderPage, button interaction
+*/
 package com.example.croplapp;
 
 import android.content.Intent;
