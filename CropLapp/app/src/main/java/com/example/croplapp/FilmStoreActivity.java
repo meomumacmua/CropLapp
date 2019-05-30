@@ -1,3 +1,9 @@
+/*
+* FilmItem.java
+* Author: Nguyen Duc Tien 16020175
+* Purpose: Film store activity
+* Include: initDatabaseStore, interact with filmitem
+*/
 package com.example.croplapp;
 
 import android.app.ProgressDialog;
