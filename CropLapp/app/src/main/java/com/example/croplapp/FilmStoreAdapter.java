@@ -62,6 +62,12 @@ public class FilmStoreAdapter extends RecyclerView.Adapter<FilmStoreAdapter.View
 
         viewHolder.filmname.setText(filmDetails.getFilmname());
         viewHolder.filmprice.setText(filmDetails.getFilmprice());
+        String filmstatus= filmDetails.getFilmstatus();
+//        if (filmstatus.contains("Còn hàng")) {
+//            viewHolder.filmstatus.setText(R.string.filmavailable);
+//        } else if (filmstatus.contains("Hết hàng")) {
+//            viewHolder.filmstatus.setText(R.string.filmunavailable);
+//        }
         viewHolder.filmstatus.setText(filmDetails.getFilmstatus());
         Glide.with(context).load(filmDetails.getFilmimage()).placeholder(R.mipmap.loading).error(R.mipmap.file).into(viewHolder.filmimage);
 

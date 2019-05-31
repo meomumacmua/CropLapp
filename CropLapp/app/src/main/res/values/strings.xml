@@ -1,5 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="shot">Số kiểu</string>
+    <string name="filmid">Tên film</string>
+    <string name="filmprices">Giá</string>
+    <string name="filmstate">Trạng thái</string>
+    <string name="filmavailable">Còn hàng</string>
+    <string name="filmunavailable">Hết hàng</string>
+
     <string name="info1">Tác giả\nNguyễn Đức Tiến - 16020175\nDương Quốc Anh - 16020102</string>
     <string name="info2">Cố vấn hình ảnh: Vũ Tuấn Anh\nCroplabHaNoi</string>
 

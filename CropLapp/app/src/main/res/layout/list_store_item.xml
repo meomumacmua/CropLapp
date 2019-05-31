@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/list_item_back"
@@ -54,7 +55,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:gravity="right|center_vertical"
-                    android:text="Tên film:"
+                    android:text="@string/filmid"
                     android:textStyle="bold"
                     android:textColor="#000000"
                     android:textSize="12dp" />
@@ -63,7 +64,6 @@
                     android:id="@+id/film_name"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:text="@string/filmname"
                     android:gravity="center"
                     android:layout_weight="0.4"
                     android:layout_margin="5dp"
@@ -85,7 +85,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:gravity="right|center_vertical"
-                    android:text="Giá:"
+                    android:text="@string/filmprices"
                     android:textStyle="bold"
                     android:textColor="#000000"
                     android:textSize="12dp"/>
@@ -94,7 +94,6 @@
                     android:id="@+id/film_price"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:text="@string/filmprice"
                     android:gravity="center"
                     android:layout_weight="0.4"
                     android:layout_margin="5dp"
@@ -114,7 +113,7 @@
                    android:layout_height="match_parent"
                    android:layout_weight="1"
                    android:gravity="right|center_vertical"
-                   android:text="Trạng Thái:"
+                   android:text="@string/filmstate"
                    android:textStyle="bold"
                    android:textColor="#000000"
                    android:textSize="12dp"/>
@@ -123,7 +122,6 @@
                    android:id="@+id/film_status"
                    android:layout_width="match_parent"
                    android:layout_height="match_parent"
-                   android:text="@string/filmstatus"
                    android:gravity="center"
                    android:layout_weight="0.4"
                    android:layout_margin="5dp"

@@ -1,5 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="shot">Shot</string>
+    <string name="filmid">Film name</string>
+    <string name="filmprices">Price</string>
+    <string name="filmstate">State</string>
+    <string name="filmavailable">Available</string>
+    <string name="filmunavailable">Unavailable</string>
+
     <string name="info1">Author\nNguyen Duc Tien - 16020175\nDuong Quoc Anh - 16020102</string>
     <string name="info2">Image advisor: Vu Tuan Anh\nCroplabHaNoi</string>
 

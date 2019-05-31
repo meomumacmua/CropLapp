@@ -56,8 +56,8 @@ public class FilmStoreActivity extends AppCompatActivity {
             public void onReceivedStore(ArrayList<String> list) {
                 progressDialog.dismiss();
                 filmData = list;
-                for (int i = 0; i < filmData.size(); i++) {
-                }
+//                for (int i = 0; i < filmData.size(); i++) {
+//                }
                 addToAdapter();
             }
         });
