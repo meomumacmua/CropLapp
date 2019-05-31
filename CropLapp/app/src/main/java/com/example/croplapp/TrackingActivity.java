@@ -230,6 +230,7 @@ public class TrackingActivity extends AppCompatActivity {
 
         if (canGoBack) {
             finish();
+            overridePendingTransition(R.anim.slide_in_left,R.anim.slide_out_right);
         }
     }
 

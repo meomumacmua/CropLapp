@@ -1,7 +1,7 @@
 /*
  * OMane: OptionList.java
  * Author: Nguyen Duc Tien 16020175, Duong Quoc Anh 16020102
- * Purpose: Change search area: "Hà Nội" or "Sài Gòn", change language, show intro
+ * Purpose: Change search area: "Hà Nội" or "Hồ Chí Minh", change language, show intro
  * Include: AdapterView, Spinner, setLang, loadLang
  */
 package com.example.croplapp;
@@ -96,8 +96,6 @@ public class OptionList extends AppCompatActivity {
             showArea.setText(getString(R.string.currentArea) + " " + getString(R.string.areaHcm));
         }
 
-
-
         /* Get the spinner from the xml. */
         final Spinner dropdownArea = findViewById(R.id.spinner0);
 //        final Spinner dropdownLang = findViewById(R.id.spinner1);
@@ -140,29 +138,6 @@ public class OptionList extends AppCompatActivity {
             public void onNothingSelected(AdapterView<?> adapterView) {
             }
         });
-//        dropdownLang.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-//            @Override
-//            public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
-//                switch (position) {
-//                    case 0: {
-//                        break;
-//                    }
-//                    case 1: {
-//                        setLocale("vi");
-//                        recreate();
-//                        break;
-//                    }
-//                    case 2: {
-//                        setLocale("en");
-//                        recreate();
-//                        break;
-//                    }
-//                }
-//            }
-//            @Override
-//            public void onNothingSelected(AdapterView<?> adapterView) {
-//            }
-//        });
     }
 
     /*
@@ -183,7 +158,9 @@ public class OptionList extends AppCompatActivity {
          */
         setResult(AppCompatActivity.RESULT_OK, data);
         // Call the finish() function to close the current Activity and return to MainActivity
+        // Animation
         finish();
+        overridePendingTransition(R.anim.slide_in_right,R.anim.slide_out_left);
     }
 
     /* Alert dialog funtiion*/
@@ -242,7 +219,6 @@ public class OptionList extends AppCompatActivity {
     }
 
     public void showNotification() {
-        while (true) {
             try {
                 //set time in mili
                 Thread.sleep(3000);
@@ -265,7 +241,6 @@ public class OptionList extends AppCompatActivity {
 
             NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
             notificationManager.notify(0, notification);
-        }
     }
 
 }

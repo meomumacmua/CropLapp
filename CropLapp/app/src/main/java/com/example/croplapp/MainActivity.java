@@ -108,6 +108,7 @@ public class MainActivity extends AppCompatActivity {
                     Intent intent = new Intent(MainActivity.this, FilmStoreActivity.class);
                     // Start activity
                     startActivity(intent);
+                    overridePendingTransition(R.anim.slide_in_down,R.anim.slide_out_up);
                 }
             }
         });
@@ -125,6 +126,7 @@ public class MainActivity extends AppCompatActivity {
                 bundle.putBoolean(getString(R.string.keyState), onlineStatus);
                 intent1.putExtras(bundle);
                 startActivity(intent1);
+                overridePendingTransition(R.anim.slide_in_right,R.anim.slide_out_left);
 
                 if (DEBUG) {
                     Log.d("print", "onButton tracking - currentAreaCode: "  + currentAreaCode);
@@ -149,6 +151,7 @@ public class MainActivity extends AppCompatActivity {
 
                     Intent intent2 = new Intent(MainActivity.this, WebViewActivity.class);
                     startActivity(intent2);
+                    overridePendingTransition(R.anim.slide_in_up,R.anim.slide_out_down);
                 }
             }
         });

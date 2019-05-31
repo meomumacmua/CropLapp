@@ -116,4 +116,10 @@ public class FilmStoreActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setAdapter(adapter);
     }
+
+    @Override
+    public void onBackPressed() {
+        finish();
+        overridePendingTransition(R.anim.slide_in_up,R.anim.slide_out_down);
+    }
 }
